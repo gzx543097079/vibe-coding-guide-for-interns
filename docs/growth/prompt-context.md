@@ -3,8 +3,6 @@ title: 上下文管理
 description: CLAUDE.md / AGENT.md、文件范围与敏感信息。
 ---
 
-# 上下文管理
-
 ::: info 本章还没写
 下面是计划覆盖的内容。想参与编写，点页面底部的「在 GitHub 上编辑此页」。
 :::

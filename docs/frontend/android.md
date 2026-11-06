@@ -3,8 +3,6 @@ title: Android
 description: Kotlin / Compose 与 Android Studio 的基本工作流。
 ---
 
-# Android
-
 ::: info 本章还没写
 下面是计划覆盖的内容。想参与编写，点页面底部的「在 GitHub 上编辑此页」。
 :::

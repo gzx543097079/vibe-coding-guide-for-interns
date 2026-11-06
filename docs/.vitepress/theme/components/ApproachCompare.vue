@@ -134,10 +134,10 @@ const rows: [string, (a: NonNullable<typeof data.value>['approaches'][number]) =
   width: 104px;
 }
 .ac-table .cur {
-  background: color-mix(in oklab, var(--mod-frontend) 8%, var(--raised));
+  background: var(--accent-soft);
 }
 .ac-table thead th.cur {
-  background: color-mix(in oklab, var(--mod-frontend) 14%, var(--paper-2));
+  background: var(--accent-soft);
 }
 .ac-table ul {
   margin: 0 !important;
@@ -154,8 +154,8 @@ const rows: [string, (a: NonNullable<typeof data.value>['approaches'][number]) =
   font-size: 11.5px;
   font-weight: 650;
   line-height: 20px;
-  color: var(--on-frontend);
-  background: var(--mod-frontend);
+  color: var(--on-accent);
+  background: var(--accent);
   vertical-align: 1px;
 }
 .ac-cards {
@@ -195,8 +195,8 @@ const rows: [string, (a: NonNullable<typeof data.value>['approaches'][number]) =
     background: var(--raised);
   }
   .ac-card.cur {
-    border-color: color-mix(in oklab, var(--mod-frontend) 45%, var(--rule));
-    background: color-mix(in oklab, var(--mod-frontend) 6%, var(--raised));
+    border-color: var(--accent);
+    background: var(--accent-soft);
   }
   .ac-card-name {
     margin: 0 0 8px !important;

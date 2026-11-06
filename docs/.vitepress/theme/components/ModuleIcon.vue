@@ -82,7 +82,7 @@ defineProps<{ id: string; play?: boolean }>()
   width: 100%;
   height: auto;
   overflow: visible;
-  color: var(--on-mod);
+  color: var(--mod);
 }
 .s {
   fill: none;
@@ -96,7 +96,7 @@ defineProps<{ id: string; play?: boolean }>()
 }
 .dot,
 .knob {
-  fill: var(--mod);
+  fill: var(--raised);
   stroke: currentColor;
   stroke-width: 2.5;
 }
@@ -140,7 +140,7 @@ defineProps<{ id: string; play?: boolean }>()
   transform-origin: center;
 }
 .on .pop {
-  animation: pop 0.5s var(--ease-spring) 0.7s both;
+  animation: pop 0.5s var(--ease) 0.7s both;
 }
 @keyframes grow {
   from {
@@ -158,7 +158,7 @@ defineProps<{ id: string; play?: boolean }>()
   transition: opacity 0.3s var(--ease-out);
 }
 .knob {
-  transition: transform 0.45s var(--ease-spring);
+  transition: transform 0.45s var(--ease);
 }
 .on .track {
   opacity: 0.35;
@@ -170,7 +170,7 @@ defineProps<{ id: string; play?: boolean }>()
 .dev-a,
 .dev-b,
 .sync {
-  transition: transform 0.5s var(--ease-spring);
+  transition: transform 0.5s var(--ease);
 }
 .on .dev-a {
   transform: translateY(4px);

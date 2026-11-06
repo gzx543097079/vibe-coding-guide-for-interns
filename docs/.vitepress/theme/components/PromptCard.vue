@@ -103,7 +103,7 @@ async function copy() {
 
 <style scoped>
 .pc {
-  --pc-line: var(--mod-growth);
+  --pc-line: var(--accent);
   position: relative;
   margin: 22px 0 28px;
   border: 1px solid var(--rule);
@@ -193,7 +193,7 @@ async function copy() {
 .pc-tab[aria-selected='true'] {
   background: var(--raised);
   color: var(--ink);
-  box-shadow: 0 1px 2px oklch(0.2 0.02 250 / 0.12);
+  box-shadow: var(--shadow-1);
 }
 .pc-tab.good svg {
   color: var(--mod-start);

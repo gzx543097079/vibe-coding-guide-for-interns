@@ -1,10 +1,8 @@
-import { h } from 'vue'
 import type { Theme } from 'vitepress'
 // 不引入默认主题自带的 Inter 字体，统一使用系统字体栈
 import DefaultTheme from 'vitepress/theme-without-fonts'
 
-import ChapterCrumb from './components/ChapterCrumb.vue'
-import SidebarHere from './components/SidebarHere.vue'
+import Layout from './Layout.vue'
 import HomePage from './components/HomePage.vue'
 import CodeTabs from './components/CodeTabs.vue'
 import ControlDemo from './components/ControlDemo.vue'
@@ -19,11 +17,7 @@ import './styles/sidebar.css'
 
 export default {
   extends: DefaultTheme,
-  Layout: () =>
-    h(DefaultTheme.Layout, null, {
-      'doc-before': () => h(ChapterCrumb),
-      'sidebar-nav-before': () => h(SidebarHere),
-    }),
+  Layout,
   enhanceApp({ app }) {
     app.component('HomePage', HomePage)
     app.component('CodeTabs', CodeTabs)

@@ -3,8 +3,6 @@ title: GitHub 与 PR 协作
 description: 分支策略、PR 描述、Code Review 与 Issue。
 ---
 
-# GitHub 与 PR 协作
-
 ::: info 本章还没写
 下面是计划覆盖的内容。想参与编写，点页面底部的「在 GitHub 上编辑此页」。
 :::

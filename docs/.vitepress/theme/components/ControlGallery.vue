@@ -271,7 +271,7 @@ const nameOf = (id: string) => controls.find((c) => c.id === id)?.name ?? id
 .m-shade {
   position: absolute;
   inset: 0;
-  background: oklch(0.15 0.02 250 / 0.35);
+  background: rgb(20 20 19 / 0.35);
   opacity: 0;
   animation-name: shade;
 }
@@ -456,7 +456,7 @@ const nameOf = (id: string) => controls.find((c) => c.id === id)?.name ?? id
   font-weight: 650;
   opacity: 0;
   transform: translateY(-4px);
-  transition: opacity 0.2s var(--ease-out), transform 0.3s var(--ease-spring);
+  transition: opacity 0.2s var(--ease-out), transform 0.3s var(--ease);
 }
 .gc-grid li:hover .gc-copy,
 .gc-grid li:focus-within .gc-copy {

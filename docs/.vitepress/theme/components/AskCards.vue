@@ -71,17 +71,11 @@ const toggle = (i: number) => (open.value[i] = !open.value[i])
   position: relative;
   display: flex;
   flex-direction: column;
-  perspective: 1000px;
 }
 .ak-inner {
   position: relative;
   flex: 1;
   min-height: 210px;
-  transform-style: preserve-3d;
-  transition: transform 0.55s var(--ease-spring);
-}
-.ak.flipped .ak-inner {
-  transform: rotateY(180deg);
 }
 .ak-face {
   position: absolute;
@@ -89,20 +83,28 @@ const toggle = (i: number) => (open.value[i] = !open.value[i])
   display: flex;
   flex-direction: column;
   padding: 20px 22px;
-  border-radius: 18px 18px 0 0;
-  backface-visibility: hidden;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   border: 1px solid var(--rule);
   border-bottom: 0;
+  transition: opacity var(--dur-3) var(--ease), transform var(--dur-3) var(--ease);
+}
+.ak.flipped .ak-front {
+  opacity: 0;
+  transform: translateY(-6px);
 }
 .ak-front {
   background: var(--raised);
 }
 .ak-back {
-  transform: rotateY(180deg);
-  background: var(--ink);
-  color: var(--paper);
-  border-color: var(--ink);
+  background: var(--paper-3);
+  color: var(--ink);
   justify-content: center;
+  opacity: 0;
+  transform: translateY(6px);
+}
+.ak.flipped .ak-back {
+  opacity: 1;
+  transform: none;
 }
 .ak-row {
   display: flex;
@@ -124,9 +126,10 @@ const toggle = (i: number) => (open.value[i] = !open.value[i])
 }
 .ak-q {
   margin: 0 !important;
-  font-size: 22px;
+  font-family: var(--font-serif);
+  font-size: 23px;
   line-height: 1.3;
-  font-weight: 760;
+  font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--ink);
 }
@@ -144,7 +147,8 @@ const toggle = (i: number) => (open.value[i] = !open.value[i])
 }
 .ak-eg {
   margin: 0;
-  font-size: 17px;
+  font-family: var(--font-serif);
+  font-size: 18px;
   line-height: 1.7;
   font-weight: 550;
 }
@@ -154,19 +158,18 @@ const toggle = (i: number) => (open.value[i] = !open.value[i])
   justify-content: center;
   gap: 8px;
   height: 44px;
-  border-radius: 0 0 18px 18px;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
   border: 1px solid var(--rule);
   background: var(--paper-2);
   color: var(--ink);
   font-size: 14px;
   font-weight: 600;
-  box-shadow: 0 10px 22px -14px oklch(0.2 0.03 250 / 0.3);
 }
 .ak-btn:hover {
   background: var(--paper-3);
 }
 .ak-btn svg {
-  transition: transform 0.45s var(--ease-spring);
+  transition: transform var(--dur-3) var(--ease);
 }
 .ak.flipped .ak-btn svg {
   transform: rotate(-180deg);
@@ -182,23 +185,12 @@ const toggle = (i: number) => (open.value[i] = !open.value[i])
   }
 }
 
-/* 减少动态效果：不翻转，改为淡入淡出 */
+/* 减少动态效果：只保留淡入淡出 */
 @media (prefers-reduced-motion: reduce) {
-  .ak-inner,
-  .ak.flipped .ak-inner {
-    transform: none;
-    transition: none;
-  }
-  .ak-back {
-    transform: none;
-    opacity: 0;
-    transition: opacity 0.25s linear;
-  }
+  .ak-face,
+  .ak.flipped .ak-front,
   .ak.flipped .ak-back {
-    opacity: 1;
-  }
-  .ak.flipped .ak-front {
-    opacity: 0;
+    transform: none;
   }
 }
 </style>

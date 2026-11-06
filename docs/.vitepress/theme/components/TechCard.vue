@@ -85,7 +85,7 @@ const host = (url: string) => url.replace(/^https?:\/\//, '').replace(/\/$/, '')
   border-radius: 14px;
   border: 1px solid var(--rule);
   background: var(--raised);
-  box-shadow: 0 1px 2px oklch(0.2 0.02 250 / 0.05);
+  box-shadow: var(--shadow-1);
   overflow: hidden;
 }
 .tc-sum {
@@ -120,7 +120,7 @@ const host = (url: string) => url.replace(/^https?:\/\//, '').replace(/\/$/, '')
 .tc-caret {
   align-self: center;
   color: var(--ink-3);
-  transition: transform 0.3s var(--ease-spring);
+  transition: transform 0.3s var(--ease);
 }
 .tc[open] .tc-caret {
   transform: rotate(180deg);

@@ -163,7 +163,7 @@ const hasSlot = (i: number) => Boolean(slots[`t${i + 1}`])
   bottom: -1px;
   height: 3px;
   border-radius: 3px 3px 0 0;
-  background: var(--mod, var(--ink));
+  background: var(--accent);
 }
 .ct-tab:focus-visible {
   outline-offset: -2px;

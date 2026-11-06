@@ -1,4 +1,19 @@
-/* 侧边栏：每个模块一个分组，标题前为模块色块标签，当前章节高亮 */
+/* 侧边栏：模块分组可折叠，标题前为模块色块标签，当前页色块高亮 */
+
+.VPSidebar {
+  border-right: 1px solid var(--rule);
+}
+@media (min-width: 960px) {
+  .VPSidebar {
+    padding-top: calc(var(--vp-nav-height) + 8px) !important;
+  }
+}
+@media (max-width: 959px) {
+  .VPSidebar {
+    width: min(320px, 86vw) !important;
+    box-shadow: var(--shadow-3);
+  }
+}
 
 #VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='start']) { --mod: var(--mod-start); }
 #VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='git']) { --mod: var(--mod-git); }
@@ -8,27 +23,37 @@
 #VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='quality']) { --mod: var(--mod-quality); }
 #VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='growth']) { --mod: var(--mod-growth); }
 
+#VPSidebarNav .group {
+  padding-top: 6px !important;
+}
+#VPSidebarNav .group + .group {
+  border-top: 0 !important;
+}
+
 /* 模块标题 */
+#VPSidebarNav .VPSidebarItem.level-0 > .item {
+  min-height: 36px;
+}
 #VPSidebarNav .VPSidebarItem.level-0 > .item > .text {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 14.5px;
-  font-weight: 700;
+  font-size: 13.5px;
+  font-weight: 650;
+  color: var(--ink);
 }
 #VPSidebarNav .sb-mod {
   display: inline-grid;
   place-items: center;
   flex: none;
-  width: 24px;
-  height: 24px;
-  border-radius: 7px;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
   background: var(--mod);
   color: var(--on-mod);
-  font-size: 12.5px;
-  font-weight: 750;
+  font-size: 11.5px;
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
-  box-shadow: inset 0 -2px 0 color-mix(in oklab, var(--mod) 70%, var(--ink));
 }
 #VPSidebarNav .sb-count {
   margin-left: auto;
@@ -39,12 +64,13 @@
 }
 #VPSidebarNav .VPSidebarItem.level-0 > .item .caret {
   color: var(--ink-3);
+  align-self: center;
 }
 #VPSidebarNav .VPSidebarItem.level-0 {
-  padding-bottom: 14px;
+  padding-bottom: 12px;
 }
 #VPSidebarNav .VPSidebarItem.collapsed.level-0 {
-  padding-bottom: 6px;
+  padding-bottom: 4px;
 }
 #VPSidebarNav .VPSidebarItem .indicator {
   display: none;
@@ -52,8 +78,8 @@
 
 /* 章节条目 */
 #VPSidebarNav .VPSidebarItem.level-0 > .items {
-  margin-top: 4px;
-  padding-left: 34px;
+  margin-top: 2px;
+  padding-left: 0;
 }
 #VPSidebarNav .VPSidebarItem.level-1 .items,
 #VPSidebarNav .VPSidebarItem.level-2 .items {
@@ -61,48 +87,56 @@
   padding-left: 0;
 }
 #VPSidebarNav .VPSidebarItem.is-link > .item > .link {
-  margin-left: -10px;
-  padding: 0 10px;
-  border-radius: 8px;
+  padding: 0 10px 0 30px;
+  border-radius: var(--radius-sm);
+}
+#VPSidebarNav .VPSidebarItem.level-2.is-link > .item > .link {
+  padding-left: 42px;
 }
 #VPSidebarNav .VPSidebarItem.is-link > .item > .link > .text {
-  padding: 5px 0;
+  padding: 6px 0;
   font-size: 14px;
   line-height: 22px;
-  color: var(--ink-2);
-  font-weight: 500;
+  font-weight: 450;
+  color: var(--ink-3);
 }
 #VPSidebarNav .VPSidebarItem.is-link > .item > .link:hover {
-  background: var(--paper-3);
+  background: var(--paper-2);
 }
 #VPSidebarNav .VPSidebarItem.is-link > .item > .link:hover > .text {
   color: var(--ink);
 }
 
-/* 当前章节 */
+/* 当前页 */
 #VPSidebarNav .VPSidebarItem.is-active > .item > .link {
-  background: color-mix(in oklab, var(--mod) 16%, var(--paper-2));
-  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--mod) 35%, transparent);
+  background: var(--mod-soft, var(--paper-3));
+  background: color-mix(in oklab, var(--mod) 13%, var(--paper));
 }
 #VPSidebarNav .VPSidebarItem.is-active > .item > .link > .text {
   color: var(--ink);
-  font-weight: 650;
+  font-weight: 600;
 }
 
 /* 子分组标题（如「性能优化」） */
+#VPSidebarNav .VPSidebarItem.level-1:not(.is-link) > .item {
+  padding-left: 30px;
+}
 #VPSidebarNav .sb-sub {
   font-size: 12px;
-  font-weight: 650;
-  letter-spacing: 0.04em;
+  font-weight: 600;
   color: var(--ink-3);
 }
 #VPSidebarNav .VPSidebarItem.level-1:not(.is-link) > .item .caret {
   color: var(--ink-3);
 }
-#VPSidebarNav .VPSidebarItem.level-1:not(.is-link) > .items {
-  padding-left: 12px;
-}
 
-#VPSidebarNav .group + .group {
-  border-top-color: var(--rule);
+/* 触屏：条目至少 44px 高 */
+@media (max-width: 959px), (pointer: coarse) {
+  #VPSidebarNav .VPSidebarItem.is-link > .item > .link {
+    min-height: 44px;
+    align-items: center;
+  }
+  #VPSidebarNav .VPSidebarItem.level-0 > .item {
+    min-height: 44px;
+  }
 }

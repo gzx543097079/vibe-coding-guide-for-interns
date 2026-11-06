@@ -3,8 +3,6 @@ title: Taro
 description: 用 React 或 Vue 开发多端小程序。
 ---
 
-# Taro
-
 ::: info 本章还没写
 下面是计划覆盖的内容。想参与编写，点页面底部的「在 GitHub 上编辑此页」。
 :::

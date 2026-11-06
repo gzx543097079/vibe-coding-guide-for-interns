@@ -215,14 +215,14 @@ function replay() {
 
 /* 设备外框 */
 .cd-device {
-  --app-bg: oklch(0.99 0.003 230);
-  --app-ink: oklch(0.24 0.02 252);
-  --app-ink-2: oklch(0.47 0.016 252);
-  --app-line: oklch(0.91 0.006 230);
-  --app-soft: oklch(0.955 0.006 230);
-  --app-accent: oklch(0.5 0.15 258);
+  --app-bg: #fffefb;
+  --app-ink: #141413;
+  --app-ink-2: #66635c;
+  --app-line: #e6dfd8;
+  --app-soft: #f5f0e8;
+  --app-accent: #b3573a;
   --app-on-accent: #fff;
-  --app-danger: oklch(0.55 0.2 27);
+  --app-danger: #b0413a;
   position: relative;
   margin: 0 auto;
   background: var(--app-bg);
@@ -230,14 +230,14 @@ function replay() {
   box-shadow: var(--shadow-2);
 }
 :root.dark .cd-device {
-  --app-bg: oklch(0.2 0.012 250);
-  --app-ink: oklch(0.94 0.008 240);
-  --app-ink-2: oklch(0.76 0.012 240);
-  --app-line: oklch(0.3 0.014 250);
-  --app-soft: oklch(0.25 0.014 250);
-  --app-accent: oklch(0.74 0.13 255);
-  --app-on-accent: oklch(0.18 0.03 255);
-  --app-danger: oklch(0.7 0.16 27);
+  --app-bg: #24221f;
+  --app-ink: #f3efe7;
+  --app-ink-2: #a7a196;
+  --app-line: #34312c;
+  --app-soft: #2a2824;
+  --app-accent: #e08b6b;
+  --app-on-accent: #1b1a17;
+  --app-danger: #e38d84;
 }
 .cd-device.phone {
   width: 268px;
@@ -245,7 +245,7 @@ function replay() {
   border-radius: 40px;
   padding: 10px;
   background: var(--app-bg);
-  outline: 9px solid oklch(0.22 0.012 250);
+  outline: 9px solid #2a2824;
   outline-offset: -1px;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -253,7 +253,7 @@ function replay() {
   flex-direction: column;
 }
 :root.dark .cd-device.phone {
-  outline-color: oklch(0.36 0.012 250);
+  outline-color: #3d3a34;
 }
 .cd-status {
   display: flex;
@@ -269,7 +269,7 @@ function replay() {
   width: 74px;
   height: 20px;
   border-radius: 12px;
-  background: oklch(0.15 0.01 250);
+  background: #141413;
 }
 .cd-sig {
   display: inline-flex;
@@ -360,7 +360,7 @@ function replay() {
   color: var(--paper);
   font-size: 13px;
   font-weight: 650;
-  transition: transform 0.3s var(--ease-spring);
+  transition: transform 0.3s var(--ease);
 }
 .cd-copy:hover {
   transform: translateY(-1px);
@@ -505,7 +505,7 @@ function replay() {
   color: var(--ink-2);
 }
 .cd-notes li.cur {
-  background: color-mix(in oklab, var(--mod-frontend) 12%, var(--paper-2));
+  background: var(--accent-soft);
   color: var(--ink);
 }
 .cd-notes b {

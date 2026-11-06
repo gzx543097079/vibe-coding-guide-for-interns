@@ -53,7 +53,7 @@ export default defineConfig({
     ['meta', { name: 'theme-color', content: '#14181d', media: '(prefers-color-scheme: dark)' }],
   ],
   markdown: {
-    theme: { light: 'github-light-default', dark: 'github-dark-default' },
+    theme: { light: 'github-dark-default', dark: 'github-dark-default' },
     container: {
       tipLabel: '提示',
       warningLabel: '注意',

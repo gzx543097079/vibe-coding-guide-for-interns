@@ -18,7 +18,7 @@ const activeIndex = computed(() => modules.findIndex((m) => m.id === activeId.va
 const reduce = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 const canHover = () => window.matchMedia?.('(hover: hover)').matches
 
-// 用 View Transition 在卡片与模块页之间过渡，不支持时直接切换
+// 用 View Transition 在卡片与模块章节列表之间过渡，不支持时直接切换
 async function swap(id: string | null, morph: string | null) {
   morphId.value = morph
   const apply = async () => {
@@ -65,31 +65,7 @@ onMounted(() => {
 })
 onBeforeUnmount(() => window.removeEventListener('popstate', syncFromHash))
 
-// 卡片倾斜与光泽跟随指针
-let raf = 0
-function tilt(e: PointerEvent) {
-  if (e.pointerType !== 'mouse' || reduce()) return
-  const el = e.currentTarget as HTMLElement
-  const r = el.getBoundingClientRect()
-  const x = (e.clientX - r.left) / r.width
-  const y = (e.clientY - r.top) / r.height
-  cancelAnimationFrame(raf)
-  raf = requestAnimationFrame(() => {
-    el.style.setProperty('--rx', `${((0.5 - y) * 7).toFixed(2)}deg`)
-    el.style.setProperty('--ry', `${((x - 0.5) * 9).toFixed(2)}deg`)
-    el.style.setProperty('--sx', `${(e.clientX - r.left).toFixed(0)}px`)
-    el.style.setProperty('--sy', `${(e.clientY - r.top).toFixed(0)}px`)
-  })
-}
-function untilt(e: PointerEvent) {
-  const el = e.currentTarget as HTMLElement
-  cancelAnimationFrame(raf)
-  el.style.removeProperty('--rx')
-  el.style.removeProperty('--ry')
-  if (playing.value === el.dataset.card) playing.value = null
-}
-
-// 触摸设备上，卡片进入视口时播放一次插画动画
+// 触摸设备没有悬停：卡片进入视口时播放一次图标动画
 let playIo: IntersectionObserver | null = null
 onMounted(() => {
   if (canHover() || reduce() || !('IntersectionObserver' in window)) return
@@ -97,8 +73,7 @@ onMounted(() => {
     (entries) => {
       for (const e of entries) {
         if (e.isIntersecting) {
-          const id = (e.target as HTMLElement).dataset.card!
-          playing.value = id
+          playing.value = (e.target as HTMLElement).dataset.card!
           playIo?.unobserve(e.target)
         }
       }
@@ -109,7 +84,7 @@ onMounted(() => {
 })
 onBeforeUnmount(() => playIo?.disconnect())
 
-const previewTags = (m: Module) => m.chapters.slice(0, 4).map((c) => c.short)
+const previewTags = (m: Module) => m.chapters.slice(0, 3).map((c) => c.short)
 </script>
 
 <template>
@@ -124,33 +99,34 @@ const previewTags = (m: Module) => m.chapters.slice(0, 4).map((c) => c.short)
           :data-card="m.id"
           :aria-label="`${m.name}，${m.chapters.length} 章，查看章节`"
           @click="open(m)"
-          @pointermove="tilt"
           @pointerenter="playing = m.id"
-          @pointerleave="untilt"
+          @pointerleave="playing = null"
           @focus="playing = m.id"
           @blur="playing = null"
         >
-          <span class="mc-art" :style="morphId === m.id ? { viewTransitionName: 'mod-art' } : undefined">
+          <span class="mc-top">
+            <span class="mc-ico" :style="morphId === m.id ? { viewTransitionName: 'mod-art' } : undefined">
+              <ModuleIcon :id="m.id" :play="playing === m.id" />
+            </span>
             <span class="mc-no">{{ String(m.no).padStart(2, '0') }}</span>
-            <span class="mc-ico"><ModuleIcon :id="m.id" :play="playing === m.id" /></span>
           </span>
-          <span class="mc-body">
-            <span class="mc-head">
-              <span class="mc-name">{{ m.name }}</span>
-              <span class="mc-count">{{ m.chapters.length }} 章</span>
-            </span>
-            <span class="mc-intro">{{ m.intro }}</span>
-            <span class="mc-tags" aria-hidden="true">
-              <span v-for="t in previewTags(m)" :key="t" class="mc-tag">{{ t }}</span>
-              <span v-if="m.chapters.length > 4" class="mc-tag more">+{{ m.chapters.length - 4 }}</span>
+          <span class="mc-name">{{ m.name }}</span>
+          <span class="mc-intro">{{ m.intro }}</span>
+          <span class="mc-tags" aria-hidden="true">
+            <span v-for="t in previewTags(m)" :key="t" class="mc-tag">{{ t }}</span>
+          </span>
+          <span class="mc-foot">
+            <span>{{ m.chapters.length }} 章</span>
+            <span class="mc-go">
+              查看章节
+              <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
             </span>
           </span>
-          <span class="mc-sheen" aria-hidden="true" />
         </button>
       </li>
     </ul>
 
-    <!-- 模块章节页 -->
+    <!-- 模块章节列表 -->
     <section v-else id="module-view" class="mv" :data-mod="active.id" aria-labelledby="mv-title">
       <div class="mv-top">
         <button type="button" class="mv-back" @click="close()">
@@ -167,13 +143,14 @@ const previewTags = (m: Module) => m.chapters.slice(0, 4).map((c) => c.short)
         </span>
       </div>
 
-      <header class="mv-head" :style="morphId === active.id ? { viewTransitionName: 'mod-art' } : undefined">
+      <header class="mv-head">
+        <span class="mv-ico" :style="morphId === active.id ? { viewTransitionName: 'mod-art' } : undefined">
+          <ModuleIcon :id="active.id" play />
+        </span>
         <div class="mv-text">
-          <span class="mv-no">模块 {{ String(active.no).padStart(2, '0') }} · {{ active.chapters.length }} 章</span>
           <h3 id="mv-title" ref="viewHead" class="mv-title" tabindex="-1">{{ active.name }}</h3>
-          <p class="mv-intro">{{ active.intro }}</p>
+          <p class="mv-intro">{{ active.intro }} 共 {{ active.chapters.length }} 章。</p>
         </div>
-        <span class="mv-ico"><ModuleIcon :id="active.id" play /></span>
       </header>
 
       <ol class="cc-list">
@@ -181,17 +158,12 @@ const previewTags = (m: Module) => m.chapters.slice(0, 4).map((c) => c.short)
           <a class="cc" :href="withBase(c.link)">
             <span class="cc-top">
               <span class="cc-code">{{ chapterCode({ module: active, index: i }) }}</span>
-              <span class="cc-arrow" aria-hidden="true">
-                <svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
-              </span>
+              <span class="cc-chip wip">建设中</span>
+              <span class="cc-chip">{{ chapterTag({ module: active, chapter: c }) }}</span>
             </span>
             <span class="cc-title">{{ c.title }}</span>
             <span class="cc-sum">{{ c.summary }}</span>
-            <span class="cc-chips">
-              <span class="cc-chip wip">建设中</span>
-              <span class="cc-chip">{{ chapterTag({ module: active, chapter: c }) }}</span>
-              <span v-if="c.group" class="cc-chip">{{ c.group }}</span>
-            </span>
+            <span v-if="c.group" class="cc-group">{{ c.group }}</span>
           </a>
         </li>
       </ol>
@@ -204,11 +176,11 @@ const previewTags = (m: Module) => m.chapters.slice(0, 4).map((c) => c.short)
   scroll-margin-top: calc(var(--vp-nav-height) + 16px);
 }
 
-/* 模块卡片网格：首张卡片占两列 */
+/* 模块卡片：4 列，首张占两列 */
 .mg-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 20px;
+  gap: 16px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -216,190 +188,164 @@ const previewTags = (m: Module) => m.chapters.slice(0, 4).map((c) => c.short)
 .mg-grid li.wide {
   grid-column: span 2;
 }
-
 .mc {
-  --rx: 0deg;
-  --ry: 0deg;
-  --sx: 50%;
-  --sy: 0px;
   position: relative;
   display: flex;
   flex-direction: column;
+  gap: 8px;
   width: 100%;
   height: 100%;
+  padding: 20px 20px 16px;
   text-align: left;
-  border-radius: 18px;
-  background: var(--raised);
+  border-radius: var(--radius-lg);
   border: 1px solid var(--rule);
-  box-shadow:
-    0 1px 1px oklch(0.2 0.02 250 / 0.06),
-    0 2px 4px oklch(0.2 0.02 250 / 0.05),
-    0 10px 24px -12px oklch(0.2 0.02 250 / 0.16);
-  overflow: hidden;
-  isolation: isolate;
-  transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
-  transition: transform 0.45s var(--ease-spring);
-  will-change: transform;
+  background: var(--raised);
+  box-shadow: var(--shadow-1);
+  transition: transform var(--dur-2) var(--ease);
 }
 .mc::after {
   /* 悬停时更深的投影层，用透明度切换 */
   content: '';
   position: absolute;
-  inset: 0;
+  inset: -1px;
   z-index: -1;
   border-radius: inherit;
-  box-shadow: 0 22px 40px -18px oklch(0.2 0.03 250 / 0.35);
+  box-shadow: var(--shadow-2);
   opacity: 0;
-  transition: opacity 0.3s var(--ease-out);
+  transition: opacity var(--dur-2) var(--ease);
 }
-:root.dark .mc::after {
-  box-shadow: 0 22px 40px -16px oklch(0 0 0 / 0.65);
+.mc::before {
+  /* 悬停时的模块色描边，用透明度切换 */
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid var(--mod-line);
+  opacity: 0;
+  transition: opacity var(--dur-2) var(--ease);
+  pointer-events: none;
+}
+.mg-grid li {
+  position: relative;
+  z-index: 0;
 }
 .mc:hover,
 .mc:focus-visible {
-  transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(-6px);
+  transform: translateY(-3px);
 }
 .mc:hover::after,
-.mc:focus-visible::after {
+.mc:focus-visible::after,
+.mc:hover::before,
+.mc:focus-visible::before {
   opacity: 1;
 }
 .mc:active {
-  transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(-2px) scale(0.985);
-  transition-duration: 0.15s;
+  transform: translateY(-1px) scale(0.99);
 }
-.mc:focus-visible {
-  outline: 2.5px solid var(--focus);
-  outline-offset: 3px;
-}
-
-.mc-art {
-  position: relative;
-  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.2);
+.mc-top {
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: space-between;
-  height: 148px;
-  padding: 16px 18px 14px;
-  background: var(--mod);
-  color: var(--on-mod);
-  border-bottom: 1px solid color-mix(in oklab, var(--mod) 70%, var(--ink));
-}
-.mc-no {
-  align-self: flex-start;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  padding: 3px 8px;
-  border-radius: 7px;
-  border: 1.5px solid color-mix(in oklab, var(--on-mod) 55%, transparent);
+  margin-bottom: 8px;
 }
 .mc-ico {
-  width: 128px;
-  margin: 0 -4px -6px 0;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 46px;
+  padding: 6px 8px;
+  border-radius: var(--radius);
+  background: var(--mod-soft);
 }
-.wide .mc-ico {
-  width: 150px;
-}
-
-.mc-body {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
-  padding: 16px 18px 18px;
-}
-.mc-head {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
+.mc-no {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-3);
 }
 .mc-name {
-  font-size: 20px;
-  font-weight: 760;
-  letter-spacing: -0.01em;
+  font-family: var(--font-serif);
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.3;
   color: var(--ink);
-}
-.mc-count {
-  margin-left: auto;
-  font-size: 13px;
-  color: var(--ink-3);
-  font-variant-numeric: tabular-nums;
 }
 .mc-intro {
   font-size: 14px;
-  line-height: 1.6;
+  line-height: 1.65;
   color: var(--ink-2);
 }
 .mc-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: auto;
-  padding-top: 6px;
+  margin-top: 4px;
 }
 .mc-tag {
-  padding: 2px 9px;
+  padding: 1px 8px;
   border-radius: 999px;
   font-size: 12px;
   line-height: 20px;
   color: var(--ink-2);
-  background: color-mix(in oklab, var(--mod) 10%, var(--paper-2));
-  border: 1px solid color-mix(in oklab, var(--mod) 22%, var(--rule));
+  background: var(--mod-soft);
 }
-.mc-tag.more {
+.mc-foot {
+  display: flex;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule-soft);
+  font-size: 13px;
   color: var(--ink-3);
-  background: transparent;
+  font-variant-numeric: tabular-nums;
+}
+.mc-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  color: var(--ink-2);
+  font-weight: 500;
+}
+.mc-go svg {
+  transition: transform var(--dur-2) var(--ease);
+}
+.mc:hover .mc-go {
+  color: var(--accent-ink);
+}
+.mc:hover .mc-go svg {
+  transform: translateX(3px);
 }
 
-/* 光泽：一个固定的径向高光层，只用位移跟随指针 */
-.mc-sheen {
-  position: absolute;
-  top: -170px;
-  left: -170px;
-  width: 340px;
-  height: 340px;
-  border-radius: 50%;
-  pointer-events: none;
-  background: radial-gradient(closest-side, oklch(1 0 0 / 0.2), transparent);
-  opacity: 0;
-  transform: translate3d(var(--sx), var(--sy), 0);
-  transition: opacity 0.3s var(--ease-out);
-}
-.mc:hover .mc-sheen {
-  opacity: 1;
-}
-
-/* 模块章节页 */
+/* 模块章节列表 */
 .mv-top {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 .mv-back,
 .mv-pg {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  height: 36px;
+  min-height: 40px;
   padding: 0 14px;
-  border-radius: 10px;
+  border-radius: var(--radius);
   border: 1px solid var(--rule-strong);
   background: var(--raised);
   color: var(--ink);
   font-size: 14px;
-  font-weight: 600;
-  transition: transform 0.3s var(--ease-spring);
+  font-weight: 500;
+  transition: transform var(--dur-1) var(--ease);
 }
 .mv-back:hover,
 .mv-pg:hover {
-  transform: translateY(-2px);
+  border-color: var(--ink-3);
 }
 .mv-back:active,
 .mv-pg:active {
-  transform: scale(0.97);
+  transform: scale(0.98);
 }
 .mv-pager {
   display: flex;
@@ -408,155 +354,126 @@ const previewTags = (m: Module) => m.chapters.slice(0, 4).map((c) => c.short)
   margin-left: auto;
 }
 .mv-pg {
-  font-weight: 500;
   color: var(--ink-2);
 }
-
 .mv-head {
   display: flex;
-  align-items: flex-end;
-  gap: 24px;
-  padding: 26px 28px;
-  border-radius: 20px;
-  background: var(--mod);
-  color: var(--on-mod);
-  box-shadow: 0 14px 30px -18px oklch(0.2 0.03 250 / 0.5);
+  align-items: center;
+  gap: 20px;
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  background: var(--mod-soft);
 }
-.mv-text {
-  flex: 1;
-  min-width: 0;
-}
-.mv-no {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 650;
-  letter-spacing: 0.03em;
+.mv-ico {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 70px;
+  padding: 8px 10px;
+  border-radius: var(--radius);
+  background: var(--raised);
 }
 .mv-title {
-  margin: 6px 0 6px;
-  font-size: 34px;
+  margin: 0 0 4px;
+  font-family: var(--font-serif);
+  font-size: 32px;
   line-height: 1.2;
-  font-weight: 780;
-  letter-spacing: -0.02em;
+  font-weight: 600;
+  color: var(--ink);
   outline: none;
 }
 .mv-intro {
   margin: 0;
-  max-width: 34em;
-  font-size: 16px;
-  line-height: 1.65;
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--ink-2);
 }
-.mv-ico {
-  flex: none;
-  width: 170px;
-}
-
 .cc-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
-  margin: 22px 0 0;
+  gap: 12px;
+  margin: 16px 0 0;
   padding: 0;
   list-style: none;
 }
+.cc-list li {
+  position: relative;
+  z-index: 0;
+}
 .cc {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   height: 100%;
-  padding: 16px 18px 16px;
-  border-radius: 16px;
-  background: var(--raised);
+  padding: 16px 18px;
+  border-radius: var(--radius-lg);
   border: 1px solid var(--rule);
-  box-shadow: 0 1px 2px oklch(0.2 0.02 250 / 0.05);
+  background: var(--raised);
   color: var(--ink);
   text-decoration: none;
-  position: relative;
-  transition: transform 0.4s var(--ease-spring);
-}
-.cc::before {
-  /* 顶部模块色条 */
-  content: '';
-  position: absolute;
-  left: 18px;
-  right: 18px;
-  top: 0;
-  height: 3px;
-  border-radius: 0 0 3px 3px;
-  background: var(--mod);
+  transition: transform var(--dur-2) var(--ease);
 }
 .cc::after {
   content: '';
   position: absolute;
-  inset: 0;
+  inset: -1px;
   z-index: -1;
   border-radius: inherit;
-  box-shadow: 0 16px 30px -16px oklch(0.2 0.03 250 / 0.32);
+  box-shadow: var(--shadow-2);
   opacity: 0;
-  transition: opacity 0.3s var(--ease-out);
-}
-:root.dark .cc::after {
-  box-shadow: 0 16px 30px -14px oklch(0 0 0 / 0.6);
+  transition: opacity var(--dur-2) var(--ease);
 }
 .cc:hover,
 .cc:focus-visible {
-  transform: translateY(-5px);
+  transform: translateY(-3px);
+  border-color: var(--mod-line);
 }
 .cc:hover::after,
 .cc:focus-visible::after {
   opacity: 1;
 }
 .cc:active {
-  transform: translateY(-1px) scale(0.985);
+  transform: translateY(-1px) scale(0.99);
 }
 .cc-top {
   display: flex;
   align-items: center;
+  gap: 6px;
 }
 .cc-code {
+  margin-right: auto;
   font-family: var(--font-mono);
   font-size: 12.5px;
   color: var(--ink-3);
 }
-.cc-arrow {
-  margin-left: auto;
-  color: var(--ink-3);
-  transition: transform 0.35s var(--ease-spring);
+.cc-chip {
+  padding: 0 7px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  line-height: 20px;
+  color: var(--ink-2);
+  background: var(--mod-soft);
 }
-.cc:hover .cc-arrow {
-  transform: translateX(4px);
+.cc-chip.wip {
+  color: var(--warn);
+  background: var(--warn-soft);
 }
 .cc-title {
-  font-size: 17px;
-  font-weight: 700;
-  line-height: 1.4;
+  font-size: 16.5px;
+  font-weight: 650;
+  line-height: 1.45;
 }
 .cc-sum {
   font-size: 14px;
-  line-height: 1.6;
+  line-height: 1.65;
   color: var(--ink-2);
 }
-.cc-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+.cc-group {
   margin-top: auto;
-  padding-top: 4px;
-}
-.cc-chip {
-  padding: 1px 8px;
-  border-radius: 6px;
   font-size: 12px;
-  line-height: 20px;
-  color: var(--ink-2);
-  background: var(--paper-2);
-  border: 1px solid var(--rule);
-}
-.cc-chip.wip {
-  color: var(--ink);
-  border-style: dashed;
-  border-color: color-mix(in oklab, var(--warn) 55%, var(--rule));
-  background: color-mix(in oklab, var(--warn) 10%, var(--paper));
+  color: var(--ink-3);
 }
 
 @media (max-width: 1099px) {
@@ -567,29 +484,18 @@ const previewTags = (m: Module) => m.chapters.slice(0, 4).map((c) => c.short)
 @media (max-width: 639px) {
   .mg-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 12px;
   }
   .mg-grid li.wide {
     grid-column: auto;
   }
-  .mc-art {
-    height: 128px;
-  }
-  .mc-ico,
-  .wide .mc-ico {
-    width: 118px;
-  }
   .mv-head {
-    flex-direction: column-reverse;
+    flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
     padding: 20px;
   }
-  .mv-ico {
-    width: 120px;
-  }
   .mv-title {
-    font-size: 28px;
+    font-size: 26px;
   }
   .mv-pager {
     margin-left: 0;
@@ -600,12 +506,12 @@ const previewTags = (m: Module) => m.chapters.slice(0, 4).map((c) => c.short)
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mc,
   .mc:hover,
   .mc:focus-visible,
   .mc:active,
   .cc:hover,
-  .cc:focus-visible {
+  .cc:focus-visible,
+  .cc:active {
     transform: none;
   }
 }
@@ -613,11 +519,7 @@ const previewTags = (m: Module) => m.chapters.slice(0, 4).map((c) => c.short)
 
 <style>
 ::view-transition-group(mod-art) {
-  animation-duration: 0.45s;
-  animation-timing-function: cubic-bezier(0.34, 1.2, 0.64, 1);
-}
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 0.25s;
+  animation-duration: 0.32s;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 </style>

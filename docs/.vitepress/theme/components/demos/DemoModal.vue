@@ -202,7 +202,7 @@ const options = [
 .dm-backdrop {
   position: absolute;
   inset: 0;
-  background: oklch(0.15 0.02 250 / 0.42);
+  background: rgb(20 20 19 / 0.42);
 }
 .dm-sheet {
   position: absolute;

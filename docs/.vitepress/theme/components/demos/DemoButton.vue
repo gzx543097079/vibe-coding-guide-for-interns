@@ -136,7 +136,7 @@ function submit() {
 .db-btn.primary {
   background: var(--app-accent);
   color: var(--app-on-accent);
-  box-shadow: 0 1px 2px oklch(0.2 0.05 258 / 0.25), 0 4px 12px oklch(0.4 0.12 258 / 0.22);
+  box-shadow: 0 1px 2px rgb(20 20 19 / 0.2), 0 4px 12px -2px rgb(179 87 58 / 0.3);
 }
 .db-btn.primary:hover {
   background: color-mix(in oklab, var(--app-accent) 90%, var(--app-ink));
@@ -147,7 +147,7 @@ function submit() {
 }
 .db-btn.primary:active,
 .db-btn.primary.pressing {
-  box-shadow: 0 1px 1px oklch(0.2 0.05 258 / 0.2);
+  box-shadow: 0 1px 1px rgb(20 20 19 / 0.2);
   background: color-mix(in oklab, var(--app-accent) 82%, var(--app-ink));
 }
 .db-btn.primary.loading {

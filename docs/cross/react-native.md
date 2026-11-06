@@ -3,8 +3,6 @@ title: React Native
 description: 用 React + TypeScript 调用原生组件。
 ---
 
-# React Native
-
 ::: info 本章还没写
 下面是计划覆盖的内容。想参与编写，点页面底部的「在 GitHub 上编辑此页」。
 :::

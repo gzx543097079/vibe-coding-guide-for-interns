@@ -3,8 +3,6 @@ title: 其他跨端方案
 description: Kotlin Multiplatform、Electron / Tauri、Capacitor 简述。
 ---
 
-# 其他跨端方案
-
 ::: info 本章还没写
 下面是计划覆盖的内容。想参与编写，点页面底部的「在 GitHub 上编辑此页」。
 :::
