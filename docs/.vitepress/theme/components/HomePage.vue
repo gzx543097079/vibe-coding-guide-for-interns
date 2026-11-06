@@ -10,6 +10,8 @@ import { useReveal } from '../composables/useReveal'
 
 const REPO = 'https://github.com/gzx543097079/vibe-coding-guide-for-interns'
 const page = ref<HTMLElement>()
+const CN = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二']
+const modCount = CN[modules.length] ?? String(modules.length)
 useReveal(page)
 
 // 首屏代码窗展示一段真实的提示词模板，复制的是完整模板
@@ -26,8 +28,8 @@ async function copySample() {
 }
 
 const steps = [
-  { t: '先读「起步」', d: '装好环境、配好 AI 工具，养成小步提交的习惯。后面每一章都用得到。' },
-  { t: '挑你的方向', d: '做前端看「前端与客户端」「大前端 / 跨端」，做后端看「后端与数据」。「质量与交付」和「提升」人人都要看。' },
+  { t: '先读「起步」和「AI 与 Agent」的基础部分', d: '装好环境、配好 AI 工具，弄清模型和 Agent 能做什么、会错在哪。后面每一章都用得到。' },
+  { t: '挑你的方向，由浅入深', d: '做前端看「前端与客户端」「大前端 / 跨端」，做后端看「后端与数据」。每个模块按基础、进阶、精通排列，先读完基础再往下。' },
   { t: '读完回答三问', d: '答得上来，再把任务交给 AI；答不上来，先回到这一章。' },
 ]
 </script>
@@ -70,7 +72,7 @@ const steps = [
 
     <section id="modules" class="sec" aria-labelledby="mod-title">
       <div class="sec-head" data-reveal>
-        <h2 id="mod-title" class="sec-title">七个模块</h2>
+        <h2 id="mod-title" class="sec-title">{{ modCount }}个模块</h2>
         <p class="sec-lead">目录里列出了全部章节。不知道从哪看起，就点开离你手上工作最近的模块。</p>
       </div>
       <ModuleGrid />

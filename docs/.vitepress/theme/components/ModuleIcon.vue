@@ -15,6 +15,13 @@ defineProps<{ id: string; play?: boolean }>()
       <rect x="80" y="44" width="6" height="12" rx="1.5" class="f caret" />
     </g>
 
+    <!-- AI 与 Agent：芯片与闪光 -->
+    <g v-else-if="id === 'ai'">
+      <rect x="34" y="16" width="52" height="52" rx="12" class="s" />
+      <path d="M48 8v8M60 8v8M72 8v8M48 68v8M60 68v8M72 68v8M26 30h8M26 42h8M26 54h8M86 30h8M86 42h8M86 54h8" class="s" />
+      <path d="M60 28l3.6 9.4L73 41l-9.4 3.6L60 54l-3.6-9.4L47 41l9.4-3.6z" class="f pop" />
+    </g>
+
     <!-- Git：分支线 -->
     <g v-else-if="id === 'git'">
       <path d="M18 62H102" class="s" />

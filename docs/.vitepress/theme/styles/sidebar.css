@@ -16,6 +16,7 @@
 }
 
 #VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='start']) { --mod: var(--mod-start); }
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='ai']) { --mod: var(--mod-ai); }
 #VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='git']) { --mod: var(--mod-git); }
 #VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='frontend']) { --mod: var(--mod-frontend); }
 #VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='cross']) { --mod: var(--mod-cross); }
@@ -105,6 +106,32 @@
 }
 #VPSidebarNav .VPSidebarItem.is-link > .item > .link:hover > .text {
   color: var(--ink);
+}
+
+/* 级别小标签：进阶描边、精通实底 */
+#VPSidebarNav .VPSidebarItem.is-link > .item > .link > .text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#VPSidebarNav .sb-title {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+#VPSidebarNav .sb-lv {
+  flex: none;
+  padding: 0 6px;
+  border-radius: 4px;
+  border: 1px solid var(--rule-strong);
+  font-size: 11px;
+  line-height: 17px;
+  font-weight: 600;
+  color: var(--ink-3);
+}
+#VPSidebarNav .sb-lv[data-lv='精通'] {
+  border-color: transparent;
+  background: var(--paper-3);
+  color: var(--ink-2);
 }
 
 /* 当前页 */

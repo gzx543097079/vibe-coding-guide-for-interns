@@ -27,7 +27,8 @@ VitePress + 自定义主题，部署到 GitHub Pages 子路径 /vibe-coding-guid
 - 内容用 Markdown 维护，开源（MIT），欢迎 PR 共建。
 - 当前只有骨架：章节为占位文案，须明确标注，不得编造案例、数据或用户评价。
 - 简体中文为主，中英文混排需精致。
-- 内容规划：准备篇（通用/前端/后端/数据库/测试/DevOps）+ 8 个核心模块 + 实战案例 + 速查表。
+- 内容规划：8 个模块（起步、AI 与 Agent、Git 与协作、前端与客户端、大前端 / 跨端、后端与数据、质量与交付、提升），模块内按「基础 / 进阶 / 精通」分级；章节数据统一维护在 `docs/.vitepress/theme/data/modules.ts`。
+- 占位章节用 frontmatter `status: draft` 标注，不确定的内容写「待核实」。
 
 ## Brand Commitments
 

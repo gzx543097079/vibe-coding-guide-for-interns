@@ -18,7 +18,7 @@ const pages: Item[] = [
   { id: 'p-prompts', title: '场景提示词模板', sub: '写功能、修 bug、重构等模板', link: '/growth/prompt-templates', group: '页面' },
 ]
 const chapters: Item[] = modules.flatMap((m) =>
-  m.chapters.map((c) => ({ id: c.id, title: c.title, sub: c.summary, link: c.link, mod: m.id, group: m.name })),
+  m.chapters.map((c) => ({ id: c.id, title: c.title, sub: `${c.level} · ${c.summary}`, link: c.link, mod: m.id, group: m.name })),
 )
 
 const open = ref(false)

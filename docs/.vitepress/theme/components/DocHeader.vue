@@ -20,7 +20,7 @@ const updated = computed(() => {
 </script>
 
 <template>
-  <header class="dh">
+  <header class="dh" :data-mod="here?.module.id">
     <nav v-if="here" class="dh-crumb" aria-label="面包屑">
       <a :href="withBase('/')">首页</a>
       <span aria-hidden="true">/</span>
@@ -33,6 +33,7 @@ const updated = computed(() => {
     <h1 class="dh-title">{{ page.title }}</h1>
     <p v-if="frontmatter.description" class="dh-lead">{{ frontmatter.description }}</p>
     <p class="dh-meta">
+      <span v-if="here" class="dh-lv" :data-lv="here.chapter.level">{{ here.chapter.level }}</span>
       <span v-if="tag" class="dh-tag">{{ tag }}</span>
       <span v-if="here">第 {{ here.index + 1 }} / {{ here.module.chapters.length }} 章</span>
       <span v-if="updated">上次更新 {{ updated }}</span>
@@ -110,6 +111,18 @@ const updated = computed(() => {
 }
 .dh-meta {
   align-items: center;
+}
+.dh-lv {
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--mod-soft);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 650;
+}
+.dh-lv[data-lv='精通'] {
+  background: var(--mod);
+  color: var(--on-mod);
 }
 .dh-tag {
   padding: 1px 8px;

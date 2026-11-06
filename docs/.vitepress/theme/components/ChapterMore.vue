@@ -23,7 +23,7 @@ const siblings = computed(() => {
         <a class="cm-link" :href="withBase(c.link)">
           <span class="cm-no" aria-hidden="true">{{ here.module.no }}.{{ String(i + 1).padStart(2, '0') }}</span>
           <span class="cm-body">
-            <span class="cm-name">{{ c.title }}</span>
+            <span class="cm-name">{{ c.title }}<span v-if="c.level !== '基础'" class="cm-lv">{{ c.level }}</span></span>
             <span class="cm-sum">{{ c.summary }}</span>
           </span>
         </a>
@@ -95,6 +95,17 @@ const siblings = computed(() => {
 }
 .cm-link:hover .cm-name {
   color: var(--accent-ink);
+}
+.cm-lv {
+  margin-left: 8px;
+  padding: 0 6px;
+  border-radius: 4px;
+  border: 1px solid var(--rule-strong);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 17px;
+  color: var(--ink-3);
+  vertical-align: 1px;
 }
 .cm-sum {
   font-size: 13px;

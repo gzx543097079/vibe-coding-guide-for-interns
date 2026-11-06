@@ -2,7 +2,7 @@
 import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import { withBase } from 'vitepress'
 import ModuleIcon from './ModuleIcon.vue'
-import { modules, chapterCode, chapterTag, type Module } from '../data/modules'
+import { modules, chapterCode, chapterTag, levelCounts, type Module } from '../data/modules'
 import { useReveal } from '../composables/useReveal'
 
 const root = ref<HTMLElement>()
@@ -91,13 +91,13 @@ const previewTags = (m: Module) => m.chapters.slice(0, 3).map((c) => c.short)
   <div ref="root" class="mg">
     <!-- 模块卡片 -->
     <ul v-if="!active" class="mg-grid" aria-label="全部模块">
-      <li v-for="(m, i) in modules" :key="m.id" :class="{ wide: i === 0 }" data-reveal>
+      <li v-for="(m, i) in modules" :key="m.id" :class="{ wide: i === 0 && modules.length % 2 === 1 }" data-reveal>
         <button
           type="button"
           class="mc"
           :data-mod="m.id"
           :data-card="m.id"
-          :aria-label="`${m.name}，${m.chapters.length} 章，查看章节`"
+          :aria-label="`${m.name}，${m.chapters.length} 章（${levelCounts(m).map((l) => `${l.level} ${l.count}`).join('、')}），查看章节`"
           @click="open(m)"
           @pointerenter="playing = m.id"
           @pointerleave="playing = null"
@@ -116,9 +116,10 @@ const previewTags = (m: Module) => m.chapters.slice(0, 3).map((c) => c.short)
             <span v-for="t in previewTags(m)" :key="t" class="mc-tag">{{ t }}</span>
           </span>
           <span class="mc-foot">
-            <span>{{ m.chapters.length }} 章</span>
+            <span class="mc-lv">
+              <span v-for="l in levelCounts(m)" :key="l.level">{{ l.level }} {{ l.count }}</span>
+            </span>
             <span class="mc-go">
-              查看章节
               <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
             </span>
           </span>
@@ -159,6 +160,7 @@ const previewTags = (m: Module) => m.chapters.slice(0, 3).map((c) => c.short)
             <span class="cc-top">
               <span class="cc-code">{{ chapterCode({ module: active, index: i }) }}</span>
               <span class="cc-chip wip">建设中</span>
+              <span class="cc-chip lv" :data-lv="c.level">{{ c.level }}</span>
               <span class="cc-chip">{{ chapterTag({ module: active, chapter: c }) }}</span>
             </span>
             <span class="cc-title">{{ c.title }}</span>
@@ -304,7 +306,18 @@ const previewTags = (m: Module) => m.chapters.slice(0, 3).map((c) => c.short)
   color: var(--ink-3);
   font-variant-numeric: tabular-nums;
 }
+.mc-lv {
+  display: inline-flex;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.mc-lv span + span::before {
+  content: '·';
+  margin: 0 6px;
+  color: var(--rule-strong);
+}
 .mc-go {
+  flex: none;
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -461,6 +474,10 @@ const previewTags = (m: Module) => m.chapters.slice(0, 3).map((c) => c.short)
   line-height: 20px;
   color: var(--ink-2);
   background: var(--mod-soft);
+}
+.cc-chip.lv {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--rule-strong);
 }
 .cc-chip.wip {
   color: var(--warn);

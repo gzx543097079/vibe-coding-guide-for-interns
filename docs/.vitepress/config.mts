@@ -10,8 +10,10 @@ function buildSidebar(): DefaultTheme.SidebarItem[] {
     const items: DefaultTheme.SidebarItem[] = []
     let current: DefaultTheme.SidebarItem | null = null
     for (const st of mod.chapters) {
+      // 基础是默认级别不加标签，进阶 / 精通在标题后显示小标签
+      const lv = st.level === '基础' ? '' : `<span class="sb-lv" data-lv="${st.level}">${st.level}</span>`
       const item: DefaultTheme.SidebarItem = {
-        text: st.title,
+        text: `<span class="sb-title">${st.title}</span>${lv}`,
         link: st.link,
         docFooterText: st.title,
       }
