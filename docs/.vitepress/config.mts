@@ -1,17 +1,17 @@
 import { defineConfig, type DefaultTheme } from 'vitepress'
-import { lines } from './theme/data/metro'
+import { modules } from './theme/data/modules'
 
 const REPO = 'https://github.com/gzx543097079/vibe-coding-guide-for-interns'
 const BASE = '/vibe-coding-guide-for-interns/'
 
-// 由线路数据生成侧边栏：每条线路一个可折叠分组，线路内的子分组再嵌套一层
+// 由模块数据生成侧边栏：每个模块一个可折叠分组，模块内的子分组再嵌套一层
 function buildSidebar(): DefaultTheme.SidebarItem[] {
-  return lines.map((line) => {
+  return modules.map((mod) => {
     const items: DefaultTheme.SidebarItem[] = []
     let current: DefaultTheme.SidebarItem | null = null
-    for (const st of line.stations) {
+    for (const st of mod.chapters) {
       const item: DefaultTheme.SidebarItem = {
-        text: `<span class="sb-stop" aria-hidden="true"></span><span class="sb-text">${st.title}</span>`,
+        text: st.title,
         link: st.link,
         docFooterText: st.title,
       }
@@ -27,7 +27,7 @@ function buildSidebar(): DefaultTheme.SidebarItem[] {
       }
     }
     return {
-      text: `<span class="sb-line" data-line="${line.id}" aria-hidden="true">${line.no}</span><span class="sb-text">${line.name}</span><span class="sb-count">${line.stations.length} 站</span>`,
+      text: `<span class="sb-mod" data-mod="${mod.id}" aria-hidden="true">${mod.no}</span><span class="sb-text">${mod.name}</span><span class="sb-count">${mod.chapters.length} 章</span>`,
       collapsed: false,
       items,
     }
@@ -47,8 +47,6 @@ export default defineConfig({
   cleanUrls: true,
   lastUpdated: true,
   srcExclude: ['snippets/**'],
-  // 默认的链接预取会读取 <a> 的 pathname，SVG 中的 <a> 没有该属性会报错，因此关闭
-  router: { prefetchLinks: false },
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: `${BASE}favicon.svg` }],
     ['meta', { name: 'theme-color', content: '#f4f6f7', media: '(prefers-color-scheme: light)' }],
@@ -85,7 +83,7 @@ export default defineConfig({
       text: '最后更新',
       formatOptions: { dateStyle: 'medium', timeStyle: 'short' },
     },
-    docFooter: { prev: '上一站', next: '下一站' },
+    docFooter: { prev: '上一章', next: '下一章' },
     darkModeSwitchLabel: '外观',
     lightModeSwitchTitle: '切换到浅色模式',
     darkModeSwitchTitle: '切换到深色模式',
@@ -95,10 +93,10 @@ export default defineConfig({
     skipToContentLabel: '跳到正文',
     externalLinkIcon: true,
     notFound: {
-      title: '这一站不存在',
+      title: '页面不存在',
       quote: '链接可能写错了，或者章节已经改名。',
       linkLabel: '回到首页',
-      linkText: '回到线路图',
+      linkText: '回到首页',
     },
     search: {
       provider: 'local',

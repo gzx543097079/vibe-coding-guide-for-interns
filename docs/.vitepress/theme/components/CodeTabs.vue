@@ -1,28 +1,7 @@
-<script lang="ts">
-import { reactive } from 'vue'
-
-// 同一 group 的所有标签页共享选中项，并记忆到 localStorage
-const selected = reactive<Record<string, string>>({})
-const KEY = 'vcg-codetabs:'
-
-function load(group: string): string | null {
-  try {
-    return window.localStorage.getItem(KEY + group)
-  } catch {
-    return null
-  }
-}
-function save(group: string, label: string) {
-  try {
-    window.localStorage.setItem(KEY + group, label)
-  } catch {
-    /* 存储不可用时只在本页联动 */
-  }
-}
-</script>
-
 <script setup lang="ts">
-import { computed, onMounted, ref, useId, useSlots } from 'vue'
+import { computed, inject, onMounted, ref, useId, useSlots } from 'vue'
+import { copyText } from '../composables/clipboard'
+import { loadTab, saveTab, selectedTab, tabsHostKey } from '../composables/codeTabs'
 
 const props = defineProps<{
   /** 联动分组，同组标签页同步切换 */
@@ -37,22 +16,27 @@ const tabRefs = ref<HTMLButtonElement[]>([])
 const panelRefs = ref<HTMLElement[]>([])
 const copied = ref(false)
 
+// 位于控件演示内时，登记分组，供提示词与方案对比读取当前语言
+const host = inject(tabsHostKey, null)
+if (host) {
+  host.group = props.group
+  host.labels = props.labels
+}
+
 const current = computed(() => {
-  const label = selected[props.group]
+  const label = selectedTab[props.group]
   const idx = label ? props.labels.indexOf(label) : -1
   return idx >= 0 ? idx : 0
 })
 
 onMounted(() => {
-  if (selected[props.group]) return
-  const stored = load(props.group)
-  if (stored && props.labels.includes(stored)) selected[props.group] = stored
+  if (selectedTab[props.group]) return
+  const stored = loadTab(props.group)
+  if (stored && props.labels.includes(stored)) selectedTab[props.group] = stored
 })
 
 function select(i: number, focus = false) {
-  const label = props.labels[i]
-  selected[props.group] = label
-  save(props.group, label)
+  saveTab(props.group, props.labels[i])
   if (focus) tabRefs.value[i]?.focus()
 }
 
@@ -74,12 +58,9 @@ async function copy() {
   const text = Array.from(panel.querySelectorAll('pre code'))
     .map((el) => (el as HTMLElement).innerText.replace(/\n$/, ''))
     .join('\n\n')
-  try {
-    await navigator.clipboard.writeText(text)
+  if (await copyText(text)) {
     copied.value = true
-    window.setTimeout(() => (copied.value = false), 1600)
-  } catch {
-    copied.value = false
+    window.setTimeout(() => (copied.value = false), 2000)
   }
 }
 
@@ -182,7 +163,7 @@ const hasSlot = (i: number) => Boolean(slots[`t${i + 1}`])
   bottom: -1px;
   height: 3px;
   border-radius: 3px 3px 0 0;
-  background: var(--line, var(--ink));
+  background: var(--mod, var(--ink));
 }
 .ct-tab:focus-visible {
   outline-offset: -2px;
@@ -205,7 +186,7 @@ const hasSlot = (i: number) => Boolean(slots[`t${i + 1}`])
   border-color: var(--rule-strong);
 }
 .ct-copy.done {
-  color: var(--line-start);
+  color: var(--mod-start);
 }
 .ct-panel:focus-visible {
   outline-offset: -3px;

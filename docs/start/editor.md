@@ -5,11 +5,15 @@ description: VS Code、JetBrains、Cursor、Claude Code 的安装、插件与 AI
 
 # 编辑器与 AI 工具
 
-::: warning 🚧 本章内容建设中
-本章目前只有大纲，正文正在编写。下面是计划覆盖的要点，欢迎在 GitHub 上参与补充。
+::: info 本章还没写
+下面是计划覆盖的内容。想参与编写，点页面底部的「在 GitHub 上编辑此页」。
 :::
 
-## 本章计划覆盖
+## 这是什么
+
+<TechCard ids="vscode,jetbrains,cursor,claude-code" />
+
+## 计划覆盖
 
 - VS Code 与 JetBrains 系列的选择与安装
 - Cursor、Claude Code 等 AI 工具的安装与登录
@@ -19,7 +23,7 @@ description: VS Code、JetBrains、Cursor、Claude Code 的安装、插件与 AI
 
 ## 三问
 
-回答得出这三个问题，再把这个方向的任务交给 AI。以下为计划展开的要点。
+答得上这三个问题，再把这个方向的任务交给 AI。下面是计划展开的要点。
 
 ### 必须先懂什么
 

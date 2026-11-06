@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { withBase } from 'vitepress'
+import { buildControlPrompt, controls, defaultOptions } from '../data/controlPrompts'
+import { copyText } from '../composables/clipboard'
 
 const ready = [
   { key: 'button', name: '按钮', en: 'Button', desc: '按下反馈、加载与禁用状态' },
@@ -9,18 +12,22 @@ const ready = [
   { key: 'tabbar', name: '标签栏', en: 'TabBar', desc: '应用一级导航切换' },
 ]
 
-const planned = [
-  ['输入框', 'Input'],
-  ['轻提示', 'Toast'],
-  ['加载指示器', 'Loading'],
-  ['导航栏', 'NavBar'],
-  ['选择器', 'Picker'],
-  ['滑块', 'Slider'],
-  ['复选框与单选', 'Checkbox / Radio'],
-  ['分段控件', 'Segmented'],
-  ['进度条', 'Progress'],
-  ['搜索栏', 'SearchBar'],
-]
+const planned = controls.filter((c) => c.draft)
+
+const copied = ref<string | null>(null)
+const failed = ref<string | null>(null)
+let timer = 0
+async function copy(id: string) {
+  const ok = await copyText(buildControlPrompt(id, undefined, defaultOptions))
+  copied.value = ok ? id : null
+  failed.value = ok ? null : id
+  window.clearTimeout(timer)
+  timer = window.setTimeout(() => {
+    copied.value = null
+    failed.value = null
+  }, 2000)
+}
+const nameOf = (id: string) => controls.find((c) => c.id === id)?.name ?? id
 </script>
 
 <template>
@@ -55,15 +62,26 @@ const planned = [
             <span class="gc-desc">{{ c.desc }}</span>
           </span>
         </a>
+        <button type="button" class="gc-copy" :class="{ done: copied === c.key }" :aria-label="`复制${c.name}的提示词`" @click="copy(c.key)">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <path v-if="copied === c.key" d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
+            <path v-else d="M5.5 5.5h7v8h-7zM10.5 3.5V2.5h-8v8h1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+          </svg>
+          <span class="gc-copy-text">{{ copied === c.key ? '已复制' : '复制提示词' }}</span>
+        </button>
       </li>
     </ul>
 
     <h3 class="gc-sub">待补充</h3>
     <ul class="gc-todo">
-      <li v-for="p in planned" :key="p[0]">
-        <span class="gc-todo-dot" aria-hidden="true" />{{ p[0] }} <span class="gc-en">{{ p[1] }}</span>
+      <li v-for="p in planned" :key="p.id">
+        <span class="gc-todo-dot" aria-hidden="true" />{{ p.name }}
+        <button type="button" class="gc-todo-copy" :aria-label="`复制${p.name}的提示词（草稿）`" @click="copy(p.id)">
+          {{ copied === p.id ? '已复制' : '复制提示词（草稿）' }}
+        </button>
       </li>
     </ul>
+    <p class="sr-only" aria-live="polite">{{ copied ? `已复制${nameOf(copied)}的提示词` : failed ? '复制失败，请到控件详情页展开预览手动复制' : '' }}</p>
   </div>
 </template>
 
@@ -119,7 +137,7 @@ const planned = [
 
 /* 缩略图：默认暂停，悬停或聚焦时播放 */
 .gc-thumb {
-  --a: var(--line-frontend);
+  --a: var(--mod-frontend);
   position: relative;
   display: block;
   height: 132px;
@@ -198,7 +216,7 @@ const planned = [
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: var(--line-start);
+  background: var(--mod-start);
   opacity: 0;
 }
 .s-row:first-child .s-fill {
@@ -415,6 +433,57 @@ const planned = [
   height: 9px;
   border-radius: 50%;
   border: 2px solid var(--ink-3);
+}
+
+/* 复制提示词按钮：悬停或聚焦卡片时出现，触摸设备常驻 */
+.gc-grid li {
+  position: relative;
+}
+.gc-copy {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: 9px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 12.5px;
+  font-weight: 650;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.2s var(--ease-out), transform 0.3s var(--ease-spring);
+}
+.gc-grid li:hover .gc-copy,
+.gc-grid li:focus-within .gc-copy {
+  opacity: 1;
+  transform: none;
+}
+.gc-copy.done {
+  background: var(--mod-start);
+  color: var(--on-start);
+}
+@media (hover: none) {
+  .gc-copy {
+    opacity: 1;
+    transform: none;
+  }
+}
+.gc-todo-copy {
+  margin-left: 4px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 22px;
+  color: var(--ink);
+  background: var(--paper-3);
+}
+.gc-todo-copy:hover {
+  background: var(--rule);
 }
 
 @media (prefers-reduced-motion: reduce) {

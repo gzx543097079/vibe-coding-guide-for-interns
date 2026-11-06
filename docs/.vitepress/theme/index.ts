@@ -3,13 +3,15 @@ import type { Theme } from 'vitepress'
 // 不引入默认主题自带的 Inter 字体，统一使用系统字体栈
 import DefaultTheme from 'vitepress/theme-without-fonts'
 
-import LineProgress from './components/LineProgress.vue'
+import ChapterCrumb from './components/ChapterCrumb.vue'
 import SidebarHere from './components/SidebarHere.vue'
 import HomePage from './components/HomePage.vue'
 import CodeTabs from './components/CodeTabs.vue'
 import ControlDemo from './components/ControlDemo.vue'
 import ControlGallery from './components/ControlGallery.vue'
 import PromptCard from './components/PromptCard.vue'
+import TechCard from './components/TechCard.vue'
+import ApproachCompare from './components/ApproachCompare.vue'
 
 import './styles/tokens.css'
 import './styles/base.css'
@@ -19,7 +21,7 @@ export default {
   extends: DefaultTheme,
   Layout: () =>
     h(DefaultTheme.Layout, null, {
-      'doc-before': () => h(LineProgress),
+      'doc-before': () => h(ChapterCrumb),
       'sidebar-nav-before': () => h(SidebarHere),
     }),
   enhanceApp({ app }) {
@@ -28,5 +30,7 @@ export default {
     app.component('ControlDemo', ControlDemo)
     app.component('ControlGallery', ControlGallery)
     app.component('PromptCard', PromptCard)
+    app.component('TechCard', TechCard)
+    app.component('ApproachCompare', ApproachCompare)
   },
 } satisfies Theme

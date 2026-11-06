@@ -103,7 +103,7 @@ async function copy() {
 
 <style scoped>
 .pc {
-  --pc-line: var(--line-growth);
+  --pc-line: var(--mod-growth);
   position: relative;
   margin: 22px 0 28px;
   border: 1px solid var(--rule);
@@ -118,12 +118,11 @@ async function copy() {
 }
 .pc-stop {
   flex: none;
-  width: 16px;
-  height: 16px;
-  margin-top: 5px;
-  border-radius: 50%;
-  border: 3.5px solid var(--pc-line);
-  background: var(--raised);
+  width: 12px;
+  height: 12px;
+  margin-top: 7px;
+  border-radius: 3px;
+  background: var(--pc-line);
 }
 .pc-title {
   margin: 0 !important;
@@ -197,7 +196,7 @@ async function copy() {
   box-shadow: 0 1px 2px oklch(0.2 0.02 250 / 0.12);
 }
 .pc-tab.good svg {
-  color: var(--line-start);
+  color: var(--mod-start);
 }
 .pc-tab.bad svg {
   color: var(--danger);
@@ -216,7 +215,7 @@ async function copy() {
   transform: scale(0.96);
 }
 .pc-copy.done {
-  background: var(--line-start);
+  background: var(--mod-start);
   color: var(--on-start);
 }
 
@@ -246,7 +245,7 @@ async function copy() {
 .pc-ph {
   padding: 1px 3px;
   border-radius: 4px;
-  background: color-mix(in oklab, var(--line-growth) 26%, transparent);
+  background: color-mix(in oklab, var(--mod-growth) 26%, transparent);
   color: var(--ink);
   font-weight: 600;
 }

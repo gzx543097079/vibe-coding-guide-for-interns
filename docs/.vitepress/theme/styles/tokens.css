@@ -14,16 +14,16 @@
   --station-fill: oklch(0.995 0.002 220);
   --focus: oklch(0.5 0.17 258);
 
-  /* 线路色 */
-  --line-start: oklch(0.52 0.13 150);
-  --line-git: oklch(0.53 0.17 355);
-  --line-frontend: oklch(0.5 0.15 258);
-  --line-cross: oklch(0.52 0.095 200);
-  --line-backend: oklch(0.49 0.16 302);
-  --line-quality: oklch(0.53 0.18 30);
-  --line-growth: oklch(0.63 0.135 72);
+  /* 模块主色 */
+  --mod-start: oklch(0.52 0.13 150);
+  --mod-git: oklch(0.53 0.17 355);
+  --mod-frontend: oklch(0.5 0.15 258);
+  --mod-cross: oklch(0.52 0.095 200);
+  --mod-backend: oklch(0.49 0.16 302);
+  --mod-quality: oklch(0.53 0.18 30);
+  --mod-growth: oklch(0.63 0.135 72);
 
-  /* 线路徽标上的文字色 */
+  /* 模块色块上的文字色 */
   --on-start: #fff;
   --on-git: #fff;
   --on-frontend: #fff;
@@ -41,6 +41,7 @@
   --shadow-2: 0 2px 6px oklch(0.3 0.02 250 / 0.08), 0 12px 32px oklch(0.3 0.02 250 / 0.1);
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.45, 0.64, 1);
   --radius: 10px;
 
   --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
@@ -61,13 +62,13 @@
   --station-fill: oklch(0.185 0.012 248);
   --focus: oklch(0.78 0.13 245);
 
-  --line-start: oklch(0.76 0.14 150);
-  --line-git: oklch(0.74 0.15 355);
-  --line-frontend: oklch(0.74 0.13 255);
-  --line-cross: oklch(0.77 0.1 198);
-  --line-backend: oklch(0.73 0.14 302);
-  --line-quality: oklch(0.73 0.15 35);
-  --line-growth: oklch(0.82 0.14 82);
+  --mod-start: oklch(0.76 0.14 150);
+  --mod-git: oklch(0.74 0.15 355);
+  --mod-frontend: oklch(0.74 0.13 255);
+  --mod-cross: oklch(0.77 0.1 198);
+  --mod-backend: oklch(0.73 0.14 302);
+  --mod-quality: oklch(0.73 0.15 35);
+  --mod-growth: oklch(0.82 0.14 82);
 
   --on-start: oklch(0.2 0.03 150);
   --on-git: oklch(0.2 0.03 355);
@@ -85,14 +86,14 @@
   --shadow-2: 0 2px 6px oklch(0 0 0 / 0.35), 0 16px 40px oklch(0 0 0 / 0.4);
 }
 
-/* 每条线路的上下文变量，组件只需设置 data-line */
-[data-line='start'] { --line: var(--line-start); --on-line: var(--on-start); }
-[data-line='git'] { --line: var(--line-git); --on-line: var(--on-git); }
-[data-line='frontend'] { --line: var(--line-frontend); --on-line: var(--on-frontend); }
-[data-line='cross'] { --line: var(--line-cross); --on-line: var(--on-cross); }
-[data-line='backend'] { --line: var(--line-backend); --on-line: var(--on-backend); }
-[data-line='quality'] { --line: var(--line-quality); --on-line: var(--on-quality); }
-[data-line='growth'] { --line: var(--line-growth); --on-line: var(--on-growth); }
+/* 每个模块的上下文变量，组件只需设置 data-mod */
+[data-mod='start'] { --mod: var(--mod-start); --on-mod: var(--on-start); }
+[data-mod='git'] { --mod: var(--mod-git); --on-mod: var(--on-git); }
+[data-mod='frontend'] { --mod: var(--mod-frontend); --on-mod: var(--on-frontend); }
+[data-mod='cross'] { --mod: var(--mod-cross); --on-mod: var(--on-cross); }
+[data-mod='backend'] { --mod: var(--mod-backend); --on-mod: var(--on-backend); }
+[data-mod='quality'] { --mod: var(--mod-quality); --on-mod: var(--on-quality); }
+[data-mod='growth'] { --mod: var(--mod-growth); --on-mod: var(--on-growth); }
 
 /* 映射到 VitePress 默认主题变量 */
 :root,
@@ -108,10 +109,10 @@
   --vp-c-border: var(--rule-strong);
   --vp-c-gutter: var(--rule);
 
-  --vp-c-brand-1: var(--line-start);
-  --vp-c-brand-2: color-mix(in oklab, var(--line-start) 85%, var(--ink));
-  --vp-c-brand-3: var(--line-start);
-  --vp-c-brand-soft: color-mix(in oklab, var(--line-start) 14%, transparent);
+  --vp-c-brand-1: var(--mod-start);
+  --vp-c-brand-2: color-mix(in oklab, var(--mod-start) 85%, var(--ink));
+  --vp-c-brand-3: var(--mod-start);
+  --vp-c-brand-soft: color-mix(in oklab, var(--mod-start) 14%, transparent);
 
   --vp-c-tip-1: var(--tip);
   --vp-c-tip-2: color-mix(in oklab, var(--tip) 85%, var(--ink));
@@ -135,7 +136,7 @@
   --vp-code-copy-code-bg: var(--paper-3);
   --vp-code-copy-code-hover-bg: var(--paper-3);
   --vp-code-copy-code-hover-border-color: var(--rule-strong);
-  --vp-code-line-highlight-color: color-mix(in oklab, var(--line-frontend) 10%, transparent);
+  --vp-code-line-highlight-color: color-mix(in oklab, var(--mod-frontend) 10%, transparent);
   --vp-code-bg: var(--paper-3);
   --vp-code-color: var(--ink);
 
@@ -144,7 +145,7 @@
   --vp-local-search-bg: var(--paper);
   --vp-local-search-result-bg: var(--raised);
   --vp-local-search-result-border: var(--rule);
-  --vp-local-search-highlight-bg: var(--line-start);
+  --vp-local-search-highlight-bg: var(--mod-start);
   --vp-local-search-highlight-text: var(--on-start);
 
   --vp-button-brand-bg: var(--ink);

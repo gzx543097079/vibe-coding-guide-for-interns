@@ -1,37 +1,34 @@
-/* 侧边栏分组与条目 */
+/* 侧边栏：每个模块一个分组，标题前为模块色块标签，当前章节高亮 */
 
-#VPSidebarNav { --track-x: 4.5px; }
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='start']) { --mod: var(--mod-start); }
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='git']) { --mod: var(--mod-git); }
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='frontend']) { --mod: var(--mod-frontend); }
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='cross']) { --mod: var(--mod-cross); }
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='backend']) { --mod: var(--mod-backend); }
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='quality']) { --mod: var(--mod-quality); }
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='growth']) { --mod: var(--mod-growth); }
 
-#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-line[data-line='start']) { --line: var(--line-start); }
-#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-line[data-line='git']) { --line: var(--line-git); }
-#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-line[data-line='frontend']) { --line: var(--line-frontend); }
-#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-line[data-line='cross']) { --line: var(--line-cross); }
-#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-line[data-line='backend']) { --line: var(--line-backend); }
-#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-line[data-line='quality']) { --line: var(--line-quality); }
-#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-line[data-line='growth']) { --line: var(--line-growth); }
-
-/* 线路标题 */
+/* 模块标题 */
 #VPSidebarNav .VPSidebarItem.level-0 > .item > .text {
   display: flex;
   align-items: center;
   gap: 10px;
   font-size: 14.5px;
   font-weight: 700;
-  letter-spacing: 0.01em;
 }
-#VPSidebarNav .sb-line {
+#VPSidebarNav .sb-mod {
   display: inline-grid;
   place-items: center;
   flex: none;
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border-radius: 7px;
-  background: var(--line);
-  color: var(--on-line);
+  background: var(--mod);
+  color: var(--on-mod);
   font-size: 12.5px;
   font-weight: 750;
   font-variant-numeric: tabular-nums;
-  line-height: 1;
+  box-shadow: inset 0 -2px 0 color-mix(in oklab, var(--mod) 70%, var(--ink));
 }
 #VPSidebarNav .sb-count {
   margin-left: auto;
@@ -40,74 +37,72 @@
   color: var(--ink-3);
   font-variant-numeric: tabular-nums;
 }
-#VPSidebarNav .VPSidebarItem.level-0 > .item .caret { color: var(--ink-3); }
-#VPSidebarNav .VPSidebarItem.level-0 { padding-bottom: 14px; }
-#VPSidebarNav .VPSidebarItem.collapsed.level-0 { padding-bottom: 6px; }
+#VPSidebarNav .VPSidebarItem.level-0 > .item .caret {
+  color: var(--ink-3);
+}
+#VPSidebarNav .VPSidebarItem.level-0 {
+  padding-bottom: 14px;
+}
+#VPSidebarNav .VPSidebarItem.collapsed.level-0 {
+  padding-bottom: 6px;
+}
+#VPSidebarNav .VPSidebarItem .indicator {
+  display: none;
+}
 
-/* 站点列表与轨道 */
+/* 章节条目 */
 #VPSidebarNav .VPSidebarItem.level-0 > .items {
-  position: relative;
-  margin-top: 2px;
+  margin-top: 4px;
+  padding-left: 34px;
 }
-#VPSidebarNav .VPSidebarItem.level-0 > .items::before {
-  content: '';
-  position: absolute;
-  left: calc(var(--track-x) + 1px);
-  top: 14px;
-  bottom: 14px;
-  width: 3px;
-  border-radius: 3px;
-  background: color-mix(in oklab, var(--line) 55%, var(--paper-2));
-}
-
 #VPSidebarNav .VPSidebarItem.level-1 .items,
 #VPSidebarNav .VPSidebarItem.level-2 .items {
   border-left: 0;
   padding-left: 0;
 }
-#VPSidebarNav .VPSidebarItem .indicator { display: none; }
-
-#VPSidebarNav .VPSidebarItem.is-link > .item > .link > .text,
-#VPSidebarNav .VPSidebarItem.level-1 > .item > .text {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+#VPSidebarNav .VPSidebarItem.is-link > .item > .link {
+  margin-left: -10px;
+  padding: 0 10px;
+  border-radius: 8px;
+}
+#VPSidebarNav .VPSidebarItem.is-link > .item > .link > .text {
+  padding: 5px 0;
   font-size: 14px;
+  line-height: 22px;
   color: var(--ink-2);
   font-weight: 500;
 }
-#VPSidebarNav .sb-stop {
-  position: relative;
-  z-index: 1;
-  flex: none;
-  width: 13px;
-  height: 13px;
-  border-radius: 50%;
-  border: 3px solid var(--line);
-  background: var(--paper-2);
-  transition: transform 0.25s var(--ease-out);
+#VPSidebarNav .VPSidebarItem.is-link > .item > .link:hover {
+  background: var(--paper-3);
 }
-#VPSidebarNav .VPSidebarItem.is-link > .item > .link:hover .sb-stop { transform: scale(1.18); }
-#VPSidebarNav .VPSidebarItem.is-link > .item > .link:hover .text { color: var(--ink); }
+#VPSidebarNav .VPSidebarItem.is-link > .item > .link:hover > .text {
+  color: var(--ink);
+}
 
-/* 当前页面对应的条目 */
+/* 当前章节 */
+#VPSidebarNav .VPSidebarItem.is-active > .item > .link {
+  background: color-mix(in oklab, var(--mod) 16%, var(--paper-2));
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--mod) 35%, transparent);
+}
 #VPSidebarNav .VPSidebarItem.is-active > .item > .link > .text {
   color: var(--ink);
   font-weight: 650;
 }
-#VPSidebarNav .VPSidebarItem.is-active > .item > .link .sb-stop {
-  background: var(--line);
-  box-shadow: 0 0 0 3px var(--paper-2), 0 0 0 5px color-mix(in oklab, var(--line) 45%, transparent);
-}
 
 /* 子分组标题（如「性能优化」） */
-#VPSidebarNav .VPSidebarItem.level-1:not(.is-link) > .item > .text { padding-left: 26px; }
 #VPSidebarNav .sb-sub {
   font-size: 12px;
   font-weight: 650;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   color: var(--ink-3);
 }
-#VPSidebarNav .VPSidebarItem.level-1:not(.is-link) > .item .caret { color: var(--ink-3); }
+#VPSidebarNav .VPSidebarItem.level-1:not(.is-link) > .item .caret {
+  color: var(--ink-3);
+}
+#VPSidebarNav .VPSidebarItem.level-1:not(.is-link) > .items {
+  padding-left: 12px;
+}
 
-#VPSidebarNav .group + .group { border-top-color: var(--rule); }
+#VPSidebarNav .group + .group {
+  border-top-color: var(--rule);
+}

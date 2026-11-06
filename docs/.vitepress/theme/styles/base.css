@@ -13,7 +13,7 @@ body {
 }
 
 ::selection {
-  background: color-mix(in oklab, var(--line-frontend) 26%, transparent);
+  background: color-mix(in oklab, var(--mod-frontend) 26%, transparent);
   color: var(--ink);
 }
 
@@ -34,7 +34,7 @@ html {
   border-radius: 4px;
 }
 
-input, textarea { caret-color: var(--line-start); }
+input, textarea { caret-color: var(--mod-start); }
 
 /* 顶栏 */
 .VPNavBar .title { font-weight: 650; letter-spacing: -0.01em; }
@@ -206,7 +206,7 @@ input, textarea { caret-color: var(--line-start); }
 .VPDocAsideOutline .outline-marker { background-color: var(--ink); width: 2px; }
 .VPDocAsideOutline .content { border-left-color: var(--rule); }
 
-/* 文末上一站 / 下一站 */
+/* 文末上一章 / 下一章 */
 .VPDocFooter .pager-link {
   border-radius: var(--radius);
   border-color: var(--rule);
@@ -216,7 +216,7 @@ input, textarea { caret-color: var(--line-start); }
 
 /* 搜索框 */
 .VPLocalSearchBox .shell { border-radius: 14px; box-shadow: var(--shadow-2); }
-.VPLocalSearchBox .result.selected { border-color: var(--line-start) !important; }
+.VPLocalSearchBox .result.selected { border-color: var(--mod-start) !important; }
 
 /* 屏幕阅读器专用 */
 .sr-only {
@@ -245,3 +245,24 @@ input, textarea { caret-color: var(--line-start); }
 /* 浅色代码块：加深注释与函数名颜色，保证在浅灰底上达到 4.5:1 */
 html:not(.dark) .vp-code [style*='--shiki-light:#6E7781'] { color: #555f6b !important; }
 html:not(.dark) .vp-code [style*='--shiki-light:#8250DF'] { color: #6a3fc4 !important; }
+
+/* 进入视口时的错落淡入：由 useReveal 添加 .reveal-on 与 data-in */
+.reveal-on [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.reveal-on [data-reveal][data-in] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.4s var(--ease-out) calc(var(--i, 0) * 55ms),
+    transform 0.5s var(--ease-spring) calc(var(--i, 0) * 55ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on [data-reveal] {
+    transform: none;
+  }
+  .reveal-on [data-reveal][data-in] {
+    transition: opacity 0.3s linear !important;
+  }
+}

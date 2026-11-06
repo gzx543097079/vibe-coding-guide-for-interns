@@ -5,11 +5,15 @@ description: ArkTS / ArkUI 与 DevEco Studio 的基本工作流。
 
 # 鸿蒙 HarmonyOS
 
-::: warning 🚧 本章内容建设中
-本章目前只有大纲，正文正在编写。下面是计划覆盖的要点，欢迎在 GitHub 上参与补充。
+::: info 本章还没写
+下面是计划覆盖的内容。想参与编写，点页面底部的「在 GitHub 上编辑此页」。
 :::
 
-## 本章计划覆盖
+## 这是什么
+
+<TechCard ids="harmonyos,arkts,deveco" />
+
+## 计划覆盖
 
 - ArkTS 语言基础与 TypeScript 的异同
 - ArkUI 声明式开发：组件、状态装饰器与布局
@@ -23,7 +27,7 @@ description: ArkTS / ArkUI 与 DevEco Studio 的基本工作流。
 
 ## 常用控件：演示与实现
 
-上方是可以直接操作的演示，下方是同一控件的几种实现写法。切换任意一处标签，同页其他控件会一起切换，并在下次访问时记住你的选择。
+上方是可以直接操作的演示，下方是同一控件的几种写法。切换任意一处标签，本页其他控件会一起切换，下次打开也会记住。每个演示都能「复制提示词」，复制后补全占位符就能交给 AI。
 
 ### 按钮 Button {#button}
 
@@ -87,15 +91,15 @@ description: ArkTS / ArkUI 与 DevEco Studio 的基本工作流。
 
 ## 用 AI 做这个方向时的提示词
 
-::: tip 本节持续补充
-本方向的专用模板正在整理，先提供可直接套用的通用模板。更多场景见[场景提示词模板](/growth/prompt-templates)。
+::: tip 这一节还在补充
+这个方向的专用模板还在整理，先放通用模板。更多场景见[场景提示词模板](/growth/prompt-templates)。
 :::
 
 <PromptCard id="mobile-screen" />
 
 ## 三问
 
-回答得出这三个问题，再把这个方向的任务交给 AI。以下为计划展开的要点。
+答得上这三个问题，再把这个方向的任务交给 AI。下面是计划展开的要点。
 
 ### 必须先懂什么
 
