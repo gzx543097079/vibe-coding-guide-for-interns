@@ -168,32 +168,52 @@
   }
 }
 
-/* 桌面端整体折叠：把侧栏宽度归零，正文占满；侧栏滑出后隐藏 */
+/* 桌面端整体折叠：侧栏宽度做成可过渡的自定义属性，
+   侧栏滑动、正文铺开、顶栏标题收拢用同一条曲线同步完成 */
+@property --vp-sidebar-width {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 272px;
+}
+:root {
+  --sb-ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --sb-dur: 360ms;
+}
 @media (min-width: 960px) {
+  html.sb-anim {
+    transition: --vp-sidebar-width var(--sb-dur) var(--sb-ease);
+  }
   html.sidebar-collapsed {
     --vp-sidebar-width: 0px;
   }
-  html.sidebar-collapsed .VPSidebar {
-    visibility: hidden;
-    transform: translateX(-100%);
-    border-right-color: transparent;
-  }
-  html.sidebar-collapsed .VPNavBar.has-sidebar .title {
-    width: auto;
+  .VPNavBar.has-sidebar .title {
+    min-width: max-content;
+    padding-left: 44px;
     padding-right: 16px;
   }
-  html.sidebar-collapsed .VPContent.has-sidebar,
-  html.sidebar-collapsed .VPNavBar.has-sidebar .content,
-  html.sidebar-collapsed .VPNavBar.has-sidebar .divider {
-    padding-left: 0;
+  html.sb-anim .VPSidebar {
+    transition:
+      transform var(--sb-dur) var(--sb-ease),
+      opacity calc(var(--sb-dur) * 0.6) var(--sb-ease),
+      visibility 0s linear 0s;
   }
-  .VPSidebar {
-    transition: transform var(--dur-2, 240ms) var(--ease), visibility 0s linear var(--dur-2, 240ms);
+  html.sidebar-collapsed .VPSidebar {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateX(-24px);
+    border-right-color: transparent;
   }
-  html:not(.sidebar-collapsed) .VPSidebar {
-    transition: transform var(--dur-2, 240ms) var(--ease);
+  html.sb-anim.sidebar-collapsed .VPSidebar {
+    transition:
+      transform var(--sb-dur) var(--sb-ease),
+      opacity calc(var(--sb-dur) * 0.6) var(--sb-ease),
+      visibility 0s linear var(--sb-dur);
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .VPSidebar { transition: none !important; }
+  html,
+  .VPSidebar,
+  html.sidebar-collapsed .VPSidebar {
+    transition: none !important;
+  }
 }

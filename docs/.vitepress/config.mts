@@ -60,6 +60,8 @@ export default defineConfig({
     ['link', { rel: 'icon', type: 'image/svg+xml', href: `${BASE}favicon.svg` }],
     ['meta', { name: 'theme-color', content: '#f4f6f7', media: '(prefers-color-scheme: light)' }],
     ['meta', { name: 'theme-color', content: '#14181d', media: '(prefers-color-scheme: dark)' }],
+    // 首屏绘制前恢复侧边栏折叠状态，避免刷新时闪动
+    ['script', {}, "try{if(localStorage.getItem('vcg:sidebar-collapsed')==='1')document.documentElement.classList.add('sidebar-collapsed')}catch(e){}"],
   ],
   markdown: {
     theme: { light: 'github-dark-default', dark: 'github-dark-default' },

@@ -16,6 +16,8 @@ onMounted(() => {
   try { saved = localStorage.getItem(KEY) === '1' } catch { /* 忽略 */ }
   collapsed.value = saved
   document.documentElement.classList.toggle('sidebar-collapsed', saved)
+  // 首次渲染完成后才开启过渡，避免进入页面时播放折叠动画
+  setTimeout(() => document.documentElement.classList.add('sb-anim'), 80)
 })
 </script>
 
@@ -44,14 +46,16 @@ onMounted(() => {
   justify-content: center;
   width: 36px;
   height: 36px;
-  margin-right: 8px;
+  flex: none;
+  margin-right: 12px;
   border-radius: var(--radius);
   border: 1px solid var(--rule);
   background: var(--paper-2);
   color: var(--ink-3);
-  transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease);
+  transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease), background-color var(--dur-1) var(--ease);
 }
 .sb-toggle:hover {
+  background: var(--paper-3, var(--paper-2));
   color: var(--ink);
   border-color: var(--rule-strong);
 }
@@ -59,9 +63,15 @@ onMounted(() => {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
+/* 固定在顶栏左上角，不放进标题链接里（否则点击会跳回首页） */
 @media (min-width: 960px) {
-  .VPNavBar.has-sidebar .sb-toggle {
+  .sb-toggle {
     display: inline-flex;
+    position: fixed;
+    z-index: calc(var(--vp-z-index-nav, 30) + 1);
+    top: calc((var(--vp-nav-height) - 36px) / 2);
+    left: 20px;
+    margin: 0;
   }
 }
 </style>

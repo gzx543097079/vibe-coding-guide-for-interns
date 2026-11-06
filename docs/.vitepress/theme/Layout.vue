@@ -47,9 +47,9 @@ watch(
   <DefaultTheme.Layout>
     <template #layout-top>
       <ReadingProgress v-if="isDoc" />
+      <SidebarToggle />
     </template>
     <template #nav-bar-content-before>
-      <SidebarToggle />
       <SearchTrigger variant="nav" />
     </template>
     <template #sidebar-nav-before>
