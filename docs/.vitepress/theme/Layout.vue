@@ -8,7 +8,6 @@ import BackToTop from './components/BackToTop.vue'
 import CommandPalette from './components/CommandPalette.vue'
 import SearchTrigger from './components/SearchTrigger.vue'
 import SidebarToggle from './components/SidebarToggle.vue'
-import ChapterMore from './components/ChapterMore.vue'
 import NotFound from './components/NotFound.vue'
 
 const { isDark, frontmatter } = useData()
@@ -57,9 +56,6 @@ watch(
     </template>
     <template #doc-before>
       <DocHeader />
-    </template>
-    <template #doc-footer-before>
-      <ChapterMore />
     </template>
     <template #not-found>
       <NotFound />
