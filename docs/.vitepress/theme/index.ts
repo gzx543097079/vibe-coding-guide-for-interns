@@ -10,10 +10,12 @@ import ControlGallery from './components/ControlGallery.vue'
 import PromptCard from './components/PromptCard.vue'
 import TechCard from './components/TechCard.vue'
 import ApproachCompare from './components/ApproachCompare.vue'
+import { registerRich } from './components/rich'
 
 import './styles/tokens.css'
 import './styles/base.css'
 import './styles/sidebar.css'
+import './styles/rich.css'
 
 export default {
   extends: DefaultTheme,
@@ -26,5 +28,6 @@ export default {
     app.component('PromptCard', PromptCard)
     app.component('TechCard', TechCard)
     app.component('ApproachCompare', ApproachCompare)
+    registerRich(app)
   },
 } satisfies Theme
