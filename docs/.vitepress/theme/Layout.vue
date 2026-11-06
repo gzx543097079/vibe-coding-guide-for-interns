@@ -7,6 +7,7 @@ import ReadingProgress from './components/ReadingProgress.vue'
 import BackToTop from './components/BackToTop.vue'
 import CommandPalette from './components/CommandPalette.vue'
 import SearchTrigger from './components/SearchTrigger.vue'
+import SidebarToggle from './components/SidebarToggle.vue'
 import ChapterMore from './components/ChapterMore.vue'
 import NotFound from './components/NotFound.vue'
 
@@ -48,6 +49,7 @@ watch(
       <ReadingProgress v-if="isDoc" />
     </template>
     <template #nav-bar-content-before>
+      <SidebarToggle />
       <SearchTrigger variant="nav" />
     </template>
     <template #sidebar-nav-before>
