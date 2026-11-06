@@ -10,7 +10,8 @@ import SearchTrigger from './components/SearchTrigger.vue'
 
 const { isDark, frontmatter } = useData()
 const route = useRoute()
-const isDoc = computed(() => frontmatter.value.layout !== 'home')
+// 只有正文章节（doc 布局）显示阅读进度条；首页用 page 布局以显示侧边栏
+const isDoc = computed(() => !frontmatter.value.layout || frontmatter.value.layout === 'doc')
 const reduce = () => typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
 // 深浅色切换：支持 View Transition 时交叉淡化

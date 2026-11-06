@@ -175,6 +175,12 @@ const previewTags = (m: Module) => m.chapters.slice(0, 3).map((c) => c.short)
 .mg {
   scroll-margin-top: calc(var(--vp-nav-height) + 16px);
 }
+/* 窄屏顶栏下还有一条「目录」栏 */
+@media (max-width: 959px) {
+  .mg {
+    scroll-margin-top: calc(var(--vp-nav-height) + 64px);
+  }
+}
 
 /* 模块卡片：4 列，首张占两列 */
 .mg-grid {
@@ -476,12 +482,12 @@ const previewTags = (m: Module) => m.chapters.slice(0, 3).map((c) => c.short)
   color: var(--ink-3);
 }
 
-@media (max-width: 1099px) {
+@container home (max-width: 899px) {
   .mg-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
-@media (max-width: 639px) {
+@container home (max-width: 539px) {
   .mg-grid {
     grid-template-columns: 1fr;
     gap: 12px;

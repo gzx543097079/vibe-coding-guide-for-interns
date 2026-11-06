@@ -175,13 +175,13 @@ const toggle = (i: number) => (open.value[i] = !open.value[i])
   transform: rotate(-180deg);
 }
 
-@media (max-width: 899px) {
+@container home (max-width: 759px) {
   .ak-list {
     grid-template-columns: 1fr;
     gap: 16px;
   }
   .ak-inner {
-    min-height: 190px;
+    min-height: 160px;
   }
 }
 
