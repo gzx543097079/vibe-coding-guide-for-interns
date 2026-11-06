@@ -8,13 +8,6 @@ description: 消息队列、缓存、对象存储与搜索服务。
 
 <TechCard ids="redis,elasticsearch" />
 
-## 计划覆盖
-
-- 消息队列：解耦与削峰
-- 缓存：常见策略与一致性问题
-- 对象存储：文件与图片的存放
-- 搜索服务：Elasticsearch 的基本概念
-
 ## 用 AI 做这个方向时的提示词
 
 ::: tip 这一节还在补充

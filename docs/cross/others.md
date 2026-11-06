@@ -8,13 +8,6 @@ description: Kotlin Multiplatform、Electron / Tauri、Capacitor 简述。
 
 <TechCard ids="kmp,electron,tauri,capacitor" />
 
-## 计划覆盖
-
-- Kotlin Multiplatform：共享业务逻辑
-- Electron 与 Tauri：桌面应用
-- Capacitor：把 Web 应用打包成移动应用
-- 何时考虑这些方案
-
 ## 用 AI 做这个方向时的提示词
 
 ::: tip 这一节还在补充

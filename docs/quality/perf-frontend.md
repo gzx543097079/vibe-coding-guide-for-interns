@@ -4,13 +4,6 @@ title: 前端性能
 description: 加载、渲染、Lighthouse 与 DevTools Performance。
 ---
 
-## 计划覆盖
-
-- 加载：包体积分析、代码分割、懒加载、图片格式与尺寸
-- 渲染：重排与重绘、长列表虚拟化
-- Lighthouse 与 Web Vitals 指标
-- DevTools Performance 面板的基本读法
-
 ## 三问
 
 答得上这三个问题，再把这个方向的任务交给 AI。下面是计划展开的要点。

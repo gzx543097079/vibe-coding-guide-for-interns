@@ -8,15 +8,6 @@ description: JS / TS、Dart、Kotlin、Swift、ArkTS 的定位与上手路径。
 
 <TechCard ids="typescript,dart,kotlin,swift,arkts" />
 
-## 计划覆盖
-
-- JavaScript / TypeScript：Web、React Native、小程序与 uni-app / Taro
-- Dart：Flutter
-- Kotlin：Android 与 Kotlin Multiplatform
-- Swift：iOS 与 macOS
-- ArkTS：鸿蒙
-- 每种语言的上手路径与学习资源方向
-
 ## 三问
 
 答得上这三个问题，再把这个方向的任务交给 AI。下面是计划展开的要点。

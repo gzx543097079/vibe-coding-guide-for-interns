@@ -8,14 +8,6 @@ description: init、add、commit、branch、merge、rebase 与冲突处理。
 
 <TechCard ids="git" />
 
-## 计划覆盖
-
-- 工作区、暂存区、本地仓库与远程仓库
-- init / clone / add / commit / log / diff
-- 分支：branch / switch / merge
-- rebase 的作用与使用边界
-- 冲突是怎么产生的，如何读懂冲突标记并解决
-
 ## 三问
 
 答得上这三个问题，再把这个方向的任务交给 AI。下面是计划展开的要点。

@@ -4,14 +4,6 @@ title: 移动端性能
 description: iOS、Android、鸿蒙、小程序与跨端框架的性能排查。
 ---
 
-## 计划覆盖
-
-- iOS：Instruments 常用模板
-- Android：Android Studio Profiler
-- 鸿蒙：DevEco Studio 中的性能分析工具
-- 小程序：包体积、首屏时间与 setData
-- Flutter / React Native 常见卡顿原因
-
 ## 三问
 
 答得上这三个问题，再把这个方向的任务交给 AI。下面是计划展开的要点。

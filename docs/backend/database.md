@@ -8,14 +8,6 @@ description: 关系型与非关系型数据库、ORM、表设计、索引与迁�
 
 <TechCard ids="mysql,postgresql,redis,mongodb,sqlite" />
 
-## 计划覆盖
-
-- 关系型数据库：MySQL、PostgreSQL、SQLite
-- Redis 与 MongoDB 的适用场景
-- ORM 的作用与局限
-- 表设计、索引与约束
-- 数据库迁移：如何安全地修改表结构
-
 ## 用 AI 做这个方向时的提示词
 
 ::: tip 这一节还在补充

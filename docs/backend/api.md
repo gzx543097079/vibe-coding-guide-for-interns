@@ -8,14 +8,6 @@ description: HTTP / REST、OpenAPI 接口文档、JWT / OAuth 鉴权。
 
 <TechCard ids="openapi" />
 
-## 计划覆盖
-
-- HTTP 方法、状态码与 REST 风格
-- 请求与响应格式、统一错误码
-- 接口文档：OpenAPI / Swagger
-- 鉴权：Session、JWT、OAuth 的区别
-- 版本管理与向后兼容
-
 ## 用 AI 做这个方向时的提示词
 
 ::: tip 这一节还在补充

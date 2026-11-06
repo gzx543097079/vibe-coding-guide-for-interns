@@ -8,14 +8,6 @@ description: HTML / CSS / JS、React / Vue、构建工具与 DevTools。
 
 <TechCard ids="web-basics,typescript,react,vue,vite" />
 
-## 计划覆盖
-
-- HTML 语义、CSS 布局（Flex / Grid）与 JavaScript 基础
-- React 与 Vue 的核心概念：组件、状态、数据流
-- 构建工具：Vite、webpack 的作用
-- 浏览器 DevTools：元素、网络、控制台、性能面板
-- 响应式与无障碍的基本要求
-
 ## 常用控件：演示与实现
 
 上方是可以直接操作的演示，下方是同一控件的几种写法。切换任意一处标签，本页其他控件会一起切换，下次打开也会记住。每个演示都能「复制提示词」，复制后补全占位符就能交给 AI。

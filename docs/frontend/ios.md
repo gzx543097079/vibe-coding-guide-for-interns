@@ -8,14 +8,6 @@ description: Swift / SwiftUI 与 Xcode 的基本工作流。
 
 <TechCard ids="swift,swiftui,uikit,xcode" />
 
-## 计划覆盖
-
-- Swift 语言基础与 Objective-C 的关系
-- UIKit 与 SwiftUI 的定位与选择
-- Xcode：工程结构、模拟器、调试器与 Instruments
-- 应用生命周期与常见目录结构
-- 证书、签名与真机调试的基本概念
-
 ## 常用控件：演示与实现
 
 上方是可以直接操作的演示，下方是同一控件的几种写法。切换任意一处标签，本页其他控件会一起切换，下次打开也会记住。每个演示都能「复制提示词」，复制后补全占位符就能交给 AI。

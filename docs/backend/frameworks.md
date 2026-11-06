@@ -8,14 +8,6 @@ description: Spring Boot、Express / NestJS、FastAPI / Django、Go 等。
 
 <TechCard ids="spring-boot,java,nodejs,express,nestjs,python,fastapi,django,go" />
 
-## 计划覆盖
-
-- Java / Spring Boot
-- Node.js：Express、NestJS
-- Python：FastAPI、Django
-- Go 与其他语言概览
-- 选型时看什么：团队、生态、性能与运维
-
 ## 用 AI 做这个方向时的提示词
 
 ::: tip 这一节还在补充

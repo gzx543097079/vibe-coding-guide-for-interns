@@ -8,18 +8,6 @@ description: ArkTS / ArkUI 与 DevEco Studio 的基本工作流。
 
 <TechCard ids="harmonyos,arkts,deveco" />
 
-## 计划覆盖
-
-- ArkTS 语言基础与 TypeScript 的异同
-- ArkUI 声明式开发：组件、状态装饰器与布局
-- DevEco Studio：工程结构、预览器、模拟器与调试
-- Stage 模型与应用生命周期
-- 多设备适配的基本思路
-
-::: info 待校对
-鸿蒙示例按 API 10 及以上编写，部分组件参数随版本变化，标注「待校对」的示例尚未在 DevEco Studio 中验证。
-:::
-
 ## 常用控件：演示与实现
 
 上方是可以直接操作的演示，下方是同一控件的几种写法。切换任意一处标签，本页其他控件会一起切换，下次打开也会记住。每个演示都能「复制提示词」，复制后补全占位符就能交给 AI。

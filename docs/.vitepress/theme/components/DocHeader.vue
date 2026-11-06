@@ -40,7 +40,7 @@ const updated = computed(() => {
     </p>
     <div v-if="draft" class="dh-draft" role="note">
       <span class="dh-draft-badge">编写中</span>
-      <p class="dh-draft-text">正文还没写完，下面先列出本章计划覆盖的要点和三问。</p>
+      <p class="dh-draft-text">正文还没写完，下面先列出本章的三问。</p>
       <a v-if="editUrl" class="dh-draft-link" :href="editUrl" target="_blank" rel="noopener">
         参与编写
         <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>

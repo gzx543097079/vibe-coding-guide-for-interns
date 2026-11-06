@@ -8,13 +8,6 @@ description: Docker、CI/CD、环境区分与部署。
 
 <TechCard ids="docker,github-actions" />
 
-## 计划覆盖
-
-- Docker：镜像与容器的基本概念
-- CI/CD：自动构建、测试与部署
-- 环境区分：开发、测试、预发、生产
-- 部署与回滚的基本流程
-
 ## 三问
 
 答得上这三个问题，再把这个方向的任务交给 AI。下面是计划展开的要点。

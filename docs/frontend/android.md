@@ -8,18 +8,6 @@ description: Kotlin / Compose 与 Android Studio 的基本工作流。
 
 <TechCard ids="kotlin,compose,android-studio,java" />
 
-## 计划覆盖
-
-- Kotlin 语言基础与 Java 的关系
-- View 体系与 Jetpack Compose 的定位与选择
-- Android Studio：Gradle、模拟器、Logcat 与 Profiler
-- Activity / Fragment 生命周期
-- 权限、签名与多机型适配
-
-::: info 待校对
-Compose 的滑动删除写法在不同 Material3 版本间变化较大，相关示例待校对。
-:::
-
 ## 常用控件：演示与实现
 
 上方是可以直接操作的演示，下方是同一控件的几种写法。切换任意一处标签，本页其他控件会一起切换，下次打开也会记住。每个演示都能「复制提示词」，复制后补全占位符就能交给 AI。

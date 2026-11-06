@@ -8,18 +8,6 @@ description: 用 React + TypeScript 调用原生组件。
 
 <TechCard ids="react-native" />
 
-## 计划覆盖
-
-- React Native 的架构与原生组件映射
-- 用 React + TypeScript 写移动端界面
-- StyleSheet 与 Flexbox 布局
-- 导航方案与常用社区库
-- 原生模块与平台差异处理
-
-::: info 待校对
-React Native 核心库没有内置滑动删除组件，示例中只说明了常用的第三方方案。
-:::
-
 ## 常用控件：演示与实现
 
 上方是可以直接操作的演示，下方是同一控件的几种写法。切换任意一处标签，本页其他控件会一起切换，下次打开也会记住。每个演示都能「复制提示词」，复制后补全占位符就能交给 AI。

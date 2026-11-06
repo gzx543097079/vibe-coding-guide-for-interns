@@ -8,14 +8,6 @@ description: 分支策略、PR 描述、Code Review 与 Issue。
 
 <TechCard ids="github" />
 
-## 计划覆盖
-
-- 分支策略：功能分支、main 保护与命名约定
-- 如何写一份好的 PR 描述：背景、改动、验证方式
-- Code Review：如何请求审查、如何回应评论
-- Issue 的写法与关联 PR
-- Fork 与上游同步（参与开源项目时）
-
 ## 三问
 
 答得上这三个问题，再把这个方向的任务交给 AI。下面是计划展开的要点。
