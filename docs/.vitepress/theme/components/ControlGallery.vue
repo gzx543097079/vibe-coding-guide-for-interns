@@ -1,24 +1,34 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { withBase } from 'vitepress'
-import { buildControlPrompt, controls, defaultOptions } from '../data/controlPrompts'
+import { modules } from '../data/modules'
+import { buildControlPrompt, controls, defaultOptions, getControl } from '../data/controlPrompts'
 import { copyText } from '../composables/clipboard'
+import { demos } from './demos/registry'
 
-const ready = [
-  { key: 'button', name: '按钮', en: 'Button', desc: '按下反馈、加载与禁用状态' },
-  { key: 'switch', name: '开关', en: 'Switch', desc: '即时生效的二元设置' },
-  { key: 'modal', name: '弹窗', en: 'Modal / Sheet', desc: '底部弹窗与确认对话框' },
-  { key: 'list', name: '列表', en: 'List', desc: '下拉刷新与滑动删除' },
-  { key: 'tabbar', name: '标签栏', en: 'TabBar', desc: '应用一级导航切换' },
-]
-
+// 按 modules.ts 里「UI 控件与提示词」模块的子分组排列
+const mod = modules.find((m) => m.id === 'controls')
+const groups = computed(() => {
+  const out: { name: string; level: string; rows: { id: string; title: string; summary: string; link: string }[] }[] = []
+  for (const c of mod?.chapters ?? []) {
+    if (!c.group) continue
+    const id = c.link.split('/').pop()!
+    let g = out.find((x) => x.name === c.group)
+    if (!g) out.push((g = { name: c.group, level: c.level, rows: [] }))
+    g.rows.push({ id, title: c.title, summary: c.summary, link: c.link })
+  }
+  return out
+})
 const planned = controls.filter((c) => c.draft)
+const badge = (id: string) => getControl(id)?.verify.status ?? '未验证'
+const badgeClass = (id: string) => ({ 已验证: 'ok', 部分一致: 'part', 未验证: 'none' })[badge(id)]
+const frameText = (id: string) => (demos[id]?.frame === 'browser' ? '网页画布' : '手机画布')
 
 const copied = ref<string | null>(null)
 const failed = ref<string | null>(null)
 let timer = 0
 async function copy(id: string) {
-  const ok = await copyText(buildControlPrompt(id, undefined, defaultOptions))
+  const ok = await copyText(buildControlPrompt(id, 'HTML + CSS + JS', defaultOptions))
   copied.value = ok ? id : null
   failed.value = ok ? null : id
   window.clearTimeout(timer)
@@ -27,387 +37,150 @@ async function copy(id: string) {
     failed.value = null
   }, 2000)
 }
-const nameOf = (id: string) => controls.find((c) => c.id === id)?.name ?? id
+const nameOf = (id: string) => getControl(id)?.name ?? id
 </script>
 
 <template>
   <div class="gc">
-    <ul class="gc-grid" aria-label="已完成演示的控件">
-      <li v-for="c in ready" :key="c.key">
-        <a class="gc-card" :href="withBase(`/frontend/ui#${c.key}`)">
-          <span class="gc-thumb" :class="`t-${c.key}`" aria-hidden="true">
-            <template v-if="c.key === 'button'">
-              <i class="b-field" /><i class="b-field short" />
-              <i class="b-btn anim" />
-            </template>
-            <template v-else-if="c.key === 'switch'">
-              <i v-for="n in 3" :key="n" class="s-row"><i class="s-label" /><i class="s-track" :class="{ anim: n === 2 }"><i class="s-fill" /><i class="s-thumb" /></i></i>
-            </template>
-            <template v-else-if="c.key === 'modal'">
-              <i class="m-doc" />
-              <i class="m-shade anim" />
-              <i class="m-sheet anim"><i class="m-grab" /><i class="m-opt" /><i class="m-opt" /></i>
-            </template>
-            <template v-else-if="c.key === 'list'">
-              <i class="l-spin anim" />
-              <i class="l-rows anim"><i v-for="n in 4" :key="n" class="l-row"><i class="l-av" /><i class="l-line" /></i></i>
-            </template>
-            <template v-else>
-              <i class="tb-page" />
-              <i class="tb-bar"><i class="tb-pill anim" /><i v-for="n in 4" :key="n" class="tb-dot" /></i>
-            </template>
-          </span>
-          <span class="gc-meta">
-            <span class="gc-name">{{ c.name }} <span class="gc-en">{{ c.en }}</span></span>
-            <span class="gc-desc">{{ c.desc }}</span>
-          </span>
-        </a>
-        <button type="button" class="gc-copy" :class="{ done: copied === c.key }" :aria-label="`复制${c.name}的提示词`" @click="copy(c.key)">
-          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-            <path v-if="copied === c.key" d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
-            <path v-else d="M5.5 5.5h7v8h-7zM10.5 3.5V2.5h-8v8h1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-          </svg>
-          <span class="gc-copy-text">{{ copied === c.key ? '已复制' : '复制提示词' }}</span>
-        </button>
-      </li>
-    </ul>
+    <section v-for="g in groups" :key="g.name" class="gc-group">
+      <h3 class="gc-title">
+        {{ g.name }}<span v-if="g.level !== '基础'" class="gc-lv">{{ g.level }}</span>
+      </h3>
+      <ul class="gc-rows">
+        <li v-for="r in g.rows" :key="r.id" class="gc-row">
+          <a class="gc-link" :href="withBase(r.link)">
+            <span class="gc-name">{{ r.title }}</span>
+            <span class="gc-sum">{{ r.summary }}</span>
+          </a>
+          <span class="gc-frame">{{ frameText(r.id) }}</span>
+          <span class="gc-badge" :class="badgeClass(r.id)">{{ badge(r.id) }}</span>
+          <button type="button" class="gc-copy" :aria-label="`复制${nameOf(r.id)}的提示词（网页写法）`" @click="copy(r.id)">
+            {{ copied === r.id ? '已复制' : failed === r.id ? '复制失败' : '复制提示词' }}
+          </button>
+        </li>
+      </ul>
+    </section>
 
-    <h3 class="gc-sub">待补充</h3>
-    <ul class="gc-todo">
-      <li v-for="p in planned" :key="p.id">
-        <span class="gc-todo-dot" aria-hidden="true" />{{ p.name }}
-        <button type="button" class="gc-todo-copy" :aria-label="`复制${p.name}的提示词（草稿）`" @click="copy(p.id)">
-          {{ copied === p.id ? '已复制' : '复制提示词（草稿）' }}
-        </button>
-      </li>
-    </ul>
-    <p class="sr-only" aria-live="polite">{{ copied ? `已复制${nameOf(copied)}的提示词` : failed ? '复制失败，请到控件详情页展开预览手动复制' : '' }}</p>
+    <section class="gc-group">
+      <h3 class="gc-title">计划补充</h3>
+      <p class="gc-note">还没有演示，提示词是草稿，复制后要先补全占位符。</p>
+      <ul class="gc-todo">
+        <li v-for="p in planned" :key="p.id">
+          {{ p.name }}
+          <button type="button" class="gc-todo-copy" :aria-label="`复制${p.name}的提示词（草稿）`" @click="copy(p.id)">
+            {{ copied === p.id ? '已复制' : '复制草稿' }}
+          </button>
+        </li>
+      </ul>
+    </section>
+    <p class="sr-only" aria-live="polite">{{ copied ? `已复制${nameOf(copied)}的提示词` : failed ? '复制失败，请到控件页展开预览手动复制' : '' }}</p>
   </div>
 </template>
 
 <style scoped>
-.gc-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
-  margin: 20px 0 0 !important;
-  padding: 0 !important;
-  list-style: none !important;
+.gc-group + .gc-group {
+  margin-top: 28px;
 }
-.gc-grid li {
-  margin: 0 !important;
-}
-.gc-card {
+.gc-title {
   display: flex;
-  flex-direction: column;
-  height: 100%;
-  border: 1px solid var(--rule);
-  border-radius: 14px;
-  background: var(--raised);
-  color: var(--ink) !important;
-  text-decoration: none !important;
-  overflow: hidden;
-  transition: transform 0.25s var(--ease-out);
-}
-.gc-card:hover,
-.gc-card:focus-visible {
-  border-color: var(--rule-strong);
-  box-shadow: var(--shadow-1);
-  transform: translateY(-2px);
-}
-.gc-meta {
-  display: grid;
-  gap: 2px;
-  padding: 12px 14px 14px;
-}
-.gc-name {
-  font-size: 15.5px;
-  font-weight: 700;
-}
-.gc-en {
-  font-size: 12.5px;
-  font-weight: 500;
-  color: var(--ink-3);
-}
-.gc-desc {
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--ink-2);
-}
-
-/* 缩略图：默认暂停，悬停或聚焦时播放 */
-.gc-thumb {
-  --a: var(--mod-frontend);
-  position: relative;
-  display: block;
-  height: 132px;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--ink) 8%, transparent) 1px, transparent 1.5px) 0 0 / 14px 14px,
-    var(--paper-2);
-  border-bottom: 1px solid var(--rule);
-}
-.gc-thumb i {
-  display: block;
-  font-style: normal;
-}
-.gc-thumb .anim {
-  animation-duration: 2.4s;
-  animation-iteration-count: infinite;
-  animation-timing-function: var(--ease-out);
-  animation-play-state: paused;
-}
-.gc-card:hover .anim,
-.gc-card:focus-visible .anim {
-  animation-play-state: running;
-}
-
-/* 按钮 */
-.t-button {
-  padding: 22px 28px 0;
-}
-.b-field {
-  height: 14px;
-  margin-bottom: 8px;
-  border-radius: 5px;
-  background: var(--paper-3);
-}
-.b-field.short {
-  width: 60%;
-}
-.b-btn {
-  height: 30px;
-  margin-top: 16px;
-  border-radius: 9px;
-  background: var(--a);
-  animation-name: press;
-}
-@keyframes press {
-  0%, 30%, 100% { transform: scale(1); }
-  38% { transform: scale(0.93); }
-  50% { transform: scale(1); }
-}
-
-/* 开关 */
-.t-switch {
-  padding: 20px 26px;
-  display: grid !important;
-  gap: 12px;
-}
-.s-row {
-  display: flex !important;
-  align-items: center;
-  justify-content: space-between;
-}
-.s-label {
-  width: 52%;
-  height: 10px;
-  border-radius: 5px;
-  background: var(--paper-3);
-}
-.s-track {
-  position: relative;
-  width: 34px;
-  height: 20px;
-  border-radius: 10px;
-  background: var(--rule-strong);
-}
-.s-fill {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: var(--mod-start);
-  opacity: 0;
-}
-.s-row:first-child .s-fill {
-  opacity: 1;
-}
-.s-row:first-child .s-thumb {
-  transform: translateX(14px);
-}
-.s-thumb {
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 1px 2px oklch(0 0 0 / 0.25);
-}
-.s-track.anim .s-fill {
-  animation: track 2.4s var(--ease-out) infinite paused;
-}
-.gc-card:hover .s-track.anim .s-fill,
-.gc-card:focus-visible .s-track.anim .s-fill {
-  animation-play-state: running;
-}
-.s-track.anim .s-thumb {
-  animation: knob 2.4s var(--ease-out) infinite paused;
-}
-.gc-card:hover .s-track.anim .s-thumb,
-.gc-card:focus-visible .s-track.anim .s-thumb {
-  animation-play-state: running;
-}
-@keyframes track {
-  0%, 25% { opacity: 0; }
-  40%, 75% { opacity: 1; }
-  90%, 100% { opacity: 0; }
-}
-@keyframes knob {
-  0%, 25% { transform: translateX(0); }
-  40%, 75% { transform: translateX(14px); }
-  90%, 100% { transform: translateX(0); }
-}
-
-/* 弹窗 */
-.m-doc {
-  position: absolute;
-  inset: 18px 26px auto;
-  height: 46px;
-  border-radius: 8px;
-  background: var(--paper-3);
-}
-.m-shade {
-  position: absolute;
-  inset: 0;
-  background: rgb(20 20 19 / 0.35);
-  opacity: 0;
-  animation-name: shade;
-}
-.m-sheet {
-  position: absolute;
-  left: 14px;
-  right: 14px;
-  bottom: 6px;
-  height: 70px;
-  padding: 6px 12px;
-  border-radius: 12px;
-  background: var(--raised);
-  transform: translateY(110%);
-  animation-name: sheet;
-}
-.m-grab {
-  width: 22px;
-  height: 3px;
-  margin: 0 auto 8px;
-  border-radius: 2px;
-  background: var(--rule-strong);
-}
-.m-opt {
-  height: 10px;
-  margin-bottom: 7px;
-  border-radius: 5px;
-  background: var(--paper-3);
-}
-@keyframes sheet {
-  0%, 15% { transform: translateY(110%); }
-  35%, 75% { transform: translateY(0); }
-  92%, 100% { transform: translateY(110%); }
-}
-@keyframes shade {
-  0%, 15% { opacity: 0; }
-  35%, 75% { opacity: 1; }
-  92%, 100% { opacity: 0; }
-}
-
-/* 列表 */
-.l-spin {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  width: 14px;
-  height: 14px;
-  margin-left: -7px;
-  border-radius: 50%;
-  border: 2px solid var(--a);
-  border-right-color: transparent;
-  opacity: 0;
-  animation-name: lspin;
-}
-.l-rows {
-  padding: 12px 22px 0;
-  animation-name: lpull;
-}
-.l-row {
-  display: flex !important;
   align-items: center;
   gap: 8px;
-  height: 26px;
+  margin: 0 0 8px !important;
+  font-size: 16px !important;
 }
-.l-av {
-  width: 18px;
-  height: 18px;
-  border-radius: 6px;
-  background: color-mix(in oklab, var(--a) 30%, var(--paper-3));
-}
-.l-line {
-  flex: 1;
-  height: 9px;
-  border-radius: 5px;
+.gc-lv {
+  padding: 0 7px;
+  border-radius: 999px;
   background: var(--paper-3);
+  color: var(--ink-3);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
 }
-@keyframes lpull {
-  0%, 10% { transform: translateY(0); }
-  30%, 60% { transform: translateY(24px); }
-  80%, 100% { transform: translateY(0); }
-}
-@keyframes lspin {
-  0%, 15% { opacity: 0; transform: rotate(0); }
-  30% { opacity: 1; }
-  60% { opacity: 1; transform: rotate(540deg); }
-  75%, 100% { opacity: 0; transform: rotate(720deg); }
-}
-
-/* 标签栏 */
-.tb-page {
-  position: absolute;
-  inset: 16px 22px 50px;
-  border-radius: 8px;
-  background: var(--paper-3);
-}
-.tb-bar {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 38px;
-  display: grid !important;
-  grid-template-columns: repeat(4, 1fr);
-  align-items: center;
-  justify-items: center;
-  padding: 0 10px;
-  background: var(--raised);
+.gc-rows {
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
   border-top: 1px solid var(--rule);
 }
-.tb-dot {
-  position: relative;
-  width: 12px;
-  height: 12px;
-  border-radius: 4px;
-  background: var(--rule-strong);
+.gc-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  align-items: center;
+  gap: 12px;
+  margin: 0 !important;
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--rule);
 }
-.tb-pill {
-  position: absolute;
-  left: 10px;
-  top: 7px;
-  width: calc((100% - 20px) / 4);
-  height: 24px;
-  border-radius: 12px;
-  background: color-mix(in oklab, var(--a) 22%, transparent);
-  animation-name: pill;
+.gc-link {
+  display: grid;
+  min-width: 0;
+  text-decoration: none !important;
 }
-@keyframes pill {
-  0%, 20% { transform: translateX(0); }
-  30%, 45% { transform: translateX(100%); }
-  55%, 70% { transform: translateX(200%); }
-  80%, 100% { transform: translateX(0); }
+.gc-name {
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.5;
 }
-
-/* 待补充清单 */
-.gc-sub {
-  margin: 36px 0 10px !important;
-  font-size: 16px !important;
+.gc-link:hover .gc-name {
+  color: var(--accent-ink);
+}
+.gc-sum {
+  color: var(--ink-2);
+  font-size: 13.5px;
+  font-weight: 400;
+  line-height: 1.55;
+}
+.gc-frame {
+  color: var(--ink-3);
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+.gc-badge {
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 22px;
+  white-space: nowrap;
+}
+.gc-badge.ok {
+  background: var(--tip-soft);
+  color: var(--tip);
+}
+.gc-badge.part {
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+.gc-badge.none {
+  background: var(--paper-3);
+  color: var(--ink-3);
+}
+.gc-copy,
+.gc-todo-copy {
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--rule-strong);
+  background: var(--raised);
+  color: var(--ink);
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: transform 150ms var(--ease-out);
+}
+.gc-copy:hover,
+.gc-todo-copy:hover {
+  border-color: var(--ink-3);
+}
+.gc-copy:active,
+.gc-todo-copy:active {
+  transform: scale(0.96);
+}
+.gc-note {
+  margin: 0 0 8px !important;
+  font-size: 13.5px !important;
+  color: var(--ink-2);
 }
 .gc-todo {
   display: flex;
@@ -420,76 +193,27 @@ const nameOf = (id: string) => controls.find((c) => c.id === id)?.name ?? id
 .gc-todo li {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   margin: 0 !important;
-  padding: 5px 12px;
-  border-radius: 999px;
-  border: 1px dashed var(--rule-strong);
-  font-size: 13.5px;
-  color: var(--ink-2);
-}
-.gc-todo-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  border: 2px solid var(--ink-3);
-}
-
-/* 复制提示词按钮：悬停或聚焦卡片时出现，触摸设备常驻 */
-.gc-grid li {
-  position: relative;
-}
-.gc-copy {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 2;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  height: 32px;
-  padding: 0 10px;
-  border-radius: 9px;
-  background: var(--ink);
-  color: var(--paper);
-  font-size: 12.5px;
-  font-weight: 650;
-  opacity: 0;
-  transform: translateY(-4px);
-  transition: opacity 0.2s var(--ease-out), transform 0.3s var(--ease);
-}
-.gc-grid li:hover .gc-copy,
-.gc-grid li:focus-within .gc-copy {
-  opacity: 1;
-  transform: none;
-}
-.gc-copy.done {
-  background: var(--mod-start);
-  color: var(--on-start);
-}
-@media (hover: none) {
-  .gc-copy {
-    opacity: 1;
-    transform: none;
-  }
-}
-.gc-todo-copy {
-  margin-left: 4px;
-  padding: 0 8px;
-  border-radius: 999px;
-  font-size: 12px;
-  line-height: 22px;
+  padding: 4px 4px 4px 12px;
+  border-radius: 10px;
+  background: var(--paper-2);
   color: var(--ink);
-  background: var(--paper-3);
+  font-size: 14px;
 }
-.gc-todo-copy:hover {
-  background: var(--rule);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .gc-thumb .anim,
-  .gc-thumb .anim * {
-    animation: none !important;
+@media (max-width: 639px) {
+  .gc-row {
+    grid-template-columns: 1fr auto;
+    gap: 6px 10px;
+  }
+  .gc-link {
+    grid-column: 1 / -1;
+  }
+  .gc-frame {
+    display: none;
+  }
+  .gc-badge {
+    justify-self: start;
   }
 }
 </style>

@@ -14,7 +14,7 @@ interface Item {
 
 const pages: Item[] = [
   { id: 'p-home', title: '首页', sub: '模块总览与使用方法', link: '/', group: '页面' },
-  { id: 'p-controls', title: '控件总览', sub: '控件演示与复制提示词', link: '/frontend/controls', group: '页面' },
+  { id: 'p-controls', title: '控件总览', sub: '控件演示与复制提示词', link: '/controls/overview', group: '页面' },
   { id: 'p-prompts', title: '场景提示词模板', sub: '写功能、修 bug、重构等模板', link: '/growth/prompt-templates', group: '页面' },
 ]
 const chapters: Item[] = modules.flatMap((m) =>

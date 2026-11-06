@@ -115,7 +115,7 @@ const steps = [
     <footer class="foot">
       <p class="foot-brand">Vibe Coding 开发指南</p>
       <nav class="foot-links" aria-label="页脚">
-        <a :href="withBase('/frontend/controls')">控件总览</a>
+        <a :href="withBase('/controls/overview')">控件与提示词</a>
         <a :href="withBase('/growth/prompt-templates')">提示词模板</a>
         <a :href="REPO" target="_blank" rel="noopener">GitHub</a>
         <a :href="`${REPO}/blob/main/LICENSE`" target="_blank" rel="noopener">MIT 协议</a>

@@ -78,7 +78,7 @@ export default defineConfig({
     siteTitle: 'Vibe Coding 开发指南',
     nav: [
       { text: '开始阅读', link: '/start/intro' },
-      { text: '控件总览', link: '/frontend/controls' },
+      { text: '控件与提示词', link: '/controls/overview' },
       { text: '提示词模板', link: '/growth/prompt-templates' },
     ],
     sidebar: {

@@ -1,35 +1,25 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, provide, reactive, ref, useId } from 'vue'
-import { buildControlPrompt, defaultOptions, optionLabels, type PromptOptions } from '../data/controlPrompts'
+import { buildControlPrompt, defaultOptions, getControl, optionLabels, type PromptOptions } from '../data/controlPrompts'
 import { controlNote } from '../data/approaches'
 import { currentTab, tabsHostKey, type TabsHost } from '../composables/codeTabs'
 import { copyText } from '../composables/clipboard'
-import DemoButton from './demos/DemoButton.vue'
-import DemoSwitch from './demos/DemoSwitch.vue'
-import DemoModal from './demos/DemoModal.vue'
-import DemoList from './demos/DemoList.vue'
-import DemoTabBar from './demos/DemoTabBar.vue'
+import { demos, type Frame } from './demos/registry'
 
-type Control = 'button' | 'switch' | 'modal' | 'list' | 'tabbar'
+const props = defineProps<{
+  control: string
+  /** 外框；缺省时用注册表里的默认外框 */
+  frame?: Frame
+  title?: string
+  /** 显示「网页 / 手机」外框切换 */
+  frames?: boolean
+}>()
 
-const props = withDefaults(
-  defineProps<{
-    control: Control
-    frame?: 'phone' | 'browser'
-    title?: string
-  }>(),
-  { frame: 'phone' },
-)
-
-const meta: Record<Control, { name: string; hint: string; comp: unknown }> = {
-  button: { name: '按钮 Button', hint: '按下看反馈，提交后进入加载状态', comp: DemoButton },
-  switch: { name: '开关 Switch', hint: '点击或按空格切换', comp: DemoSwitch },
-  modal: { name: '弹窗 Modal / Sheet', hint: '打开底部弹窗或对话框，Esc 关闭', comp: DemoModal },
-  list: { name: '列表 List', hint: '向下拖动刷新，向左滑动删除；也可用顶部按钮', comp: DemoList },
-  tabbar: { name: '标签栏 TabBar', hint: '切换标签，方向键可移动', comp: DemoTabBar },
-}
-
-const info = computed(() => meta[props.control])
+const info = computed(() => demos[props.control])
+const frameSel = ref<Frame | null>(null)
+const frame = computed<Frame>(() => frameSel.value ?? props.frame ?? info.value?.frame ?? 'phone')
+const verify = computed(() => getControl(props.control)?.verify)
+const verifyClass = computed(() => ({ 已验证: 'ok', 部分一致: 'part', 未验证: 'none' })[verify.value?.status ?? '未验证'])
 const runKey = ref(0)
 const play = ref(false)
 const root = ref<HTMLElement>()
@@ -90,6 +80,10 @@ function replay() {
       <div class="cd-head">
         <span class="cd-name">{{ title ?? info.name }}</span>
         <span class="cd-hint">{{ info.hint }}</span>
+        <div v-if="frames" class="cd-frames" role="group" aria-label="演示外框">
+          <button type="button" :aria-pressed="frame === 'browser'" @click="frameSel = 'browser'">网页</button>
+          <button type="button" :aria-pressed="frame === 'phone'" @click="frameSel = 'phone'">手机</button>
+        </div>
         <button type="button" class="cd-copy" :class="copyState" :aria-describedby="`${uid}-tip`" @click="copyPrompt">
           <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true">
             <path v-if="copyState === 'done'" d="M3 8.5 6.5 12 13 4.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
@@ -113,6 +107,10 @@ function replay() {
             <span>{{ text }}</span>
           </label>
         </fieldset>
+        <p v-if="verify" class="cd-verify">
+          <span class="cd-badge" :class="verifyClass">{{ verify.status }}</span>
+          <span>{{ verify.date ? `${verify.date} · ` : '' }}{{ verify.note }}</span>
+        </p>
         <p :id="`${uid}-tip`" class="cd-tip">
           提示词按当前选中的写法（{{ stackLabel ?? '未指定' }}）生成，复制后把 <mark class="cd-ph">{…}</mark> 换成你项目的实际内容。
         </p>
@@ -136,7 +134,7 @@ function replay() {
           <span class="cd-url">localhost:5173</span>
         </div>
         <div class="cd-screen">
-          <component :is="info.comp" :key="runKey" :play="play" :frame="frame" />
+          <component :is="info.comp" :key="`${runKey}-${frame}`" :play="play" :frame="frame" />
         </div>
         <div v-if="frame === 'phone'" class="cd-home" aria-hidden="true" />
       </div>
@@ -156,6 +154,54 @@ function replay() {
 </template>
 
 <style scoped>
+.cd-frames {
+  display: inline-flex;
+  padding: 2px;
+  border-radius: 8px;
+  border: 1px solid var(--rule-strong);
+  background: var(--raised);
+}
+.cd-frames button {
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.cd-frames button[aria-pressed='true'] {
+  background: var(--ink);
+  color: var(--paper);
+}
+.cd-verify {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  margin: 10px 0 0 !important;
+  font-size: 12.5px !important;
+  line-height: 1.6 !important;
+  color: var(--ink-2);
+}
+.cd-badge {
+  flex: none;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 20px;
+}
+.cd-badge.ok {
+  background: var(--tip-soft);
+  color: var(--tip);
+}
+.cd-badge.part {
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+.cd-badge.none {
+  background: var(--paper-3);
+  color: var(--ink-3);
+}
 .cd {
   margin: 22px 0 34px;
   display: grid;
@@ -335,6 +381,8 @@ function replay() {
 }
 .cd-screen {
   position: relative;
+  font-size: 14px;
+  line-height: 1.5;
   flex: 1;
   min-height: 0;
   overflow: hidden;

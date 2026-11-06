@@ -43,6 +43,7 @@
   --mod-ai: oklch(0.5 0.08 335);
   --mod-git: oklch(0.5 0.08 5);
   --mod-frontend: oklch(0.5 0.07 250);
+  --mod-controls: oklch(0.5 0.07 110);
   --mod-cross: oklch(0.5 0.06 195);
   --mod-backend: oklch(0.5 0.07 305);
   --mod-quality: oklch(0.52 0.08 50);
@@ -51,6 +52,7 @@
   --on-ai: #fff;
   --on-git: #fff;
   --on-frontend: #fff;
+  --on-controls: #fff;
   --on-cross: #fff;
   --on-backend: #fff;
   --on-quality: #fff;
@@ -116,6 +118,7 @@
   --mod-ai: oklch(0.77 0.07 335);
   --mod-git: oklch(0.76 0.07 5);
   --mod-frontend: oklch(0.76 0.06 250);
+  --mod-controls: oklch(0.77 0.07 110);
   --mod-cross: oklch(0.76 0.06 195);
   --mod-backend: oklch(0.76 0.06 305);
   --mod-quality: oklch(0.77 0.07 50);
@@ -124,6 +127,7 @@
   --on-ai: #1b1a17;
   --on-git: #1b1a17;
   --on-frontend: #1b1a17;
+  --on-controls: #1b1a17;
   --on-cross: #1b1a17;
   --on-backend: #1b1a17;
   --on-quality: #1b1a17;
@@ -139,6 +143,7 @@
 [data-mod='ai'] { --mod: var(--mod-ai); --on-mod: var(--on-ai); }
 [data-mod='git'] { --mod: var(--mod-git); --on-mod: var(--on-git); }
 [data-mod='frontend'] { --mod: var(--mod-frontend); --on-mod: var(--on-frontend); }
+[data-mod='controls'] { --mod: var(--mod-controls); --on-mod: var(--on-controls); }
 [data-mod='cross'] { --mod: var(--mod-cross); --on-mod: var(--on-cross); }
 [data-mod='backend'] { --mod: var(--mod-backend); --on-mod: var(--on-backend); }
 [data-mod='quality'] { --mod: var(--mod-quality); --on-mod: var(--on-quality); }

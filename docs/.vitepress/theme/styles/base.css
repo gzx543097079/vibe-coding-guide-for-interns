@@ -162,6 +162,15 @@ textarea {
 .vp-doc li::marker {
   color: var(--ink-3);
 }
+/* 控件演示画布：不继承正文排版（行高 1.8、段落间距、列表缩进），统一按 14px / 1.5 */
+:where(.vp-doc) .cd-screen p,
+:where(.vp-doc) .cd-screen li {
+  line-height: inherit;
+  text-wrap: wrap;
+}
+:where(.vp-doc) .cd-screen li + li {
+  margin-top: 0;
+}
 
 /* 代码块：深色底 + 顶部语言栏 + 常驻复制按钮 */
 .vp-doc div[class*='language-'] {

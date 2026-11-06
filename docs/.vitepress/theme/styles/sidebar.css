@@ -19,6 +19,7 @@
 #VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='ai']) { --mod: var(--mod-ai); }
 #VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='git']) { --mod: var(--mod-git); }
 #VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='frontend']) { --mod: var(--mod-frontend); }
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='controls']) { --mod: var(--mod-controls); }
 #VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='cross']) { --mod: var(--mod-cross); }
 #VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='backend']) { --mod: var(--mod-backend); }
 #VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='quality']) { --mod: var(--mod-quality); }

@@ -41,6 +41,16 @@ defineProps<{ id: string; play?: boolean }>()
       <path d="M78 22h28M78 34h18" class="s" />
     </g>
 
+    <!-- UI 控件与提示词：手机里的心形与网页里的滑块 -->
+    <g v-else-if="id === 'controls'">
+      <rect x="14" y="8" width="40" height="68" rx="9" class="s" />
+      <path d="M29 16h10" class="s" />
+      <path d="M34 54c-7-4.6-11-8.4-11-12.6a5.4 5.4 0 0 1 11-1.8 5.4 5.4 0 0 1 11 1.8c0 4.2-4 8-11 12.6z" class="f pop" />
+      <rect x="62" y="20" width="48" height="42" rx="7" class="s" />
+      <path d="M62 31h48M70 47h32" class="s" />
+      <circle cx="74" cy="47" r="5" class="knob" />
+    </g>
+
     <!-- 大前端 / 跨端：多设备 -->
     <g v-else-if="id === 'cross'">
       <g class="dev-a">
@@ -172,6 +182,9 @@ defineProps<{ id: string; play?: boolean }>()
 }
 .on .knob {
   transform: translateX(26px);
+}
+.mi-controls.on .knob {
+  transform: translateX(22px);
 }
 
 .dev-a,
