@@ -1,6 +1,6 @@
-# Vibe Coding 开发指南（实习生版）
+# Vibe Coding 开发指南
 
-面向实习生的 Vibe Coding 开发指南：如何借助 AI 编码助手高效、安全地完成日常开发。
+Vibe Coding 开发指南：如何借助 AI 编码助手高效、安全地完成日常开发。
 
 ## 内容规划
 

@@ -1,7 +1,7 @@
 {
   "name": "vibe-coding-guide-for-interns",
   "private": true,
-  "description": "Vibe Coding 开发指南（实习生版）",
+  "description": "Vibe Coding 开发指南",
   "license": "MIT",
   "type": "module",
   "scripts": {

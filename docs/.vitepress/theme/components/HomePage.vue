@@ -28,9 +28,9 @@ const steps = [
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-text">
         <h1 id="hero-title" class="hero-title">
-          Vibe Coding 开发指南<span class="hero-edition">（实习生版）</span>
+          Vibe Coding 开发指南
         </h1>
-        <p class="hero-lead">写给刚入职的实习生。用 AI 写代码之前，先弄清楚这个方向该懂什么、结果怎么检查。</p>
+        <p class="hero-lead">用 AI 写代码之前，先弄清楚这个方向该懂什么、结果怎么检查。</p>
         <div class="hero-actions">
           <a class="btn btn-primary" :href="withBase('/start/intro')">
             从第一章开始
@@ -104,7 +104,7 @@ const steps = [
       <div class="foot-cols">
         <div>
           <p class="foot-brand">Vibe Coding 开发指南</p>
-          <p class="foot-note">写给实习生的 AI 编码实践指南。</p>
+          <p class="foot-note">AI 编码实践指南。</p>
         </div>
         <nav aria-label="页脚：内容">
           <p class="foot-h">内容</p>
@@ -148,14 +148,6 @@ const steps = [
   letter-spacing: -0.02em;
   color: var(--ink);
   word-break: keep-all;
-}
-.hero-edition {
-  display: block;
-  margin: 6px 0 0 -0.5em;
-  font-size: 0.5em;
-  font-weight: 500;
-  letter-spacing: 0;
-  color: var(--ink-3);
 }
 .hero-lead {
   margin: 22px 0 0;
