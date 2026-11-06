@@ -1,0 +1,157 @@
+/* 色彩、字体与间距 token；浅色与深色各一套，并映射到 VitePress 变量 */
+
+:root {
+  /* 底色与文字 */
+  --paper: oklch(0.975 0.0045 220);
+  --paper-2: oklch(0.953 0.006 220);
+  --paper-3: oklch(0.925 0.008 222);
+  --raised: oklch(0.995 0.002 220);
+  --ink: oklch(0.235 0.02 252);
+  --ink-2: oklch(0.42 0.018 252);
+  --ink-3: oklch(0.5 0.016 252);
+  --rule: oklch(0.885 0.008 228);
+  --rule-strong: oklch(0.8 0.01 230);
+  --station-fill: oklch(0.995 0.002 220);
+  --focus: oklch(0.5 0.17 258);
+
+  /* 线路色 */
+  --line-start: oklch(0.52 0.13 150);
+  --line-git: oklch(0.53 0.17 355);
+  --line-frontend: oklch(0.5 0.15 258);
+  --line-cross: oklch(0.52 0.095 200);
+  --line-backend: oklch(0.49 0.16 302);
+  --line-quality: oklch(0.53 0.18 30);
+  --line-growth: oklch(0.63 0.135 72);
+
+  /* 线路徽标上的文字色 */
+  --on-start: #fff;
+  --on-git: #fff;
+  --on-frontend: #fff;
+  --on-cross: #fff;
+  --on-backend: #fff;
+  --on-quality: #fff;
+  --on-growth: oklch(0.22 0.03 70);
+
+  /* 提示块 */
+  --tip: oklch(0.5 0.15 258);
+  --warn: oklch(0.5 0.12 70);
+  --danger: oklch(0.52 0.19 28);
+
+  --shadow-1: 0 1px 2px oklch(0.3 0.02 250 / 0.06), 0 2px 8px oklch(0.3 0.02 250 / 0.05);
+  --shadow-2: 0 2px 6px oklch(0.3 0.02 250 / 0.08), 0 12px 32px oklch(0.3 0.02 250 / 0.1);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --radius: 10px;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+}
+
+.dark {
+  --paper: oklch(0.185 0.012 248);
+  --paper-2: oklch(0.215 0.014 248);
+  --paper-3: oklch(0.255 0.016 248);
+  --raised: oklch(0.235 0.015 248);
+  --ink: oklch(0.935 0.008 240);
+  --ink-2: oklch(0.8 0.012 240);
+  --ink-3: oklch(0.7 0.012 240);
+  --rule: oklch(0.31 0.014 248);
+  --rule-strong: oklch(0.4 0.016 248);
+  --station-fill: oklch(0.185 0.012 248);
+  --focus: oklch(0.78 0.13 245);
+
+  --line-start: oklch(0.76 0.14 150);
+  --line-git: oklch(0.74 0.15 355);
+  --line-frontend: oklch(0.74 0.13 255);
+  --line-cross: oklch(0.77 0.1 198);
+  --line-backend: oklch(0.73 0.14 302);
+  --line-quality: oklch(0.73 0.15 35);
+  --line-growth: oklch(0.82 0.14 82);
+
+  --on-start: oklch(0.2 0.03 150);
+  --on-git: oklch(0.2 0.03 355);
+  --on-frontend: oklch(0.2 0.03 255);
+  --on-cross: oklch(0.2 0.03 200);
+  --on-backend: oklch(0.2 0.03 302);
+  --on-quality: oklch(0.2 0.03 35);
+  --on-growth: oklch(0.2 0.03 82);
+
+  --tip: oklch(0.76 0.12 255);
+  --warn: oklch(0.82 0.13 82);
+  --danger: oklch(0.74 0.15 28);
+
+  --shadow-1: 0 1px 2px oklch(0 0 0 / 0.3), 0 2px 8px oklch(0 0 0 / 0.25);
+  --shadow-2: 0 2px 6px oklch(0 0 0 / 0.35), 0 16px 40px oklch(0 0 0 / 0.4);
+}
+
+/* 每条线路的上下文变量，组件只需设置 data-line */
+[data-line='start'] { --line: var(--line-start); --on-line: var(--on-start); }
+[data-line='git'] { --line: var(--line-git); --on-line: var(--on-git); }
+[data-line='frontend'] { --line: var(--line-frontend); --on-line: var(--on-frontend); }
+[data-line='cross'] { --line: var(--line-cross); --on-line: var(--on-cross); }
+[data-line='backend'] { --line: var(--line-backend); --on-line: var(--on-backend); }
+[data-line='quality'] { --line: var(--line-quality); --on-line: var(--on-quality); }
+[data-line='growth'] { --line: var(--line-growth); --on-line: var(--on-growth); }
+
+/* 映射到 VitePress 默认主题变量 */
+:root,
+.dark {
+  --vp-c-bg: var(--paper);
+  --vp-c-bg-alt: var(--paper-2);
+  --vp-c-bg-elv: var(--raised);
+  --vp-c-bg-soft: var(--paper-2);
+  --vp-c-text-1: var(--ink);
+  --vp-c-text-2: var(--ink-2);
+  --vp-c-text-3: var(--ink-3);
+  --vp-c-divider: var(--rule);
+  --vp-c-border: var(--rule-strong);
+  --vp-c-gutter: var(--rule);
+
+  --vp-c-brand-1: var(--line-start);
+  --vp-c-brand-2: color-mix(in oklab, var(--line-start) 85%, var(--ink));
+  --vp-c-brand-3: var(--line-start);
+  --vp-c-brand-soft: color-mix(in oklab, var(--line-start) 14%, transparent);
+
+  --vp-c-tip-1: var(--tip);
+  --vp-c-tip-2: color-mix(in oklab, var(--tip) 85%, var(--ink));
+  --vp-c-tip-3: var(--tip);
+  --vp-c-tip-soft: color-mix(in oklab, var(--tip) 9%, var(--paper));
+  --vp-c-warning-1: var(--warn);
+  --vp-c-warning-2: color-mix(in oklab, var(--warn) 85%, var(--ink));
+  --vp-c-warning-3: var(--warn);
+  --vp-c-warning-soft: color-mix(in oklab, var(--warn) 11%, var(--paper));
+  --vp-c-danger-1: var(--danger);
+  --vp-c-danger-2: color-mix(in oklab, var(--danger) 85%, var(--ink));
+  --vp-c-danger-3: var(--danger);
+  --vp-c-danger-soft: color-mix(in oklab, var(--danger) 9%, var(--paper));
+
+  --vp-font-family-base: var(--font-sans);
+  --vp-font-family-mono: var(--font-mono);
+
+  --vp-code-block-bg: var(--paper-2);
+  --vp-code-tab-bg: var(--paper-2);
+  --vp-code-tab-divider: var(--rule);
+  --vp-code-copy-code-bg: var(--paper-3);
+  --vp-code-copy-code-hover-bg: var(--paper-3);
+  --vp-code-copy-code-hover-border-color: var(--rule-strong);
+  --vp-code-line-highlight-color: color-mix(in oklab, var(--line-frontend) 10%, transparent);
+  --vp-code-bg: var(--paper-3);
+  --vp-code-color: var(--ink);
+
+  --vp-nav-bg-color: var(--paper);
+  --vp-sidebar-bg-color: var(--paper-2);
+  --vp-local-search-bg: var(--paper);
+  --vp-local-search-result-bg: var(--raised);
+  --vp-local-search-result-border: var(--rule);
+  --vp-local-search-highlight-bg: var(--line-start);
+  --vp-local-search-highlight-text: var(--on-start);
+
+  --vp-button-brand-bg: var(--ink);
+  --vp-button-brand-text: var(--paper);
+  --vp-button-brand-hover-bg: color-mix(in oklab, var(--ink) 88%, var(--paper));
+  --vp-button-brand-hover-text: var(--paper);
+  --vp-button-brand-active-bg: var(--ink);
+  --vp-button-brand-border: transparent;
+  --vp-button-brand-hover-border: transparent;
+}

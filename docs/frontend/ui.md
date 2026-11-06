@@ -1,0 +1,209 @@
+---
+title: UI 控件与组件
+description: 常见控件的行为与组件化思想，附各平台实现对照。
+---
+
+# UI 控件与组件
+
+::: warning 🚧 本章内容建设中
+本章目前只有大纲，正文正在编写。下面是计划覆盖的要点，欢迎在 GitHub 上参与补充。
+:::
+
+## 本章计划覆盖
+
+- 常见控件：按钮、开关、输入框、弹窗、列表、导航、标签栏
+- 控件的状态：默认、悬停、按下、禁用、加载、错误
+- 组件化思想：拆分、复用、props 与事件
+- 各平台控件的对应关系与差异
+- 无障碍：语义、键盘操作与读屏
+
+## 常用控件：演示与实现
+
+上方是可以直接操作的演示，下方是同一控件的几种实现写法。切换任意一处标签，同页其他控件会一起切换，并在下次访问时记住你的选择。
+
+### 按钮 Button {#button}
+
+<ControlDemo control="button" frame="phone">
+<CodeTabs group="ui-cross" :labels="['SwiftUI', 'Kotlin (Compose)', 'ArkTS', 'Flutter (Dart)', 'React']">
+<template #t1>
+
+<!--@include: ../snippets/button/swiftui.md-->
+
+</template>
+<template #t2>
+
+<!--@include: ../snippets/button/compose.md-->
+
+</template>
+<template #t3>
+
+<!--@include: ../snippets/button/arkts.md-->
+
+</template>
+<template #t4>
+
+<!--@include: ../snippets/button/flutter.md-->
+
+</template>
+<template #t5>
+
+<!--@include: ../snippets/button/react.md-->
+
+</template>
+</CodeTabs>
+</ControlDemo>
+
+### 开关 Switch {#switch}
+
+<ControlDemo control="switch" frame="phone">
+<CodeTabs group="ui-cross" :labels="['SwiftUI', 'Kotlin (Compose)', 'ArkTS', 'Flutter (Dart)', 'React']">
+<template #t1>
+
+<!--@include: ../snippets/switch/swiftui.md-->
+
+</template>
+<template #t2>
+
+<!--@include: ../snippets/switch/compose.md-->
+
+</template>
+<template #t3>
+
+<!--@include: ../snippets/switch/arkts.md-->
+
+</template>
+<template #t4>
+
+<!--@include: ../snippets/switch/flutter.md-->
+
+</template>
+<template #t5>
+
+<!--@include: ../snippets/switch/react.md-->
+
+</template>
+</CodeTabs>
+</ControlDemo>
+
+### 弹窗 Modal / Sheet {#modal}
+
+<ControlDemo control="modal" frame="phone">
+<CodeTabs group="ui-cross" :labels="['SwiftUI', 'Kotlin (Compose)', 'ArkTS', 'Flutter (Dart)', 'React']">
+<template #t1>
+
+<!--@include: ../snippets/modal/swiftui.md-->
+
+</template>
+<template #t2>
+
+<!--@include: ../snippets/modal/compose.md-->
+
+</template>
+<template #t3>
+
+<!--@include: ../snippets/modal/arkts.md-->
+
+</template>
+<template #t4>
+
+<!--@include: ../snippets/modal/flutter.md-->
+
+</template>
+<template #t5>
+
+<!--@include: ../snippets/modal/react.md-->
+
+</template>
+</CodeTabs>
+</ControlDemo>
+
+### 列表 List {#list}
+
+<ControlDemo control="list" frame="phone">
+<CodeTabs group="ui-cross" :labels="['SwiftUI', 'Kotlin (Compose)', 'ArkTS', 'Flutter (Dart)', 'React']">
+<template #t1>
+
+<!--@include: ../snippets/list/swiftui.md-->
+
+</template>
+<template #t2>
+
+<!--@include: ../snippets/list/compose.md-->
+
+</template>
+<template #t3>
+
+<!--@include: ../snippets/list/arkts.md-->
+
+</template>
+<template #t4>
+
+<!--@include: ../snippets/list/flutter.md-->
+
+</template>
+<template #t5>
+
+<!--@include: ../snippets/list/react.md-->
+
+</template>
+</CodeTabs>
+</ControlDemo>
+
+### 标签栏 TabBar {#tabbar}
+
+<ControlDemo control="tabbar" frame="phone">
+<CodeTabs group="ui-cross" :labels="['SwiftUI', 'Kotlin (Compose)', 'ArkTS', 'Flutter (Dart)', 'React']">
+<template #t1>
+
+<!--@include: ../snippets/tabbar/swiftui.md-->
+
+</template>
+<template #t2>
+
+<!--@include: ../snippets/tabbar/compose.md-->
+
+</template>
+<template #t3>
+
+<!--@include: ../snippets/tabbar/arkts.md-->
+
+</template>
+<template #t4>
+
+<!--@include: ../snippets/tabbar/flutter.md-->
+
+</template>
+<template #t5>
+
+<!--@include: ../snippets/tabbar/react.md-->
+
+</template>
+</CodeTabs>
+</ControlDemo>
+
+## 用 AI 做这个方向时的提示词
+
+::: tip 本节持续补充
+本方向的专用模板正在整理，先提供可直接套用的通用模板。更多场景见[场景提示词模板](/growth/prompt-templates)。
+:::
+
+<PromptCard id="frontend-ui" />
+
+## 三问
+
+回答得出这三个问题，再把这个方向的任务交给 AI。以下为计划展开的要点。
+
+### 必须先懂什么
+
+- 控件的交互状态与反馈
+- 组件的输入（props）与输出（事件）
+
+### 怎么验证
+
+- 逐个检查控件的每种状态
+- 只用键盘完成一遍操作
+
+### AI 常错在哪
+
+- 跨平台混用控件 API
+- 用 div 模拟按钮却不处理键盘与读屏

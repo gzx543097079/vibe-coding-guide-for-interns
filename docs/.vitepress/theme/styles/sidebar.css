@@ -1,0 +1,113 @@
+/* 侧边栏分组与条目 */
+
+#VPSidebarNav { --track-x: 4.5px; }
+
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-line[data-line='start']) { --line: var(--line-start); }
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-line[data-line='git']) { --line: var(--line-git); }
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-line[data-line='frontend']) { --line: var(--line-frontend); }
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-line[data-line='cross']) { --line: var(--line-cross); }
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-line[data-line='backend']) { --line: var(--line-backend); }
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-line[data-line='quality']) { --line: var(--line-quality); }
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-line[data-line='growth']) { --line: var(--line-growth); }
+
+/* 线路标题 */
+#VPSidebarNav .VPSidebarItem.level-0 > .item > .text {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+#VPSidebarNav .sb-line {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  background: var(--line);
+  color: var(--on-line);
+  font-size: 12.5px;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+#VPSidebarNav .sb-count {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+#VPSidebarNav .VPSidebarItem.level-0 > .item .caret { color: var(--ink-3); }
+#VPSidebarNav .VPSidebarItem.level-0 { padding-bottom: 14px; }
+#VPSidebarNav .VPSidebarItem.collapsed.level-0 { padding-bottom: 6px; }
+
+/* 站点列表与轨道 */
+#VPSidebarNav .VPSidebarItem.level-0 > .items {
+  position: relative;
+  margin-top: 2px;
+}
+#VPSidebarNav .VPSidebarItem.level-0 > .items::before {
+  content: '';
+  position: absolute;
+  left: calc(var(--track-x) + 1px);
+  top: 14px;
+  bottom: 14px;
+  width: 3px;
+  border-radius: 3px;
+  background: color-mix(in oklab, var(--line) 55%, var(--paper-2));
+}
+
+#VPSidebarNav .VPSidebarItem.level-1 .items,
+#VPSidebarNav .VPSidebarItem.level-2 .items {
+  border-left: 0;
+  padding-left: 0;
+}
+#VPSidebarNav .VPSidebarItem .indicator { display: none; }
+
+#VPSidebarNav .VPSidebarItem.is-link > .item > .link > .text,
+#VPSidebarNav .VPSidebarItem.level-1 > .item > .text {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--ink-2);
+  font-weight: 500;
+}
+#VPSidebarNav .sb-stop {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 3px solid var(--line);
+  background: var(--paper-2);
+  transition: transform 0.25s var(--ease-out);
+}
+#VPSidebarNav .VPSidebarItem.is-link > .item > .link:hover .sb-stop { transform: scale(1.18); }
+#VPSidebarNav .VPSidebarItem.is-link > .item > .link:hover .text { color: var(--ink); }
+
+/* 当前页面对应的条目 */
+#VPSidebarNav .VPSidebarItem.is-active > .item > .link > .text {
+  color: var(--ink);
+  font-weight: 650;
+}
+#VPSidebarNav .VPSidebarItem.is-active > .item > .link .sb-stop {
+  background: var(--line);
+  box-shadow: 0 0 0 3px var(--paper-2), 0 0 0 5px color-mix(in oklab, var(--line) 45%, transparent);
+}
+
+/* 子分组标题（如「性能优化」） */
+#VPSidebarNav .VPSidebarItem.level-1:not(.is-link) > .item > .text { padding-left: 26px; }
+#VPSidebarNav .sb-sub {
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+}
+#VPSidebarNav .VPSidebarItem.level-1:not(.is-link) > .item .caret { color: var(--ink-3); }
+
+#VPSidebarNav .group + .group { border-top-color: var(--rule); }
