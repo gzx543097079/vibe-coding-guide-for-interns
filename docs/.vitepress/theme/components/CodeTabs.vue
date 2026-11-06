@@ -197,6 +197,10 @@ const hasSlot = (i: number) => Boolean(slots[`t${i + 1}`])
   border-radius: 0 !important;
   background: var(--paper-2);
 }
+.ct-panel :deep(div[class*='language-'] > button.copy) {
+  /* 标签栏已有「复制代码」，去掉代码块自带的复制按钮 */
+  display: none !important;
+}
 .ct-panel :deep(div[class*='language-'] + div[class*='language-']) {
   border-top: 1px dashed var(--rule) !important;
 }

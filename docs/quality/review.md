@@ -1,11 +1,8 @@
 ---
+status: draft
 title: 验证与代码审查
 description: 不盲信 AI 输出，逐行审 diff，识别不存在的 API。
 ---
-
-::: info 本章还没写
-下面是计划覆盖的内容。想参与编写，点页面底部的「在 GitHub 上编辑此页」。
-:::
 
 ## 计划覆盖
 

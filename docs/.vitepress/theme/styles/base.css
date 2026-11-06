@@ -234,11 +234,11 @@ textarea {
   }
 }
 
-/* 提示块：柔和底色 + 左侧细色条 */
+/* 提示块：柔和底色 + 同色系细描边（不用左侧色条） */
 .custom-block {
   margin: 20px 0;
-  padding: 14px 18px 12px 20px;
-  border: 0 !important;
+  padding: 14px 18px 12px;
+  border: 1px solid color-mix(in oklab, var(--signal, var(--ink-3)) 22%, transparent) !important;
   border-radius: var(--radius);
   font-size: 15px;
   line-height: 1.75;
@@ -248,12 +248,6 @@ textarea {
 .custom-block.warning { --signal: var(--warn); background: var(--warn-soft); }
 .custom-block.danger { --signal: var(--danger); background: var(--danger-soft); }
 .custom-block.info { --signal: var(--ink-3); background: var(--info-soft); }
-.custom-block.tip,
-.custom-block.warning,
-.custom-block.danger,
-.custom-block.info {
-  box-shadow: inset 3px 0 0 var(--signal);
-}
 .custom-block .custom-block-title {
   margin-bottom: 2px;
   font-size: 14px;
@@ -307,6 +301,64 @@ textarea {
     display: block;
     overflow-x: auto;
   }
+}
+
+/* ---------- 章节概览版式 ---------- */
+/* 草稿章节的「计划覆盖」：一张待写要点清单，虚线圆点表示还没写 */
+.is-draft .vp-doc h2[id='计划覆盖'] + ul {
+  margin: 16px 0 0;
+  padding: 4px 0;
+  list-style: none;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+  background: var(--raised);
+}
+.is-draft .vp-doc h2[id='计划覆盖'] + ul > li {
+  position: relative;
+  margin: 0;
+  padding: 10px 18px 10px 46px;
+  line-height: 1.7;
+  color: var(--ink);
+}
+.is-draft .vp-doc h2[id='计划覆盖'] + ul > li + li {
+  border-top: 1px solid var(--rule-soft);
+}
+.is-draft .vp-doc h2[id='计划覆盖'] + ul > li::before {
+  content: '';
+  position: absolute;
+  top: 17px;
+  left: 18px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1.5px dashed var(--ink-3);
+}
+
+/* 「三问」：每一问是一块面板，标题和要点同底色 */
+.vp-doc h2[id='三问'] ~ h3:has(+ ul) {
+  margin: 16px 0 0;
+  padding: 14px 18px 2px;
+  border: 1px solid var(--rule);
+  border-bottom: 0;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: var(--paper-2);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 600;
+}
+.vp-doc h2[id='三问'] ~ h3:has(+ ul) + ul {
+  margin: 0;
+  padding: 2px 18px 14px 38px;
+  border: 1px solid var(--rule);
+  border-top: 0;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  background: var(--paper-2);
+}
+.vp-doc h2[id='三问'] ~ h3:has(+ ul) + ul > li + li {
+  margin-top: 2px;
+}
+.vp-doc h2[id='三问'] ~ h3 .header-anchor {
+  display: none;
 }
 
 /* 右侧本页目录 */

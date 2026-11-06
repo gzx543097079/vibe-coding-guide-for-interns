@@ -1,11 +1,8 @@
 ---
+status: draft
 title: 语言基础
 description: JS / TS、Dart、Kotlin、Swift、ArkTS 的定位与上手路径。
 ---
-
-::: info 本章还没写
-下面是计划覆盖的内容。想参与编写，点页面底部的「在 GitHub 上编辑此页」。
-:::
 
 ## 这是什么
 

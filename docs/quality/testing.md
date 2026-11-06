@@ -1,11 +1,8 @@
 ---
+status: draft
 title: 测试
 description: 单元、集成与 E2E 测试，让 AI 先写测试。
 ---
-
-::: info 本章还没写
-下面是计划覆盖的内容。想参与编写，点页面底部的「在 GitHub 上编辑此页」。
-:::
 
 ## 计划覆盖
 

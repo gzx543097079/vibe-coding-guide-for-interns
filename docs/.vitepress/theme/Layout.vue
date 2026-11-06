@@ -7,6 +7,8 @@ import ReadingProgress from './components/ReadingProgress.vue'
 import BackToTop from './components/BackToTop.vue'
 import CommandPalette from './components/CommandPalette.vue'
 import SearchTrigger from './components/SearchTrigger.vue'
+import ChapterMore from './components/ChapterMore.vue'
+import NotFound from './components/NotFound.vue'
 
 const { isDark, frontmatter } = useData()
 const route = useRoute()
@@ -53,6 +55,12 @@ watch(
     </template>
     <template #doc-before>
       <DocHeader />
+    </template>
+    <template #doc-footer-before>
+      <ChapterMore />
+    </template>
+    <template #not-found>
+      <NotFound />
     </template>
     <template #layout-bottom>
       <BackToTop />

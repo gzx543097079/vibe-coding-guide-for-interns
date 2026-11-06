@@ -1,11 +1,8 @@
 ---
+status: draft
 title: 前端性能
 description: 加载、渲染、Lighthouse 与 DevTools Performance。
 ---
-
-::: info 本章还没写
-下面是计划覆盖的内容。想参与编写，点页面底部的「在 GitHub 上编辑此页」。
-:::
 
 ## 计划覆盖
 
