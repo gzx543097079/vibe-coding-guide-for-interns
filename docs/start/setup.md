@@ -91,6 +91,8 @@ macOS 自带的 Git 可能比较旧，用 Homebrew 装一份新的；Windows 的
   :win='["if (!(Test-Path $PROFILE)) { New-Item $PROFILE -Force }", "Add-Content $PROFILE &apos;fnm env --use-on-cd --shell powershell | Out-String | Invoke-Expression&apos;"]'
 />
 
+Windows 新开终端时如果提示「禁止运行脚本」，是 PowerShell 的执行策略不允许加载配置文件。可以把当前用户的策略改为 `RemoteSigned`（`Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`）<RTbd />，改之前先读一遍微软的[执行策略说明](https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/about_execution_policies)，公司电脑先问 IT。
+
 第三步，新开一个终端，装 LTS 版本并验证：
 
 <RTerm
@@ -151,7 +153,7 @@ JDK 有多个发行版，选哪个、装哪个大版本，**先问团队**。下
   title="排查 PATH"
   :mac='["which node", "echo $PATH | tr \":\" \"\\n\""]'
   :win='["Get-Command node", "$env:Path -split \";\""]'
-  :mac-out='["/Users/you/.local/state/fnm_multishells/xxxx/bin/node", "/opt/homebrew/bin", "/usr/local/bin", "/usr/bin"]'
+  :mac-out='["…/fnm_multishells/<id>/bin/node", "/opt/homebrew/bin", "/usr/local/bin", "/usr/bin"]'
 />
 
 找不到：说明安装目录不在 PATH 里，回到安装步骤看提示，或新开终端。找到的路径不是你预期的：说明装了不止一份，卸掉多余的那份。

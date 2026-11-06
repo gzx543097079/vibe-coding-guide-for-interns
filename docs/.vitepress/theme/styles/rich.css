@@ -432,6 +432,10 @@
   color: var(--accent-ink);
   transition: background-color var(--dur-1) var(--ease);
 }
+.rx-tree-btn {
+  flex: none;
+  white-space: nowrap;
+}
 .rx-steps-all:hover,
 .rx-tree-btn:hover {
   background: var(--accent-soft);
@@ -696,14 +700,6 @@
 }
 .rx-term-o {
   display: block;
-  animation: rx-line var(--dur-3) var(--ease) both;
-  animation-delay: calc(120ms + var(--i, 0) * 70ms);
-}
-@keyframes rx-line {
-  from {
-    opacity: 0;
-    transform: translateY(3px);
-  }
 }
 .vp-doc .rx-term-note {
   padding: 8px 16px 10px;
@@ -1207,7 +1203,6 @@ button.rx-tree-name[aria-expanded='true'] .rx-tree-caret {
   .rx-ask-item[open] .rx-ask-body,
   .rx-step[open] .rx-step-body,
   .rx-term-screen,
-  .rx-term-o,
   .rx-ea .rx-ea-link.is-on svg {
     animation: none !important;
   }
