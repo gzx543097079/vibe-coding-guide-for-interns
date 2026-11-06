@@ -1,2 +1,17 @@
-# vibe-coding-guide-for-interns
-面向实习生的 Vibe Coding 开发指南
+# Vibe Coding 开发指南（实习生版）
+
+面向实习生的 Vibe Coding 开发指南：如何借助 AI 编码助手高效、安全地完成日常开发。
+
+## 内容规划
+
+- 入门：环境与工具准备
+- 提示词与任务拆解
+- 代码审查与验证
+- Git / PR 协作流程
+- 安全与常见坑
+
+> 项目处于起步阶段，欢迎通过 Issue 和 PR 参与共建。
+
+## 许可证
+
+[MIT](LICENSE)
