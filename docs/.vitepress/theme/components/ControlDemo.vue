@@ -109,7 +109,7 @@ function replay() {
         </fieldset>
         <p v-if="verify" class="cd-verify">
           <span class="cd-badge" :class="verifyClass">{{ verify.status }}</span>
-          <span>{{ verify.date ? `${verify.date} · ` : '' }}{{ verify.note }}</span>
+          <span>{{ verify.date ? `${verify.date} · ` : '' }}{{ verify.note }}<template v-if="verify.status !== '未验证'"> 提示词已按网页模拟验证，原生代码未在真机验证。</template></span>
         </p>
         <p :id="`${uid}-tip`" class="cd-tip">
           提示词按当前选中的写法（{{ stackLabel ?? '未指定' }}）生成，复制后把 <mark class="cd-ph">{…}</mark> 换成你项目的实际内容。

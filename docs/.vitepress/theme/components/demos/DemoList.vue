@@ -9,16 +9,17 @@ interface Item {
   title: string
   sub: string
   hue: number
+  time: string
 }
 
 let seq = 0
-const make = (title: string, sub: string, hue: number): Item => ({ id: ++seq, title, sub, hue })
+const make = (title: string, sub: string, hue: number, time = '刚刚'): Item => ({ id: ++seq, title, sub, hue, time })
 const items = ref<Item[]>([
-  make('构建通知', 'main 分支构建通过', 150),
-  make('代码审查', '你的 PR 有 2 条新评论', 258),
-  make('导师', '下午三点对一下需求', 30),
-  make('测试环境', '部署完成', 200),
-  make('周报提醒', '周五下班前提交', 78),
+  make('构建通知', 'main 分支构建通过', 150, '09:12'),
+  make('代码审查', '你的 PR 有 2 条新评论', 258, '昨天'),
+  make('导师', '下午三点对一下需求', 30, '昨天'),
+  make('测试环境', '部署完成', 200, '周一'),
+  make('周报提醒', '周五下班前提交', 78, '周一'),
 ])
 const incoming = [
   ['Issue 指派', '新任务：修复分页参数', 302],
@@ -136,7 +137,6 @@ function offset(id: number) {
 }
 
 const ready = computed(() => pull.value >= THRESHOLD || refreshing.value)
-const fmt = ['09:12', '昨天', '昨天', '周一', '周一', '上周']
 </script>
 
 <template>
@@ -160,7 +160,7 @@ const fmt = ['09:12', '昨天', '昨天', '周一', '周一', '上周']
       </div>
 
       <TransitionGroup tag="ul" name="dl-item" class="dl-list" :class="{ anim: animating }" :style="{ transform: `translateY(${pull}px)` }">
-        <li v-for="(item, i) in items" :key="item.id" class="dl-row">
+        <li v-for="item in items" :key="item.id" class="dl-row">
           <button type="button" class="dl-del" :tabindex="openId === item.id ? 0 : -1" @click="remove(item.id)" @focus="openId = item.id">
             删除
           </button>
@@ -175,7 +175,7 @@ const fmt = ['09:12', '昨天', '昨天', '周一', '周一', '上周']
               <span class="dl-title">{{ item.title }}</span>
               <span class="dl-sub">{{ item.sub }}</span>
             </span>
-            <span class="dl-time">{{ fmt[i] ?? '' }}</span>
+            <span class="dl-time">{{ item.time }}</span>
             <button
               type="button"
               class="dl-more"

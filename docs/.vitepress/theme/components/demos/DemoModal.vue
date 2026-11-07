@@ -23,7 +23,7 @@ async function show(kind: 'sheet' | 'dialog', moveFocus = true) {
   opener = kind === 'sheet' ? shareBtn.value ?? null : delBtn.value ?? null
   open.value = kind
   await nextTick()
-  if (moveFocus) panel.value?.querySelector<HTMLElement>('button')?.focus()
+  if (moveFocus) panel.value?.querySelector<HTMLElement>('button')?.focus({ preventScroll: true })
 }
 
 async function close(result?: string) {
@@ -33,7 +33,7 @@ async function close(result?: string) {
   if (result) last.value = result
   // 等背景区域解除 inert 后再还原焦点
   await nextTick()
-  if (hadFocus) opener?.focus()
+  if (hadFocus) opener?.focus({ preventScroll: true })
 }
 
 // 焦点限制在弹窗内，Esc 关闭

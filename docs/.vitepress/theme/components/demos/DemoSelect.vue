@@ -25,7 +25,7 @@ async function show() {
   open.value = true
   active.value = options.findIndex((o) => o.v === value.value)
   await nextTick()
-  listbox.value?.focus()
+  listbox.value?.focus({ preventScroll: true })
 }
 function hide(refocus = true) {
   if (!open.value) return

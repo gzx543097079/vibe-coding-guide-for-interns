@@ -57,7 +57,8 @@ function drop(cancel = false) {
     Object.assign(s, { mode: null, from: -1, to: -1, dy: 0, settling: false })
     msg.value = cancel ? `已取消，${label}回到第 ${from + 1} 位` : `已放下${label}，位置 ${to + 1} / ${n.value}`
     await nextTick()
-    if (mode === 'key') handles.value[to]?.focus()
+    // v-for 的模板引用数组不保证与数据顺序一致，按 DOM 顺序找手柄
+    if (mode === 'key') list.value?.children[to]?.querySelector<HTMLButtonElement>('.dso-handle')?.focus()
     requestAnimationFrame(() => requestAnimationFrame(() => (instant.value = false)))
   }, mode === 'pointer' || to !== from || cancel ? 200 : 0)
 }
