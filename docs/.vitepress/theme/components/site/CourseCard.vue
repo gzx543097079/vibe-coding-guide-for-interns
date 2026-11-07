@@ -7,24 +7,19 @@ defineProps<{ course: Module }>()
 const { isComplete } = useLearning()
 </script>
 <template>
-  <a
-    class="course-card"
-    :href="withBase('/courses/' + course.id)"
-  >
-    <span class="course-card-no">{{ String(course.no).padStart(2, '0') }}</span>
-    <span class="course-card-icon"><SiteIcon :name="course.id" :size="20" /></span>
+  <a class="course-card" :href="withBase('/courses/' + course.id)">
     <div class="course-card-body">
       <h2>{{ course.name }}</h2>
       <p>{{ course.intro }}</p>
     </div>
     <span class="course-card-tag">{{ course.tag }}</span>
-    <span class="course-card-meta">{{ course.chapters.length }} 步</span>
+    <span class="course-card-meta">{{ course.chapters.length }} 篇</span>
     <span class="course-card-meta">{{
       course.chapters.filter((c) => isComplete(c.id)).length
-        ? '已完成 ' + course.chapters.filter((c) => isComplete(c.id)).length + ' 步'
+        ? '读过 ' + course.chapters.filter((c) => isComplete(c.id)).length + ' 篇'
         : course.chapters.some((c) => c.level !== '基础')
           ? '基础 / 进阶 / 精通'
-          : '从第一步开始'
+          : '从第一篇开始'
     }}</span>
     <SiteIcon name="arrow" :size="17" />
   </a>

@@ -1,9 +1,9 @@
 ---
 layout: page
 markdownStyles: false
-title: Vibe Coding 开发指南
+title: Vibe Coding 开发笔记
 titleTemplate: false
-description: 从当前任务出发，读懂、验证并交付 AI 辅助开发的结果。
+description: 环境、代码、调试和交付时随手查的 108 篇笔记。
 ---
 
 <HomePage />

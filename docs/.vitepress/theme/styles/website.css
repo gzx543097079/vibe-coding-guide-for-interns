@@ -1,47 +1,46 @@
-/* 工程交付台：固定的工作栏、浅色画布与任务状态；组件演示画布保持独立。 */
+/* 开发笔记：暖纸色页面、浅色常驻顶栏和克制的陶土色；组件演示画布保持独立。 */
 :root {
-  --paper: #f4f5f3;
-  --paper-2: #eceeea;
-  --paper-3: #e2e5e0;
-  --paper-4: #d5dad3;
-  --raised: #ffffff;
-  --ink: #161b18;
-  --ink-2: #414a44;
-  --ink-3: #68726b;
-  --rule: #dce1da;
-  --rule-soft: #e7ebe4;
-  --rule-strong: #bfc8bd;
-  --shell: #17211c;
-  --shell-2: #223028;
-  --shell-line: #35473c;
-  --shell-ink: #f2f5f0;
-  --shell-ink-2: #b8c6bb;
-  --accent: #246b51;
-  --accent-hover: #1a563f;
-  --accent-ink: #1d6048;
-  --accent-soft: #e1eee7;
-  --on-accent: #fff;
-  --focus: #246b51;
-  --tip: #246b51;
-  --tip-soft: #e1eee7;
-  --warn: #775617;
-  --warn-soft: #f4ecd7;
-  --danger: #9c3d35;
-  --danger-soft: #f6e3df;
-  --info-soft: #e8ede8;
-  --live: #7ddba8;
-  --font-serif: var(--font-sans);
-  --radius: 6px;
-  --radius-lg: 9px;
-  --radius-xl: 12px;
-  --code-bg: #141c17;
-  --code-head: #1d2821;
-  --code-rule: #314137;
-  --shadow-1: 0 2px 4px rgb(25 35 51 / 0.04);
+  --paper: #f8f6f0;
+  --paper-2: #f1eee6;
+  --paper-3: #e9e5dc;
+  --paper-4: #ded9ce;
+  --raised: var(--raised);
+  --ink: #181714;
+  --ink-2: #4c4841;
+  --ink-3: #756f64;
+  --rule: #ded9cc;
+  --rule-soft: #ebe7dd;
+  --rule-strong: #c6bfb1;
+  --shell: #f8f6f0;
+  --shell-2: #f1eee6;
+  --shell-line: #ded9cc;
+  --shell-ink: #181714;
+  --shell-ink-2: #756f64;
+  --accent: #a6563d;
+  --accent-hover: #8f4632;
+  --accent-ink: #914a34;
+  --accent-soft: #f5e8df;
+  --on-accent: #fffefb;
+  --focus: #914a34;
+  --tip: #8b5c48;
+  --tip-soft: #f5e8df;
+  --warn: #7b5a1f;
+  --warn-soft: #f8efd9;
+  --danger: #a3443d;
+  --danger-soft: #f8e5e1;
+  --info-soft: #f0ece4;
+  --live: #a6563d;
+  --radius: 4px;
+  --radius-lg: 6px;
+  --radius-xl: 8px;
+  --code-bg: #201e1a;
+  --code-head: #2a2722;
+  --code-rule: #413c34;
+  --shadow-1: 0 2px 6px rgb(48 42 34 / 0.05);
   --shadow-2:
-    0 4px 10px rgb(22 32 25 / 0.05), 0 18px 36px -20px rgb(22 32 25 / 0.22);
+    0 4px 12px rgb(48 42 34 / 0.05), 0 18px 36px -24px rgb(48 42 34 / 0.22);
   --shadow-3:
-    0 8px 16px rgb(22 32 25 / 0.08), 0 30px 64px -28px rgb(22 32 25 / 0.3);
+    0 8px 16px rgb(48 42 34 / 0.08), 0 30px 64px -28px rgb(48 42 34 / 0.3);
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   --vp-c-bg: var(--paper);
   --vp-c-bg-alt: var(--paper-2);
@@ -49,35 +48,35 @@
   --vp-c-bg-soft: var(--paper-2);
 }
 .dark {
-  --paper: #111814;
-  --paper-2: #18211b;
-  --paper-3: #222d25;
-  --paper-4: #2c3930;
-  --raised: #1a241d;
-  --ink: #eef3ed;
-  --ink-2: #c4cfc5;
-  --ink-3: #99a89c;
-  --rule: #314036;
-  --rule-soft: #27342b;
-  --rule-strong: #4a5f50;
-  --shell: #0d1510;
-  --shell-2: #17241c;
-  --shell-line: #304136;
-  --shell-ink: #f2f5f0;
-  --shell-ink-2: #b8c6bb;
-  --accent: #83d3ab;
-  --accent-hover: #a1dfbe;
-  --accent-ink: #91dcb4;
-  --accent-soft: #213b2d;
-  --on-accent: #102017;
-  --focus: #91dcb4;
-  --tip: #91dcb4;
-  --tip-soft: #203b2c;
-  --warn: #dfc486;
-  --warn-soft: #3a301b;
-  --danger: #e7a09a;
-  --danger-soft: #3c2622;
-  --info-soft: #233027;
+  --paper: #181714;
+  --paper-2: #211f1b;
+  --paper-3: #2a2722;
+  --paper-4: #36322c;
+  --raised: #211f1b;
+  --ink: #f6f1e7;
+  --ink-2: #d1c8ba;
+  --ink-3: #a89e90;
+  --rule: #36322c;
+  --rule-soft: #2a2722;
+  --rule-strong: #514b42;
+  --shell: #181714;
+  --shell-2: #211f1b;
+  --shell-line: #36322c;
+  --shell-ink: #f6f1e7;
+  --shell-ink-2: #a89e90;
+  --accent: #e1a188;
+  --accent-hover: #edb59e;
+  --accent-ink: #e8ae96;
+  --accent-soft: #392720;
+  --on-accent: #181714;
+  --focus: #e8ae96;
+  --tip: #e1a188;
+  --tip-soft: #392720;
+  --warn: #d9b675;
+  --warn-soft: #3a2e19;
+  --danger: #e79a92;
+  --danger-soft: #3e2724;
+  --info-soft: #2a2722;
 }
 html {
   scroll-padding-top: 100px;
@@ -116,8 +115,8 @@ a {
   color: inherit;
 }
 ::selection {
-  color: var(--on-accent);
-  background: var(--accent);
+  color: var(--ink);
+  background: var(--accent-soft);
 }
 input,
 textarea {
@@ -143,10 +142,11 @@ button:focus-visible {
   top: -80px;
   left: 20px;
   z-index: 500;
-  background: var(--accent);
-  color: var(--on-accent);
+  background: var(--raised);
+  color: var(--ink);
+  border: 1px solid var(--rule-strong);
   padding: 12px 20px;
-  border-radius: 8px;
+  border-radius: var(--radius);
 }
 .skip-link:focus {
   top: 12px;
@@ -155,7 +155,8 @@ button:focus-visible {
   position: sticky;
   top: 0;
   z-index: 60;
-  background: var(--shell);
+  background: color-mix(in srgb, var(--shell) 94%, transparent);
+  backdrop-filter: blur(8px);
   color: var(--shell-ink);
   border-bottom: 1px solid var(--shell-line);
 }
@@ -173,27 +174,25 @@ button:focus-visible {
   flex: none;
   gap: 11px;
   font-size: 17px;
-  font-weight: 680;
-  letter-spacing: -0.01em;
+  font-weight: 650;
+  letter-spacing: -0.015em;
   text-decoration: none;
   line-height: 1.2;
 }
 .brand-symbol {
-  width: 34px;
-  height: 34px;
+  width: 24px;
+  height: 28px;
   display: grid;
   place-items: center;
-  border-radius: 6px;
-  color: var(--shell);
-  background: var(--live);
+  color: var(--accent-ink);
 }
 .brand-caption {
   display: block;
-  margin-top: 3px;
+  margin-top: 2px;
   color: var(--shell-ink-2);
-  font-size: 10px;
-  font-weight: 560;
-  letter-spacing: 0.1em;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
 }
 .site-nav {
   display: flex;
@@ -207,7 +206,7 @@ button:focus-visible {
   display: flex;
   align-items: center;
   font-size: 13px;
-  font-weight: 560;
+  font-weight: 500;
   color: var(--shell-ink-2);
   text-decoration: none;
 }
@@ -218,12 +217,13 @@ button:focus-visible {
   right: 0;
   bottom: 0;
   height: 2px;
-  background: var(--live);
+  background: var(--accent);
   transform: scaleX(0);
   transition: transform 160ms var(--ease);
 }
 .site-nav a.active {
   color: var(--shell-ink);
+  font-weight: 650;
 }
 .site-nav a.active::after {
   transform: scaleX(1);
@@ -242,7 +242,7 @@ button:focus-visible {
   align-items: center;
   padding: 6px 10px;
   border: 1px solid var(--shell-line);
-  border-radius: 4px;
+  border-radius: var(--radius);
   color: var(--shell-ink-2);
   font-size: 11px;
   white-space: nowrap;
@@ -252,22 +252,22 @@ button:focus-visible {
   align-items: center;
   gap: 9px;
   padding: 8px 11px;
-  background: var(--shell-2);
+  background: var(--raised);
   border: 1px solid var(--shell-line);
-  border-radius: 5px;
+  border-radius: var(--radius);
   font-size: 12px;
   color: var(--shell-ink-2);
 }
 .site-search kbd {
   margin-left: 15px;
   border: 1px solid var(--shell-line);
-  border-radius: 3px;
+  border-radius: var(--radius);
   padding: 1px 4px;
   font: inherit;
   color: var(--shell-ink-2);
 }
 .site-search:hover {
-  border-color: var(--live);
+  border-color: var(--accent);
   color: var(--shell-ink);
 }
 .icon-button {
@@ -277,7 +277,7 @@ button:focus-visible {
   width: 34px;
   height: 34px;
   color: var(--shell-ink-2);
-  border-radius: 5px;
+  border-radius: var(--radius);
   flex: none;
 }
 .icon-button:hover {
@@ -293,6 +293,7 @@ button:focus-visible {
   gap: 28px;
   border-top: 1px solid var(--rule);
   background: var(--shell);
+  color: var(--shell-ink);
 }
 .native-search-host {
   position: fixed;
@@ -312,9 +313,9 @@ button:focus-visible {
   min-height: 42px;
   padding: 0 18px;
   border: 1px solid transparent;
-  border-radius: 5px;
+  border-radius: var(--radius);
   font-size: 13px;
-  font-weight: 640;
+  font-weight: 600;
   text-decoration: none;
   transition:
     background 160ms,
@@ -397,22 +398,23 @@ button:focus-visible {
   padding: 6px;
   border: 2px solid var(--paper);
   border-radius: 50%;
-  background: #dce6f9;
-  color: #34588c;
+  background: var(--paper-3);
+  color: var(--ink-2);
 }
 .mini-avatars svg + svg {
   margin-left: -7px;
-  background: #d8eee5;
-  color: #26604b;
+  background: var(--paper-3);
+  color: var(--ink-2);
 }
 .mini-avatars svg:last-child {
-  background: #e6e0f5;
-  color: #654f97;
+  background: var(--paper-3);
+  color: var(--ink-2);
 }
 .hero-playground {
-  background: var(--shell);
+  background: var(--paper-3);
   color: var(--shell-ink);
-  border-radius: 8px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
   padding: 22px 22px 14px;
   box-shadow: var(--shadow-2);
 }
@@ -491,7 +493,7 @@ button:focus-visible {
 .playground-canvas p {
   margin: 7px 0 18px;
   font-size: 12px;
-  color: #637087;
+  color: var(--ink-3);
 }
 .sample-primary {
   display: inline-flex;
@@ -588,7 +590,7 @@ button:focus-visible {
   height: 23px;
   border-radius: 20px;
   padding: 3px;
-  background: #c4cdda;
+  background: var(--rule-strong);
   flex: none;
 }
 .sample-switch i {
@@ -596,7 +598,7 @@ button:focus-visible {
   width: 17px;
   height: 17px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--raised);
   transform: translateX(0);
   transition: transform 200ms var(--ease);
 }
@@ -658,7 +660,7 @@ button:focus-visible {
   font-size: 25px;
   font-weight: 680;
   line-height: 1.4;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.02em;
 }
 .section-heading p {
   margin: 10px 0 0;
@@ -693,7 +695,7 @@ button:focus-visible {
   border-color: var(--accent);
 }
 .featured-ai {
-  background: var(--shell);
+  background: var(--paper-3);
   color: var(--shell-ink);
 }
 .featured-frontend {
@@ -1006,11 +1008,12 @@ button:focus-visible {
   margin-bottom: 42px;
 }
 .page-intro h1 {
+  font-family: var(--font-serif);
   font-size: 38px;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.02em;
   line-height: 1.35;
   margin: 0;
-  font-weight: 690;
+  font-weight: 600;
 }
 .page-intro > div {
   padding-bottom: 6px;
@@ -1038,13 +1041,14 @@ button:focus-visible {
 }
 .filter-buttons button {
   padding: 10px 18px;
-  border-radius: 7px;
+  border-radius: var(--radius);
   color: var(--ink-2);
   font-size: 13px;
 }
 .filter-buttons button[aria-pressed='true'] {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  font-weight: 650;
 }
 .filter-buttons button:hover:not([aria-pressed='true']) {
   background: var(--paper-3);
@@ -1057,7 +1061,7 @@ button:focus-visible {
   min-height: 41px;
   border: 1px solid var(--rule-strong);
   background: var(--raised);
-  border-radius: 8px;
+  border-radius: var(--radius);
   color: var(--ink-3);
 }
 .catalog-search input {
@@ -1089,7 +1093,7 @@ button:focus-visible {
 }
 .course-card {
   display: grid;
-  grid-template-columns: 34px 26px minmax(0, 1fr) 48px 52px 130px 18px;
+  grid-template-columns: minmax(0, 1fr) 48px 52px 130px 18px;
   align-items: center;
   gap: 16px;
   min-height: 86px;
@@ -1147,7 +1151,7 @@ button:focus-visible {
   align-items: center;
   gap: 20px;
   background: var(--paper-2);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
 }
 .catalog-tip > svg {
   color: var(--accent-ink);
@@ -1170,7 +1174,7 @@ button:focus-visible {
   align-items: center;
   padding: 70px 20px;
   border: 1px dashed var(--rule-strong);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
 }
 .empty-state > svg {
   color: var(--ink-3);
@@ -1198,7 +1202,7 @@ button:focus-visible {
   width: 100%;
   height: 3px;
   margin-bottom: 21px;
-  background: var(--shell);
+  background: var(--accent);
 }
 .back-link {
   display: inline-flex;
@@ -1212,11 +1216,12 @@ button:focus-visible {
   padding-top: 28px;
 }
 .course-intro-grid h1 {
+  font-family: var(--font-serif);
   font-size: 38px;
   line-height: 1.25;
   margin: 0 0 18px;
-  letter-spacing: -0.035em;
-  font-weight: 760;
+  letter-spacing: -0.02em;
+  font-weight: 600;
 }
 .course-intro-grid p {
   color: var(--ink-2);
@@ -1263,7 +1268,7 @@ button:focus-visible {
   margin: 0;
   padding: 0;
   border: 1px solid var(--rule);
-  border-radius: 7px;
+  border-radius: var(--radius-lg);
   background: var(--raised);
   overflow: hidden;
 }
@@ -1316,7 +1321,7 @@ button:focus-visible {
   padding: 27px;
   background: var(--raised);
   border: 1px solid var(--rule);
-  border-radius: 7px;
+  border-radius: var(--radius-lg);
 }
 .course-side-info h2 {
   font-size: 18px;
@@ -1400,15 +1405,16 @@ button:focus-visible {
   gap: 15px;
   padding: 23px 20px;
   border: 1px solid var(--rule);
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
   text-align: left;
   background: var(--raised);
   color: var(--ink-2);
 }
 .path-selector button[aria-pressed='true'] {
   background: var(--accent-soft);
-  border-color: var(--accent);
+  border-color: var(--rule-strong);
   color: var(--accent-ink);
+  font-weight: 650;
 }
 .path-selector strong {
   display: block;
@@ -1426,7 +1432,7 @@ button:focus-visible {
 .path-detail {
   background: var(--raised);
   border: 1px solid var(--rule);
-  border-radius: 7px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
 }
 .path-detail-head {
@@ -1505,8 +1511,8 @@ button:focus-visible {
   margin: 0 38px 32px;
   padding: 20px;
   background: var(--tip-soft);
-  border-radius: 10px;
-  color: var(--tip);
+  border-radius: var(--radius-lg);
+  color: var(--ink-2);
 }
 .path-outcome > svg {
   flex: none;
@@ -1532,9 +1538,10 @@ button:focus-visible {
   margin-bottom: 30px;
 }
 .lab-page-heading h1 {
-  font-size: 30px;
-  font-weight: 680;
-  letter-spacing: -0.035em;
+  font-family: var(--font-serif);
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   margin: 0 0 11px;
 }
 .lab-page-heading p {
@@ -1547,7 +1554,7 @@ button:focus-visible {
   grid-template-columns: 210px minmax(0, 1fr);
   border: 1px solid var(--rule-strong);
   background: var(--raised);
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
 }
 .lab-library {
   border-right: 1px solid var(--rule);
@@ -1666,13 +1673,13 @@ button:focus-visible {
   padding: 3px;
   background: var(--paper-2);
   border: 1px solid var(--rule);
-  border-radius: 6px;
+  border-radius: var(--radius);
 }
 .segmented-control button {
   padding: 5px 10px;
   font-size: 11px;
   color: var(--ink-3);
-  border-radius: 4px;
+  border-radius: var(--radius);
 }
 .segmented-control button[aria-pressed='true'] {
   background: var(--raised);
@@ -1700,7 +1707,7 @@ button:focus-visible {
   --app-danger: #b0413a;
   flex: none;
   background: var(--app-bg);
-  border: 1px solid #c6ccd5;
+  border: 1px solid var(--rule-strong);
   box-shadow:
     0 8px 15px rgb(24 35 51 / 0.05),
     0 25px 42px -20px rgb(24 35 51 / 0.18);
@@ -1866,7 +1873,7 @@ button:focus-visible {
 .lab-validation p {
   color: var(--ink-3);
 }
-/* 阅读工作区只围绕当前任务所属领域，避免全站目录占据屏幕。 */
+/* 阅读页围绕当前方向组织侧栏，避免全站目录占据屏幕。 */
 .reader-layout {
   display: grid;
   grid-template-columns: 220px minmax(0, 760px) 170px;
@@ -1898,19 +1905,14 @@ button:focus-visible {
 .reader-course-name {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-2);
+  font-size: 13px;
   margin-bottom: 26px;
 }
-.reader-course-name > span {
-  display: grid;
-  place-items: center;
-  width: 33px;
-  height: 33px;
-  color: var(--accent-ink);
-  background: var(--accent-soft);
-  border-radius: 8px;
-  flex: none;
+.reader-course-name strong {
+  font-weight: 600;
 }
 .reader-sidebar section {
   margin-bottom: 22px;
@@ -1999,11 +2001,12 @@ button:focus-visible {
   font-variant-numeric: tabular-nums;
 }
 .reader-header h1 {
+  font-family: var(--font-serif);
   margin: 14px 0;
   font-size: 34px;
-  font-weight: 690;
+  font-weight: 600;
   line-height: 1.4;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.02em;
 }
 .reader-header > p {
   font-size: 15px;
@@ -2036,9 +2039,9 @@ button:focus-visible {
 }
 .reader-body.vp-doc h2 {
   font-size: 25px;
-  font-weight: 720;
+  font-weight: 650;
   line-height: 1.5;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   margin: 42px 0 17px;
   padding: 0;
 }
@@ -2194,7 +2197,7 @@ button:focus-visible {
   color: var(--on-accent);
 }
 .dark .hero-playground {
-  background: var(--shell);
+  background: var(--paper-3);
 }
 .dark .featured-frontend {
   background: var(--paper-3);

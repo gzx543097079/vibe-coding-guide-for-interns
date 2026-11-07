@@ -14,10 +14,10 @@ interface Item {
 }
 
 const actions: Item[] = [
-  { id: 'p-home', title: '回到工作台', sub: '继续当前任务与写任务简报', link: '/', group: '快捷动作' },
-  { id: 'p-lab', title: '动手验证交互', sub: '17 个组件演示与提示词', link: '/lab', group: '快捷动作' },
-  { id: 'p-prompts', title: '准备任务简报', sub: '场景提示词模板与填写线索', link: '/growth/prompt-templates', group: '快捷动作' },
-  { id: 'p-review', title: '检查与交付', sub: '验证、审查与发布相关章节', link: '/courses/quality', group: '快捷动作' },
+  { id: 'p-home', title: '首页', sub: '继续读，或者整理一段需求', link: '/', group: '常用页面' },
+  { id: 'p-lab', title: '组件演示', sub: '17 个可操作的组件例子', link: '/lab', group: '常用页面' },
+  { id: 'p-prompts', title: '需求模板', sub: '写功能、修 bug 和审查的模板', link: '/growth/prompt-templates', group: '常用页面' },
+  { id: 'p-review', title: '质量与交付', sub: '测试、调试、审查和发布', link: '/courses/quality', group: '常用页面' },
 ]
 const chapters: Item[] = modules.flatMap((m) =>
   m.chapters.map((c) => ({ id: c.id, title: c.title, sub: `${c.level} · ${c.summary}`, link: c.link, mod: m.id, group: m.name })),
@@ -40,7 +40,7 @@ const recent = computed<Item[]>(() => {
     {
       id: 'r-' + ref.chapter.id,
       title: '接着读 · ' + ref.chapter.title,
-      sub: `${ref.module.name} · 第 ${ref.index + 1} 步`,
+      sub: `${ref.module.name} · 第 ${ref.index + 1} 篇`,
       link: ref.chapter.link,
       mod: ref.module.id,
       group: '最近停留',
@@ -96,7 +96,7 @@ function go(it: Item | undefined) {
   hide(false)
   router.go(withBase(it.link))
 }
-// 交给内置全文搜索：写入搜索词后用 "/" 快捷键打开
+// 交给内置全文搜索：写入搜索词后用「/」快捷键打开
 function fullText() {
   const text = q.value
   hide(false)
@@ -182,7 +182,7 @@ function mark(text: string) {
               aria-controls="cp-list"
               aria-autocomplete="list"
               :aria-activedescendant="activeId"
-              placeholder="输入任务或章节名；Shift + Enter 查全文"
+              placeholder="输入章节名；Shift + Enter 查全文"
               autocomplete="off"
               spellcheck="false"
               @keydown="onKey"
@@ -213,7 +213,7 @@ function mark(text: string) {
               </div>
             </div>
             <div v-if="!flat.length" class="cp-empty">
-              <p>没有匹配的任务或章节。</p>
+              <p>没有匹配的页面或章节。</p>
               <button type="button" class="cp-full" @click="fullText">在全文中搜索「{{ q }}」</button>
             </div>
           </div>
@@ -221,7 +221,7 @@ function mark(text: string) {
           <div class="cp-foot">
             <span><kbd>↑</kbd><kbd>↓</kbd> 选择</span>
             <span><kbd>↵</kbd> 打开</span>
-            <span v-if="!q" class="cp-hint">输入关键词后搜索全部章节</span>
+            <span v-if="!q" class="cp-hint">输入关键词可以搜索全部章节</span>
             <button type="button" class="cp-foot-btn" @click="fullText"><kbd>⇧</kbd><kbd>↵</kbd> 全文搜索</button>
           </div>
           <p class="sr-only" aria-live="polite">{{ q ? `找到 ${flat.length} 个结果` : '' }}</p>
@@ -252,12 +252,6 @@ function mark(text: string) {
   background: var(--paper);
   box-shadow: var(--shadow-3);
   overflow: hidden;
-}
-.cp-panel::before {
-  content: '';
-  display: block;
-  height: 3px;
-  background: var(--shell);
 }
 .cp-input-row {
   display: flex;

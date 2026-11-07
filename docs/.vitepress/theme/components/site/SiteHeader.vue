@@ -7,11 +7,11 @@ const { isDark, page } = useData()
 const route = useRoute()
 const menu = ref(false)
 const nav = [
-  { name: '工作台', link: '/', key: 'home' },
-  { name: '工作区', link: '/learn', key: 'learn' },
-  { name: '任务线', link: '/paths', key: 'paths' },
-  { name: '实验室', link: '/lab', key: 'lab' },
-  { name: '任务简报', link: '/growth/prompt-templates', key: 'briefs' },
+  { name: '首页', link: '/', key: 'home' },
+  { name: '目录', link: '/learn', key: 'learn' },
+  { name: '路线', link: '/paths', key: 'paths' },
+  { name: '组件', link: '/lab', key: 'lab' },
+  { name: '模板', link: '/growth/prompt-templates', key: 'briefs' },
 ]
 const current = computed(() => {
   const path = page.value.relativePath
@@ -37,12 +37,12 @@ const search = () => window.dispatchEvent(new CustomEvent('vcg:palette'))
       <a
         class="site-brand"
         :href="withBase('/')"
-        aria-label="Vibe Coding 工程交付台首页"
+        aria-label="Vibe Coding 开发笔记首页"
       >
         <span class="brand-symbol" aria-hidden="true"
           ><SiteIcon name="code" :size="23"
         /></span>
-        <span>Vibe Coding<span class="brand-caption">工程交付台</span></span>
+        <span>Vibe Coding<span class="brand-caption">开发笔记</span></span>
       </a>
       <nav class="site-nav" aria-label="主导航">
         <a
@@ -59,10 +59,10 @@ const search = () => window.dispatchEvent(new CustomEvent('vcg:palette'))
           v-if="chapter"
           class="header-context"
           :href="withBase('/courses/' + chapter.module.id)"
-          >当前工作区 · {{ chapter.module.name }}</a
+          >{{ chapter.module.name }}</a
         >
         <button class="site-search" type="button" @click="search">
-          <SiteIcon name="search" :size="17" /><span>快速跳转</span
+          <SiteIcon name="search" :size="17" /><span>搜索</span
           ><kbd>⌘ K</kbd>
         </button>
         <button

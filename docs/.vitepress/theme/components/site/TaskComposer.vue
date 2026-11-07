@@ -16,8 +16,8 @@ const current = computed(
   () => prompts.find((p) => p.id === scenario.value) ?? prompts[0],
 )
 const placeholders: Record<string, string> = {
-  structure: '把目标、上下文、约束和验收标准写清楚。',
-  feature: '说明功能、参考实现、可单独验证的步骤和测试。',
+  structure: '写清目标、已知情况、范围和检查方式。',
+  feature: '说明功能、参考实现、能单独运行的小步骤和测试。',
   bugfix: '附复现步骤、实际与预期、完整报错和已排除的可能。',
   refactor: '划定行为边界、现有测试和允许改动的文件范围。',
   testing: '写清输入规则、边界值、异常预期和测试框架。',
@@ -33,22 +33,21 @@ const filled = computed(() =>
 )
 const brief = computed(() =>
   [
-    `任务：${current.value.title}`,
-    `目标：${project.value.trim() || '【一句话说明要完成什么】'}`,
+    `要做什么：${current.value.title}。${project.value.trim() || '【一句话说明要完成什么】'}`,
     '',
-    '背景与证据：',
-    `- 项目 / 技术栈：${scope.value.trim() || '【项目与相关文件】'}`,
-    `- 现象 / 依据：${evidence.value.trim() || '【复现、报错、数据或参考实现】'}`,
+    '已知情况：',
+    `- 项目与文件：${scope.value.trim() || '【项目与相关文件】'}`,
+    `- 现象或依据：${evidence.value.trim() || '【复现、报错、数据或参考实现】'}`,
     '',
-    '约束：',
+    '改动范围：',
     '- 只修改与任务相关的文件；沿用项目已有约定，不引入未确认的依赖。',
     '- 不确定的 API 或行为明确标出，不编造路径、数据或结果。',
     '',
-    '验收标准：',
+    '怎么检查：',
     `- ${acceptance.value.trim() || '【可以运行或观察到的结果，以及对应检查命令】'}`,
     '',
-    `发送前检查：${hint.value}`,
-    '完成后报告改动、实际执行过的验证，以及尚未验证的部分。',
+    `写之前再看一眼：${hint.value}`,
+    '回复里请写：改了哪些文件、实际执行过的检查，以及还没验证的部分。',
   ].join('\n'),
 )
 
@@ -69,11 +68,11 @@ function reset() {
   <section class="task-composer" aria-labelledby="task-composer-title">
     <div class="task-composer-head">
       <div>
-        <h2 id="task-composer-title">把需求写成可验收的任务</h2>
-        <p>补齐目标、证据和验收，再交给 Codex。四个字段都留着也可以先复制结构。</p>
+        <h2 id="task-composer-title">把需求写清楚</h2>
+        <p>把已知的情况填进去，右边会跟着变成一段完整的话。没填的地方会留成待补的提示。</p>
       </div>
       <a class="task-composer-link" :href="withBase('/growth/prompt-templates')"
-        >查看模板说明<SiteIcon name="arrow" :size="16"
+        >看看别的写法<SiteIcon name="arrow" :size="16"
       /></a>
     </div>
     <div class="task-composer-grid">
@@ -95,37 +94,37 @@ function reset() {
           <input v-model="scope" placeholder="例如：Vue 3，src/views/Login.vue" />
         </label>
         <label>
-          <span>现象或依据</span>
+          <span>已知情况</span>
           <textarea v-model="evidence" rows="3" placeholder="复现步骤、报错原文、参考实现或测量数据" />
         </label>
         <label>
-          <span>怎样算完成</span>
+          <span>怎么检查</span>
           <textarea v-model="acceptance" rows="3" placeholder="可运行或可观察的结果，以及检查命令" />
         </label>
       </div>
       <div class="task-result">
         <div class="task-result-head">
           <div>
-            <strong>任务简报</strong>
-            <span>{{ filled }} / 4 项已填写</span>
+            <strong>写好的内容</strong>
+            <span>{{ filled }} / 4 项已填</span>
           </div>
           <button class="task-copy" type="button" @click="copy">
             <SiteIcon :name="copied === 'done' ? 'check' : 'copy'" :size="16" />{{
               copied === 'done'
                 ? '已复制'
                 : copied === 'fail'
-                  ? '复制失败，请手动选择'
-                  : '复制简报'
+                  ? '复制失败，请手动选中'
+                  : '复制文字'
             }}
           </button>
         </div>
         <pre tabindex="0">{{ brief }}</pre>
         <div class="task-result-foot">
           <span>{{ hint }}</span>
-          <button type="button" @click="reset">清空填写</button>
+          <button type="button" @click="reset">清空</button>
         </div>
         <span class="sr-only" aria-live="polite">{{
-          copied === 'done' ? '任务简报已复制' : copied === 'fail' ? '复制失败，请手动选择简报' : ''
+          copied === 'done' ? '文字已复制' : copied === 'fail' ? '复制失败，请手动选中文字' : ''
         }}</span>
       </div>
     </div>

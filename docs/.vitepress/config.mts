@@ -8,7 +8,7 @@ export default defineConfig({
   lang: 'zh-CN',
   title: 'Vibe Coding 开发指南',
   titleTemplate: ':title · Vibe Coding 开发指南',
-  description: 'Vibe Coding 工程交付台：从当前任务出发，读懂、验证并交付 AI 辅助开发的结果。',
+  description: 'Vibe Coding 开发笔记：环境、代码、调试和交付时随手查的 108 篇笔记。',
   cleanUrls: true,
   lastUpdated: true,
   srcExclude: ['snippets/**'],
@@ -21,8 +21,8 @@ export default defineConfig({
   },
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: `${BASE}favicon.svg` }],
-    ['meta', { name: 'theme-color', content: '#17211c', media: '(prefers-color-scheme: light)' }],
-    ['meta', { name: 'theme-color', content: '#0d1510', media: '(prefers-color-scheme: dark)' }],
+    ['meta', { name: 'theme-color', content: '#f8f6f0', media: '(prefers-color-scheme: light)' }],
+    ['meta', { name: 'theme-color', content: '#181714', media: '(prefers-color-scheme: dark)' }],
     // 首屏绘制前恢复侧边栏折叠状态，避免刷新时闪动
     ['script', {}, "try{if(localStorage.getItem('vcg:sidebar-collapsed')==='1')document.documentElement.classList.add('sidebar-collapsed')}catch(e){}"],
   ],
@@ -40,11 +40,11 @@ export default defineConfig({
     logo: { src: '/favicon.svg', alt: '' },
     siteTitle: 'Vibe Coding 开发指南',
     nav: [
-      { text: '工作台', link: '/' },
-      { text: '工作区', link: '/learn' },
-      { text: '任务线', link: '/paths' },
-      { text: '实验室', link: '/lab' },
-      { text: '任务简报', link: '/growth/prompt-templates' },
+      { text: '首页', link: '/' },
+      { text: '目录', link: '/learn' },
+      { text: '路线', link: '/paths' },
+      { text: '组件', link: '/lab' },
+      { text: '模板', link: '/growth/prompt-templates' },
     ],
     outline: { level: [2, 3], label: '本页目录' },
     socialLinks: [{ icon: 'github', link: REPO, ariaLabel: 'GitHub 仓库' }],
@@ -68,8 +68,8 @@ export default defineConfig({
     notFound: {
       title: '页面不存在',
       quote: '链接可能写错了，或者章节已经改名。',
-      linkLabel: '回到工作台',
-      linkText: '回到工作台',
+      linkLabel: '回到首页',
+      linkText: '回到首页',
     },
     search: {
       provider: 'local',

@@ -1,7 +1,7 @@
 ---
 layout: page
-title: 交互验证台
-description: 体验 17 个交互组件，按验收清单检查状态，再复制提示词与查看实现。
+title: 组件演示
+description: 点开 17 个交互组件看状态，再对照实现和提示词。
 ---
 
 <LabPage />

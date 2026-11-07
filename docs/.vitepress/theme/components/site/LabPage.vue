@@ -78,11 +78,11 @@ function play() {
   <div class="lab-page site-width">
     <header class="lab-page-heading">
       <div>
-        <h1>交互验证台</h1>
-        <p>先操作、再看状态、对照验收，最后才拿走提示词。</p>
+        <h1>组件演示</h1>
+        <p>点开左边任意一个组件，看看交互状态，也可以对照实现代码。</p>
       </div>
       <a class="text-link" :href="withBase('/courses/controls')"
-        >查看控件工作区<SiteIcon name="arrow" :size="18"
+        >读相关笔记<SiteIcon name="arrow" :size="18"
       /></a>
     </header>
     <div class="lab-workspace">
@@ -110,13 +110,13 @@ function play() {
             没有匹配组件。<button @click="query = ''">清空搜索</button>
           </p>
         </nav>
-        <p class="library-note">17 个组件 · 默认网页画布；可切到参考手机画布</p>
+        <p class="library-note">17 个组件 · 默认网页画布，也可以切到参考画布</p>
       </aside>
       <div class="lab-main">
         <div class="lab-demo-bar">
           <div>
             <h2>{{ info.name }}</h2>
-            <span>{{ spec?.verify.status }} · 网页模拟</span>
+            <span>{{ spec?.verify.status }}</span>
           </div>
           <div class="lab-demo-actions">
             <div class="segmented-control" role="group" aria-label="演示外框">
@@ -140,7 +140,7 @@ function play() {
         <div class="lab-canvas">
           <div class="lab-demo-device" :class="frame">
             <div class="lab-device-heading">
-              <span>{{ frame === 'phone' ? '交互预览' : '组件预览' }}</span
+              <span>{{ frame === 'phone' ? '参考画布' : '网页画布' }}</span
               ><span class="live-indicator" />
             </div>
             <div class="lab-demo-screen">
@@ -162,16 +162,16 @@ function play() {
             >
               提示词</button
             ><button :aria-pressed="panel === 'guide'" @click="panel = 'guide'">
-              交互与验证</button
+              实现说明</button
             ><a :href="withBase('/controls/' + active)"
               >查看实现代码<SiteIcon name="arrow" :size="15"
             /></a>
           </div>
           <div v-if="panel === 'prompt'" class="lab-prompt-section">
             <div>
-              <h3>为这次实现准备简报</h3>
+              <h3>生成一段提示词</h3>
               <p>
-                选好技术栈与选项，复制后替换占位符，再交给 Codex。提示词沿用参考演示的固定画布规格；当前网页画布用于桌面验证。
+                选好技术栈和选项，复制后把占位符换成自己的内容。提示词沿用参考演示的固定画布规格。
               </p>
               <div class="lab-prompt-settings">
                 <label
@@ -204,7 +204,7 @@ function play() {
             </div>
             <div class="lab-prompt-result">
               <div>
-                <span>当前提示词</span
+                <span>提示词</span
                 ><button @click="copy">
                   <SiteIcon
                     :name="copied === 'done' ? 'check' : 'copy'"
@@ -229,12 +229,12 @@ function play() {
             </div>
           </div>
           <div v-else class="lab-validation">
-            <h3>按这些行为验收</h3>
+            <h3>可以检查这些行为</h3>
             <ul>
               <li v-for="item in spec?.acceptance" :key="item">{{ item }}</li>
             </ul>
             <p>{{ spec?.verify.note }}</p>
-            <p>验证状态针对网页模拟演示；原生片段尚未完成编译与真机验证。</p>
+            <p>验证状态针对网页演示；原生片段尚未完成编译与真机验证。</p>
           </div>
         </div>
       </div>

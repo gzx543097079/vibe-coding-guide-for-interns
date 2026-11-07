@@ -29,15 +29,15 @@ const groups = computed(() =>
     }))
     .filter((g) => g.chapters.length),
 )
-// 翻页只走当前工作区；最后一步明确回到工作区，不把读者甩到别的模块
+// 翻页只走当前方向；最后一章明确回到目录，不自动跳到另一个方向
 const before = computed(() =>
   here.value ? here.value.module.chapters[here.value.index - 1] : undefined,
 )
-// 做完本工作区最后一步后，回到工作区；不自动跳到另一个领域
+// 读完一个方向的最后一章后，回到该方向目录
 const after = computed(() =>
   here.value ? here.value.module.chapters[here.value.index + 1] : undefined,
 )
-// 只有注册了演示的章节才链接到对应组件；其余章节说明验证台是通用入口
+// 只有注册了演示的章节才链接到对应组件；其余章节使用组件页入口
 const demoSlug = computed(() => {
   if (!here.value || here.value.module.id !== 'controls') return ''
   const slug = here.value.chapter.id.split('/')[1]
@@ -110,13 +110,12 @@ onBeforeUnmount(() => observer?.disconnect())
       <div class="reader-layout">
         <aside v-if="here" class="reader-sidebar">
           <a class="reader-back" :href="withBase('/courses/' + here.module.id)"
-            ><SiteIcon name="back" :size="16" />返回工作区</a
+            ><SiteIcon name="back" :size="16" />返回目录</a
           >
           <div class="reader-course-name">
-            <span><SiteIcon :name="here.module.id" :size="22" /></span
-            ><strong>{{ here.module.name }}</strong>
+            <strong>{{ here.module.name }}</strong>
           </div>
-          <nav aria-label="当前工作区任务">
+          <nav aria-label="本方向的章节">
             <section v-for="group in groups" :key="group.level">
               <h2>
                 {{ group.level }}<span>{{ group.chapters.length }}</span>
@@ -133,18 +132,18 @@ onBeforeUnmount(() => observer?.disconnect())
             </section>
           </nav>
           <a class="reader-all" :href="withBase('/learn')"
-            >切换工作区<SiteIcon name="arrow" :size="16"
+            >换个方向<SiteIcon name="arrow" :size="16"
           /></a>
         </aside>
         <main id="main-content" class="reader-main">
           <div v-if="here" class="reader-taskbar">
             <div class="taskbar-label">
-              <span>当前任务</span>
+              <span>正在读</span>
               <strong>{{ here.module.name }} / {{ here.chapter.short }}</strong>
             </div>
             <div class="taskbar-actions">
               <a :href="verificationLink">
-                {{ demoSlug ? '验证这个控件' : '打开验证台' }}
+                {{ demoSlug ? '看这个组件' : '看组件' }}
                 <SiteIcon name="lab" :size="15" />
               </a>
               <button
@@ -154,14 +153,14 @@ onBeforeUnmount(() => observer?.disconnect())
                 @click="toggle(here.chapter.id)"
               >
                 <SiteIcon v-if="isComplete(here.chapter.id)" name="check" :size="15" />{{
-                  isComplete(here.chapter.id) ? '已完成' : '标记完成'
+                  isComplete(here.chapter.id) ? '已读' : '记一下读过'
                 }}
               </button>
             </div>
           </div>
           <header class="reader-header">
             <nav aria-label="面包屑">
-              <a :href="withBase('/learn')">工作区</a
+              <a :href="withBase('/learn')">目录</a
               ><SiteIcon name="chevron" :size="12" /><a
                 v-if="here"
                 :href="withBase('/courses/' + here.module.id)"
@@ -173,53 +172,53 @@ onBeforeUnmount(() => observer?.disconnect())
             <div v-if="here" class="reader-badges">
               <span>{{ here.chapter.level }}</span
               ><span>{{ here.module.tag }}</span
-              ><span>第 {{ here.index + 1 }} / {{ here.module.chapters.length }} 步</span>
+              ><span>第 {{ here.index + 1 }} / {{ here.module.chapters.length }} 篇</span>
             </div>
             <h1>{{ page.title }}</h1>
             <p v-if="frontmatter.description">{{ frontmatter.description }}</p>
             <div v-if="frontmatter.status === 'draft'" class="reader-draft">
-              这一步仍在编写中，请结合已有内容与项目实际验证。
+              这篇还在写，请结合已有内容和项目实际情况看。
             </div>
           </header>
           <Content class="vp-doc reader-body" />
           <section v-if="here" class="reading-next" aria-labelledby="reading-next-title">
             <div class="reading-next-head">
-              <h2 id="reading-next-title">把这一步收尾</h2>
-              <p>先验证，再记录。本地记录可随时取消，不会同步到其他设备。</p>
+              <h2 id="reading-next-title">读完以后</h2>
+              <p>想试的话，可以看看对应组件或相关的检查文章。读过的标记只记在这台电脑，也能随时取消。</p>
             </div>
-            <ol class="reading-steps">
+            <div class="reading-steps">
               <li>
-                <span>01</span><strong>动手试一次</strong>
-                <a :href="verificationLink">{{ demoSlug ? '检查这个控件' : '打开验证台' }}<SiteIcon name="arrow" :size="14" /></a>
-                <small v-if="!demoSlug">通用入口，不对应当前章节的专用组件</small>
+                <strong>看看实际效果</strong>
+                <a :href="verificationLink">{{ demoSlug ? '打开这个组件' : '打开组件页' }}<SiteIcon name="arrow" :size="14" /></a>
+                <small v-if="!demoSlug">组件页里有 17 个例子</small>
               </li>
-              <li><span>02</span><strong>对照验收</strong><a :href="withBase('/quality/review')">查看检查顺序<SiteIcon name="arrow" :size="14" /></a></li>
+              <li><strong>相关的检查文章</strong><a :href="withBase('/quality/review')">代码审查<SiteIcon name="arrow" :size="14" /></a></li>
               <li>
-                <span>03</span><strong>记下完成</strong>
+                <strong>留个记号</strong>
                 <button
                   type="button"
                   :class="{ done: isComplete(here.chapter.id) }"
                   :aria-pressed="isComplete(here.chapter.id)"
                   @click="toggle(here.chapter.id)"
-                >{{ isComplete(here.chapter.id) ? '取消完成标记' : '标记这一步完成' }}</button>
+                >{{ isComplete(here.chapter.id) ? '取消标记' : '记一下读过' }}</button>
               </li>
-            </ol>
+            </div>
           </section>
-          <nav class="reader-pagination" aria-label="工作区翻页">
+          <nav class="reader-pagination" aria-label="前后篇">
             <a v-if="before" :href="withBase(before.link)"
-              ><small>上一步</small
+              ><small>上一篇</small
               ><strong
                 ><SiteIcon name="back" :size="17" />{{ before.title }}</strong
               ></a
             ><span v-else />
             <a v-if="after" :href="withBase(after.link)"
-              ><small>继续当前任务</small
+              ><small>下一篇</small
               ><strong
                 >{{ after.title }}<SiteIcon name="arrow" :size="17" /></strong
               ></a>
             <a v-else-if="here" :href="withBase('/courses/' + here.module.id)"
-              ><small>本工作区已走完</small
-              ><strong>回到工作区<SiteIcon name="arrow" :size="17" /></strong></a
+              ><small>这个方向读完了</small
+              ><strong>回到目录<SiteIcon name="arrow" :size="17" /></strong></a
             ><span v-else />
           </nav>
           <a
@@ -231,7 +230,7 @@ onBeforeUnmount(() => observer?.disconnect())
           /></a>
         </main>
         <aside class="reader-outline">
-          <h2>本页定位</h2>
+          <h2>这一页</h2>
           <nav aria-label="本页目录">
             <a
               v-for="h in toc"
@@ -245,8 +244,8 @@ onBeforeUnmount(() => observer?.disconnect())
             >
           </nav>
           <a class="outline-lab" :href="verificationLink"
-            ><SiteIcon name="lab" :size="20" /><strong>动手验证</strong
-            ><span>{{ demoSlug ? '检查这个控件的交互状态' : '打开通用验证台' }}<SiteIcon name="arrow" :size="15" /></span
+            ><SiteIcon name="lab" :size="20" /><strong>看组件</strong
+            ><span>{{ demoSlug ? '打开这个组件的演示' : '打开组件页' }}<SiteIcon name="arrow" :size="15" /></span
           ></a>
         </aside>
       </div>

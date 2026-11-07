@@ -1,7 +1,7 @@
 ---
 layout: page
-title: 任务线
-description: 从真实目标出发，把相关工作区串成可执行的顺序。
+title: 阅读路线
+description: 把相关章节串起来，挑一条顺着读。
 ---
 
 <PathsPage />

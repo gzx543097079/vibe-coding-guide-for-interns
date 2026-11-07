@@ -131,7 +131,7 @@ const labels = computed(() =>
                 : i === (activeTab === '预览' ? 0 : 1),
         }"
         ><i />{{ label }}</span
-      ><a :href="withBase('/lab')" aria-label="前往交互验证台"
+      ><a :href="withBase('/lab')" aria-label="查看组件演示"
         ><SiteIcon name="arrow" :size="19"
       /></a>
     </div>
