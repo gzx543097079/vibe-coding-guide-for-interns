@@ -2,12 +2,10 @@
 import { computed } from 'vue'
 import { withBase } from 'vitepress'
 import { levels, modules } from '../../data/modules'
-import { courseVisuals } from '../../data/experience'
 import { useLearning } from '../../composables/useLearning'
 import SiteIcon from './SiteIcon.vue'
 const props = defineProps<{ module: string }>()
 const course = computed(() => modules.find((m) => m.id === props.module)!)
-const visual = computed(() => courseVisuals[props.module])
 const { isComplete } = useLearning()
 const completed = computed(
   () => course.value.chapters.filter((c) => isComplete(c.id)).length,
@@ -27,34 +25,28 @@ const groups = computed(() =>
 )
 </script>
 <template>
-  <div
-    class="course-page"
-    :style="{
-      '--course-color': visual.color,
-      '--course-surface': visual.surface,
-    }"
-  >
+  <div class="course-page">
     <section class="course-intro-band">
       <div class="site-width">
         <a class="back-link" :href="withBase('/learn')"
-          ><SiteIcon name="back" :size="17" />全部课程</a
+          ><SiteIcon name="back" :size="17" />全部工作区</a
         >
         <div class="course-intro-grid">
           <div>
             <h1>{{ course.name }}</h1>
             <p>{{ course.intro }}</p>
             <div class="course-intro-meta">
-              <span>{{ course.chapters.length }} 篇指南</span
+              <span>{{ course.chapters.length }} 个步骤</span
               ><span>{{ course.tag }}</span
-              ><span>文字 + 实践示例</span>
+              ><span>阅读 + 动手验证</span>
             </div>
             <a class="action-primary" :href="withBase(next.link)"
               >{{
                 completed
                   ? completed === course.chapters.length
-                    ? '重新阅读'
-                    : '继续学习'
-                  : '开始这门课程'
+                    ? '从头再看'
+                    : '继续当前任务'
+                  : '打开第一步'
               }}<SiteIcon name="arrow" :size="18"
             /></a>
           </div>
@@ -67,12 +59,12 @@ const groups = computed(() =>
     <div class="site-width course-content-grid">
       <div class="course-curriculum">
         <div class="section-heading">
-          <h2>课程内容</h2>
-          <span>{{ groups.length }} 个学习阶段</span>
+          <h2>任务步骤</h2>
+          <span>{{ groups.length }} 个阶段 · 按需要进入</span>
         </div>
         <section v-for="g in groups" :key="g.level" class="curriculum-group">
           <h3>
-            {{ g.level }}<span>{{ g.chapters.length }} 篇</span>
+            {{ g.level }}<span>{{ g.chapters.length }} 步</span>
           </h3>
           <ol>
             <li v-for="c in g.chapters" :key="c.id">
@@ -96,24 +88,24 @@ const groups = computed(() =>
         </section>
       </div>
       <aside class="course-side-info">
-        <h2>把知识变成你的经验</h2>
+        <h2>边做边检查</h2>
         <p>
-          先理解概念，再运行示例。带着手头的项目阅读，遇到问题就回到对应章节。
+          带着项目里的实际问题进入一步；读完试一次，再用验收标准判断结果。
         </p>
         <div class="course-progress-label">
-          <span>本机学习进度</span
+          <span>本机完成记录</span
           ><strong>{{ completed }} / {{ course.chapters.length }}</strong>
         </div>
         <progress
           :value="completed"
           :max="course.chapters.length"
-          aria-label="课程学习进度"
+          aria-label="工作区完成进度"
         /><small>在阅读页标记完成，记录仅保存在当前浏览器。</small
         ><a :href="withBase('/lab')"
-          ><SiteIcon name="lab" :size="20" /><span>去实验室动手试试</span
+          ><SiteIcon name="lab" :size="20" /><span>去实验室验证交互</span
           ><SiteIcon name="arrow" :size="17" /></a
         ><a :href="withBase('/growth/prompt-templates')"
-          ><SiteIcon name="code" :size="20" /><span>找到适合任务的提示词</span
+          ><SiteIcon name="code" :size="20" /><span>准备当前任务简报</span
           ><SiteIcon name="arrow" :size="17"
         /></a>
       </aside>

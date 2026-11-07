@@ -5,7 +5,7 @@ import { registerRich } from './components/rich'
 import { registerAi } from './components/ai'
 
 import Layout from './Layout.vue'
-import HomePage from './components/HomePage.vue'
+import DeskHome from './components/site/DeskHome.vue'
 import CodeTabs from './components/CodeTabs.vue'
 import ControlDemo from './components/ControlDemo.vue'
 import ControlGallery from './components/ControlGallery.vue'
@@ -18,6 +18,7 @@ import './styles/base.css'
 import './styles/rich.css'
 import './styles/ai-rich.css'
 import './styles/website.css'
+import './styles/desk.css'
 import LearnPage from './components/site/LearnPage.vue'
 import CoursePage from './components/site/CoursePage.vue'
 import PathsPage from './components/site/PathsPage.vue'
@@ -29,7 +30,7 @@ export default {
   enhanceApp({ app }) {
     registerRich(app)
     registerAi(app)
-    app.component('HomePage', HomePage)
+    app.component('HomePage', DeskHome)
     app.component('CodeTabs', CodeTabs)
     app.component('ControlDemo', ControlDemo)
     app.component('ControlGallery', ControlGallery)

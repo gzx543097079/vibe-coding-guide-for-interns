@@ -2,23 +2,23 @@
 version: 1
 slug: "docs-vitepress-theme-layout-vue"
 primary_target: "docs/.vitepress/theme/Layout.vue"
-related_targets: ["docs/.vitepress/theme/components/HomePage.vue","docs/.vitepress/theme/styles/website.css"]
+related_targets: ["docs/.vitepress/theme/components/site/DeskHome.vue","docs/.vitepress/theme/components/site/TaskComposer.vue","docs/.vitepress/theme/styles/website.css","docs/.vitepress/theme/styles/desk.css"]
 ---
 
-# 学习平台与工具实验室重设计
+# 工程交付台重构
 
-范围：首页、课程中心、模块课程页、学习路线、组件实验室、章节阅读外壳。用户确认学习平台与工具网站结合；本轮只验证桌面端，1280～1600 像素。
+范围：首页、工作区目录、领域工作区、任务线、交互验证台、章节阅读外壳。用户要求检查不符合操作习惯的行为，并明确「别让项目像知识库」；本轮只验证桌面端，1280～1600 像素。
 
 ## Direction contract
 
-THESIS：把开发指南变成能发现课程、选择路线、操作组件和持续学习的网站；首页与阅读页不再共享全站 108 章侧栏。
+THESIS：把网站从知识库式浏览改成能继续手上任务的工作台。首页恢复当前任务并写出验收，阅读页保留验证与完成路径，工作区和工具按动作组织。
 
-OWN-WORLD：社区技术公开课的节目册与作品展。冷白、深蓝黑、钴蓝组成清晰的大区域，薄荷色标记可操作状态；无衬线字体、大标题、宽内容舞台、实操面板和可筛选的课程构成统一语言。
+OWN-WORLD：深灰绿常驻工作栏、浅暖灰工作画布、任务状态绿与紧凑直角面板。信息组织、固定工作栏、粘性任务条和可操作字段承担视觉个性；不用海报标题、卡片墙、倾斜装饰或拟物终端。
 
-STORY：访客先理解学习目标，选择课程或进入实验室；打开章节后知道所在课程和下一步；阅读记录只保存在本地。
+STORY：访客打开首页就知道上次停在哪一步；进入章节后随时能看到当前任务、动手验证和完成标记；读完后按验证、检查、记录三步收尾；想换方向时再进入工作区目录或任务线。
 
-FIRST VIEWPORT：首页为横向导航，左侧大标题与两个明确入口，右侧是能真正切换状态的组件预览；下方首个课程专题在首屏露出。阅读页采用当前课程侧栏、安静正文、页内目录与完成操作。
+FIRST VIEWPORT：工作台左侧是任务导向标题与说明，右侧是当前任务、本机进度和继续按钮；紧接着露出四个领域入口。阅读页在顶栏下方保留粘性任务条，正文末尾是三步收尾和当前工作区内翻页。
 
-FORM：第 4 个方向，社区技术公开课节目册。用户选择「1+3」，将学习平台与工具实验室结合；保留高密度清晰信息、分阶段深入与可追踪位置，拒绝与主题无关的拟物外观。seed:7bd0a83090bda7fb。
+FORM：第 4 个方向，精密工程工作台，用户已委托按设计者风格重构。保留高密度清晰信息、可追踪位置、真实组件验证与全量章节地址；拒绝与任务无关的装饰外观。seed:2b41190276adc2c5。
 
-FINISH：unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+FINISH：构建、桌面宽度视觉与交互回归、机械设计检测、独立收尾复核，以及同步后的 DESIGN.md / .impeccable/design.json 一并完成。

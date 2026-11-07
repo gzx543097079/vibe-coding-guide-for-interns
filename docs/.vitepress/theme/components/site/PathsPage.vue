@@ -33,14 +33,14 @@ onBeforeUnmount(() => window.removeEventListener('hashchange', fromHash))
 <template>
   <div class="paths-page site-width">
     <header class="page-intro">
-      <h1>学习有方向，<br />实践有下一步。</h1>
+      <h1>按目标串起工作区，<br />每一步都有去处。</h1>
       <div>
-        <p>不用一次读完所有内容，先选一个你想达成的目标。</p>
-        <span>路线组合现有课程，可以随时按实际需要调整。</span>
+        <p>不用一次读完所有章节，先选一个要完成的目标。</p>
+        <span>任务线只组合已有工作区，可随时跳到当前需要的那一步。</span>
       </div>
     </header>
     <div class="paths-layout">
-      <nav class="path-selector" aria-label="选择学习路线">
+      <nav class="path-selector" aria-label="选择任务线">
         <button
           v-for="p in learningPaths"
           :key="p.id"
@@ -49,7 +49,7 @@ onBeforeUnmount(() => window.removeEventListener('hashchange', fromHash))
         >
           <SiteIcon :name="p.icon" :size="25" /><span
             ><strong>{{ p.title }}</strong
-            ><small>{{ p.modules.length }} 门课程</small></span
+            ><small>{{ p.modules.length }} 个工作区</small></span
           ><SiteIcon name="chevron" :size="17" />
         </button>
       </nav>
@@ -58,7 +58,7 @@ onBeforeUnmount(() => window.removeEventListener('hashchange', fromHash))
           <h2>{{ path.title }}</h2>
           <p>{{ path.description }}</p>
           <a class="action-primary" :href="withBase(next.link)"
-            >沿这条路线开始<SiteIcon name="arrow" :size="18"
+            >打开下一步<SiteIcon name="arrow" :size="18"
           /></a>
         </div>
         <ol class="path-course-list">
@@ -72,9 +72,9 @@ onBeforeUnmount(() => window.removeEventListener('hashchange', fromHash))
               </h3>
               <p>{{ course.intro }}</p>
               <small
-                >{{ course.chapters.length }} 篇指南 · 已完成
+                >{{ course.chapters.length }} 个步骤 · 已完成
                 {{ course.chapters.filter((c) => isComplete(c.id)).length }}
-                篇</small
+                步</small
               >
             </div>
           </li>

@@ -13,7 +13,7 @@ import { copyText } from '../../composables/clipboard'
 import SiteIcon from './SiteIcon.vue'
 const active = ref('button')
 const query = ref('')
-const frame = ref<Frame>('phone')
+const frame = ref<Frame>('browser')
 const replay = ref(0)
 const playing = ref(false)
 const stack = ref('HTML + CSS + JS')
@@ -44,17 +44,17 @@ const groups = computed(() => {
 })
 function select(id: string) {
   active.value = id
-  frame.value = demos[id].frame
+  frame.value = 'browser'
   playing.value = false
   replay.value++
   history.replaceState(null, '', '#' + id)
   copied.value = 'idle'
 }
 function fromHash() {
-  const id = location.hash.slice(1)
+  const id = new URLSearchParams(location.search).get('frame') ?? location.hash.slice(1)
   if (demos[id]) {
     active.value = id
-    frame.value = demos[id].frame
+    frame.value = 'browser'
   }
 }
 onMounted(() => {
@@ -78,11 +78,11 @@ function play() {
   <div class="lab-page site-width">
     <header class="lab-page-heading">
       <div>
-        <h1>组件实验室</h1>
-        <p>先体验，再拆解。让每个交互细节都说得清楚。</p>
+        <h1>交互验证台</h1>
+        <p>先操作、再看状态、对照验收，最后才拿走提示词。</p>
       </div>
       <a class="text-link" :href="withBase('/courses/controls')"
-        >阅读组件课程<SiteIcon name="arrow" :size="18"
+        >查看控件工作区<SiteIcon name="arrow" :size="18"
       /></a>
     </header>
     <div class="lab-workspace">
@@ -110,7 +110,7 @@ function play() {
             没有匹配组件。<button @click="query = ''">清空搜索</button>
           </p>
         </nav>
-        <p class="library-note">17 个组件 · 可交互演示</p>
+        <p class="library-note">17 个组件 · 默认网页画布；可切到参考手机画布</p>
       </aside>
       <div class="lab-main">
         <div class="lab-demo-bar">
@@ -129,7 +129,7 @@ function play() {
                 :aria-pressed="frame === 'phone'"
                 @click="frame = 'phone'"
               >
-                手机画布
+                参考画布
               </button>
             </div>
             <button class="icon-button" aria-label="播放组件演示" @click="play">
@@ -169,10 +169,9 @@ function play() {
           </div>
           <div v-if="panel === 'prompt'" class="lab-prompt-section">
             <div>
-              <h3>把交互带进你的项目</h3>
+              <h3>为这次实现准备简报</h3>
               <p>
-                复制后替换占位符，再交给
-                Codex。提示词包含当前技术栈与选项，采用参考演示的固定画布规格。
+                选好技术栈与选项，复制后替换占位符，再交给 Codex。提示词沿用参考演示的固定画布规格；当前网页画布用于桌面验证。
               </p>
               <div class="lab-prompt-settings">
                 <label
@@ -230,7 +229,7 @@ function play() {
             </div>
           </div>
           <div v-else class="lab-validation">
-            <h3>试着检查这些行为</h3>
+            <h3>按这些行为验收</h3>
             <ul>
               <li v-for="item in spec?.acceptance" :key="item">{{ item }}</li>
             </ul>
