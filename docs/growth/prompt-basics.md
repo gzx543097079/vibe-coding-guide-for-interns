@@ -41,4 +41,4 @@ description: 目标、上下文、约束、验收标准、输出格式。
 
 <PromptCard id="structure" />
 
-继续查阅：[Codex 提示词说明](https://learn.chatgpt.com/docs/prompting)、[提示词与上下文](/ai/prompting)。
+继续查阅：[Codex 提示词说明](https://learn.chatgpt.com/docs/prompting)、[上下文管理](/ai/context)。
