@@ -84,29 +84,3 @@ Codex CLI 的 `mcp` 子命令管理用户级配置。需要项目共享配置时
 
 </template>
 </RCompare>
-
-## 动手前的三问
-
-<RAsk>
-<template #know>
-
-- 接入一个 MCP Server，就是把它的工具和它持有的凭据交给模型去用。
-- 模型不直接连 Server，调用由 Host 里的 Client 发出，可以在这一层审批和拦截。
-- Server 返回的外部内容会进入上下文，可能带有提示注入。
-
-</template>
-<template #verify>
-
-- 读 Server 的文档或源码，列出它提供的每一个工具和需要的权限。
-- 装好后用 `codex mcp list`、`/mcp` 确认配置和活跃服务。
-- 第一次调用写入类工具时，看清 Client 展示的参数再批准。
-
-</template>
-<template #pitfall>
-
-- 推荐来路不明的 Server，或者给出不存在的包名和安装命令。
-- 建议使用权限过大的令牌，或把密钥直接写进配置文件提交。
-- 把旧版规范的握手流程、传输方式当成现行规范来讲。
-
-</template>
-</RAsk>

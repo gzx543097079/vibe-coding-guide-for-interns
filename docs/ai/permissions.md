@@ -79,6 +79,8 @@ prefix_rule(pattern=["npm", "run", "build"], decision="allow")
 
 在沙箱内失败，不代表应该直接升级权限。先查失败原因：路径写错、依赖缺失和网络限制，需要的处理不同。
 
+如果某项操作已经被拒绝，不要换成脚本或另一条命令绕过去。确实需要调整边界时，先说明用途和范围，再按当前授权流程处理。
+
 </RStep>
 <RStep title="单独检查外部工具" note="MCP 和连接器有自己的授权">
 
@@ -91,29 +93,3 @@ prefix_rule(pattern=["npm", "run", "build"], decision="allow")
 
 </RStep>
 </RSteps>
-
-## 动手前的三问
-
-<RAsk>
-<template #know>
-
-- 沙箱、审批策略和命令规则各自管哪一层。
-- AGENTS.md 是行为约定，不能替代系统限制。
-- 本地命令、MCP、浏览器和连接器的权限边界需要分别检查。
-
-</template>
-<template #verify>
-
-- 用 `/permissions`、`/status` 和配置文件核对当前会话设置。
-- 用 `codex execpolicy check` 检查允许、询问、禁止三类命令。
-- 在无敏感信息的练习目录验证实际边界，保留失败与成功的输出。
-
-</template>
-<template #pitfall>
-
-- 把 never 审批策略误解成无沙箱、无限权限。
-- 规则只按命令前缀匹配，却把它解释成完整安全保证。
-- 命令失败后建议关闭限制，或者换脚本绕开已经拒绝的动作。
-
-</template>
-</RAsk>

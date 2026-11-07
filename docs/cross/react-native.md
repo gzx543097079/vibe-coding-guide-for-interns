@@ -109,21 +109,10 @@ description: 用 React + TypeScript 调用原生组件。
 
 <PromptCard id="mobile-screen" />
 
-## 三问
-
-答得上这三个问题，再把这个方向的任务交给 AI。下面是计划展开的要点。
-
-### 必须先懂什么
+## 计划覆盖
 
 - RN 组件与 Web DOM 元素的区别
 - 平台差异：Platform 判断
-
-### 怎么验证
-
 - 在 iOS 与 Android 上分别运行
 - 检查第三方库是否支持当前 RN 版本
-
-### AI 常错在哪
-
-- 使用 Web 才有的 API 或 CSS 属性
-- 推荐已停止维护的社区库
+- 常见错误及排查：使用 Web 才有的 API 或 CSS 属性；推荐已停止维护的社区库。

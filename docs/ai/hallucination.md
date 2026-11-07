@@ -53,6 +53,8 @@ description: 模型为什么会编造 API、版本和引用，以及怎么发现
 
 包和版本，直接问包管理器。下面第二条命令故意查一个不存在的包，返回 404 就说明是编的：
 
+查到的最新版本不一定是项目使用的版本。核对 API 写法时，要以 `package.json` 和锁文件中的实际依赖为准。
+
 <RTerm
   title="核对包是否存在、最新版本是多少"
   :cmd='["npm view react version", "npm view this-package-should-not-exist-42"]'
@@ -91,29 +93,3 @@ console.log(typeof dayjs().toFormat) // 'undefined'
 <RPoint icon="chat" title="允许说不知道">加一句「不确定就说不确定，不要猜」。</RPoint>
 <RPoint icon="terminal" title="让它自己验证">用 Agent 时要求「改完运行 `npm test` 并贴出输出」，再自己看一眼输出。</RPoint>
 </RPoints>
-
-## 动手前的三问
-
-<RAsk>
-<template #know>
-
-- 幻觉来自生成方式本身，换更强的模型会减少，但不会消失。
-- 越冷门、越新、越细节的内容，越容易编造。
-- 项目实际用的库和版本，以 `package.json`、锁文件为准。
-
-</template>
-<template #verify>
-
-- 包名和版本用 `npm view` 或包管理器官网核对。
-- API 和配置项对照官方文档，或在终端里写一行代码试。
-- 它说「测试通过」时，自己运行一次，看真实输出。
-
-</template>
-<template #pitfall>
-
-- 编造看起来合理的函数名、参数名和配置项。
-- 给出过时的版本号和安装命令。
-- 引用打不开的链接，或者链接内容和它说的不一致。
-
-</template>
-</RAsk>

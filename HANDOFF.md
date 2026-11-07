@@ -15,7 +15,7 @@ Vibe Coding 开发指南网站。VitePress 1.6.4 + 自定义主题，部署到 G
 | 「起步」模块：5 章真实内容 + 富组件版式（样板） | 完成 |
 | 「UI 控件与提示词」模块：17 个控件，提示词已做还原验证 | 完成，见下方验证说明 |
 | 「AI 与 Agent」模块 | `feat/ai-module-rich` 已完成 AI 基础与 Agent 基础共 10 章，含交互演示；进阶与精通各 5 章仍为草稿，基础正文合并前不在 main |
-| Git、前端、跨端、后端、质量、成长 | 仍是占位页，只有「三问」 |
+| Git、前端、跨端、后端、质量、成长 | 正文仍待补充；部分页面已有演示、工具介绍或「计划覆盖」要点 |
 
 ## 怎么跑
 
@@ -31,7 +31,7 @@ npm run build && npx vitepress preview docs --port 4173   # 构建并预览
 
 - `docs/<模块>/<章节>.md`：章节正文，frontmatter 里 `status: draft` 表示占位。
 - `docs/.vitepress/theme/data/modules.ts`：模块与章节唯一数据源，侧栏、命令面板、首页、上下章都从它生成。
-- `docs/.vitepress/theme/components/rich/`：富组件（RPath、RPoints、RAsk、RCompare、RSteps、RTerm、REditorAgent、RFolderTree、RTbd），样式在 `styles/rich.css`，用法参考 `docs/start/*.md`。
+- `docs/.vitepress/theme/components/rich/`：富组件（RPath、RPoints、RCompare、RSteps、RTerm、REditorAgent、RFolderTree、RTbd），样式在 `styles/rich.css`，用法参考 `docs/start/*.md`。
 - `docs/.vitepress/theme/components/demos/` 与 `data/controlPrompts.ts`：控件演示和提示词，验证状态记录在后者。
 - `docs/snippets/`：控件的多语言代码片段。
 - `docs/.vitepress/theme/styles/tokens.css`：设计令牌。动效只用 transform / opacity，必须尊重 `prefers-reduced-motion`。
@@ -49,6 +49,8 @@ npm run build && npx vitepress preview docs --port 4173   # 构建并预览
 
 ## 本轮续接与验证
 
+- 取消每章固定的结尾问答：15 篇正文去重后把独有提醒放回相关段落，67 篇草稿改为不分固定类别的「计划覆盖」清单；另有 8 篇仅有简介的草稿保留原状态。首页、草稿提示及维护约定同步调整，已移除闲置问答组件。
+- 结构调整通过构建和差异检查，并核对 108 个章节的路径、草稿状态及 67 篇草稿的要点保留情况。浏览器检查首页、正文及草稿的 1280 / 390 像素视口，步骤点击、键盘展开和全部展开均正常，所查页面未出现新增控制台警告或错误。
 - 全站示例统一使用 Codex：安装与启动命令、AGENTS.md、Skills、MCP 配置、权限说明，以及可视化组件和命令面板数据。
 - 权限示例使用 Codex 的沙箱、审批策略与 `prefix_rule`；工具调用用 OpenAI Responses API 演示，明确不代表 Codex CLI 的内部报文格式。
 - 已运行 `npm run build`、`git diff --check`；权限章节中的 4 个规则样例通过实际 `codex execpolicy check`，检查过程未执行那些命令。

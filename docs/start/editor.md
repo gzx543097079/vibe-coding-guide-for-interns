@@ -49,6 +49,8 @@ macOS：打开 VS Code，按 <kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>P</kbd> 打开
 
 先装项目在用的：项目里有 `.prettierrc` 就装 Prettier 插件，有 `eslint.config.js` 就装 ESLint 插件，再加上你所用语言的官方插件。项目根目录的 `.vscode/extensions.json` 如果存在，VS Code 会提示你安装推荐插件。
 
+装好后，在练习文件里打乱一处缩进并保存，确认格式化确实生效。没有变化时，检查默认格式化工具和「保存时格式化」设置。
+
 </RStep>
 <RStep title="安装 Codex CLI" note="需要先安装 Node.js 与 npm">
 
@@ -92,6 +94,8 @@ Windows 可按 [官方 Windows 指南](https://developers.openai.com/codex/windo
 
 在项目根目录用 `AGENTS.md` 告诉 Codex：怎么运行、怎么测试、哪些目录不能动、代码风格是什么。本仓库现有的 `AGENT.md` 是单数，需要显式读取或配置备用文件名；加载顺序与 Skills 用法见 [规则文件与 Skills](/ai/rules-files)。
 
+新会话里让 Codex 列出收到的规则来源，再对照实际文件核查。模型的复述只能辅助确认，完成任务后仍要查看 `git diff`，检查实际改动是否遵守约定。
+
 <RCompare bad-title="写成长篇说明书" good-title="短、具体、能执行">
 <template #bad>
 
@@ -128,29 +132,3 @@ Windows 可按 [官方 Windows 指南](https://developers.openai.com/codex/windo
 ## 工具速查
 
 <TechCard ids="vscode,jetbrains,cursor,codex" />
-
-## 动手前的三问
-
-<RAsk>
-<template #know>
-
-- 编辑器工作区、项目根目录和沙箱边界各是什么，当前会话允许访问哪些目录。
-- Agent 会读哪些文件：规则文件、你提到的文件，以及它自己搜到的文件。
-- 读到的内容会发送到模型服务，公司代码能不能外发要先确认。
-
-</template>
-<template #verify>
-
-- 保存文件时格式化是否生效：故意把缩进弄乱，保存后看是否恢复。
-- 问 Agent「你读到了哪些项目规则」，看它的回答和规则文件是否一致。
-- 每次改动后用 `git diff` 或编辑器的源代码管理面板查看改了哪些文件。
-
-</template>
-<template #pitfall>
-
-- 读取或修改了你没让它碰的文件，比如锁文件、CI 配置。
-- 规则文件写得太长或太空，关键约定没被遵守。
-- 给出别的编辑器的设置项或快捷键，或者编造不存在的插件。
-
-</template>
-</RAsk>

@@ -353,33 +353,6 @@ textarea {
   border: 1.5px dashed var(--ink-3);
 }
 
-/* 「三问」：每一问是一块面板，标题和要点同底色 */
-.vp-doc h2[id='三问'] ~ h3:has(+ ul) {
-  margin: 16px 0 0;
-  padding: 14px 18px 2px;
-  border: 1px solid var(--rule);
-  border-bottom: 0;
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  background: var(--paper-2);
-  font-family: var(--font-serif);
-  font-size: 18px;
-  font-weight: 600;
-}
-.vp-doc h2[id='三问'] ~ h3:has(+ ul) + ul {
-  margin: 0;
-  padding: 2px 18px 14px 38px;
-  border: 1px solid var(--rule);
-  border-top: 0;
-  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-  background: var(--paper-2);
-}
-.vp-doc h2[id='三问'] ~ h3:has(+ ul) + ul > li + li {
-  margin-top: 2px;
-}
-.vp-doc h2[id='三问'] ~ h3 .header-anchor {
-  display: none;
-}
-
 /* 右侧本页目录 */
 .VPDocAsideOutline .outline-title {
   font-size: 12.5px !important;

@@ -43,6 +43,8 @@ description: 对话助手、编辑器补全、命令行 Agent 各适合什么场
 <RPoint icon="layers" title="团队在用什么">和团队用同一套工具，规则文件、权限配置能共享，遇到问题也有人能问。</RPoint>
 </RPoints>
 
+先用一个小任务核对实际边界：查看它读取了哪些文件、执行了哪些命令，再用 `git status` 和 `git diff` 检查结果。不要只凭工具自述判断访问范围。
+
 ## 工具速查
 
 <TechCard ids="cursor,codex" />
@@ -66,29 +68,3 @@ description: 对话助手、编辑器补全、命令行 Agent 各适合什么场
 
 </RStep>
 </RSteps>
-
-## 动手前的三问
-
-<RAsk>
-<template #know>
-
-- 公司对 AI 工具和代码外发的规定。
-- 三类工具各自看得到什么、能做什么，以及读到的内容会发往哪里。
-- 你选的工具默认有哪些权限，哪些操作会先问你。
-
-</template>
-<template #verify>
-
-- 问工具「你现在能看到哪些文件」，和你的预期对比。
-- 用 Agent 改完代码后，用 `git status` 看实际动了哪些文件。
-- 产品功能和价格以官网当前页面为准，不以 AI 的回答为准。
-
-</template>
-<template #pitfall>
-
-- 介绍别的工具的功能、快捷键或设置项，张冠李戴。
-- 给出过时的价格、套餐和模型名称。
-- 用 Agent 时读取了任务范围之外的文件，或执行了你没预料到的命令。
-
-</template>
-</RAsk>
