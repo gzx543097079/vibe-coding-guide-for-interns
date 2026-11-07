@@ -71,19 +71,23 @@ const pct = (v: number) => `${(v / scale.value) * 100}%`
 
 const verdict = computed(() => {
   if (!over.value) return { tone: 'ok', text: `占用 ${rawTotal.value} / ${CAP}，放得下。每多聊一轮、多读一个文件，这根条就再长一截。` }
+  if (mode.value === 'error') {
+    const input = rawTotal.value - RESERVE
+    if (input <= CAP)
+      return { tone: 'warn', text: `输入 ${input} 还放得下，但留给回答的空间不够 ${RESERVE}。实际 API 可能拒绝请求或限制输出，取决于具体配置。` }
+    return { tone: 'bad', text: `输入就要 ${input}，窗口只有 ${CAP}。本例选择不截断，无法在这个窗口里完成请求；请减少输入或选择其他策略。` }
+  }
   if (result.value.fail)
-    return { tone: 'bad', text: '光是规则、工具定义和文件就已经超出窗口，怎么处理历史都放不下。只能少读文件、少接工具，或者开新会话。' }
-  if (mode.value === 'error')
-    return { tone: 'bad', text: `需要 ${rawTotal.value}，窗口只有 ${CAP}。请求直接被拒（API 返回 400 “prompt is too long”），一个字都不会生成。` }
+    return { tone: 'bad', text: '处理历史后，规则、工具定义、文件和回答预留仍然超出窗口。需要减少这些内容，或缩短历史摘要；只清空历史不一定够用。' }
   if (mode.value === 'drop')
     return { tone: 'warn', text: `最早的 ${result.value.droppedRounds} 轮对话被丢掉了。如果需求就写在那几轮里，模型现在已经看不到它。` }
   return { tone: 'warn', text: `${rounds.value} 轮对话被压成一段摘要，腾出了空间，但具体的报错原文、你说过的细节可能没留下来。` }
 })
 
 const modes = [
-  { key: 'error', name: '直接报错', who: '模型 API 的行为' },
-  { key: 'drop', name: '丢掉最早的', who: '部分聊天应用的做法' },
-  { key: 'compact', name: '压缩成摘要', who: 'Agent 工具常见做法' },
+  { key: 'error', name: '直接报错', who: '不启用截断的示例' },
+  { key: 'drop', name: '丢掉最早的', who: '应用或 API 的截断策略' },
+  { key: 'compact', name: '压缩成摘要', who: 'Agent 历史压缩的示意' },
 ] as const
 </script>
 
@@ -151,6 +155,6 @@ const modes = [
     <figcaption class="ax-cap ax-verdict" :class="`is-${verdict.tone}`" aria-live="polite">
       {{ verdict.text }}
     </figcaption>
-    <p class="ax-note">数字是示意单位，用来看比例，不对应任何具体模型。三种结局由谁负责：报错是模型 API 的行为，丢弃和压缩是在 API 之外由聊天应用或 Agent 工具做的。</p>
+    <p class="ax-note">数字和压缩比例都是手写示意，不对应具体模型。报错、截断和压缩的实际行为取决于 API 配置与应用实现；Codex 的历史压缩不保证保留完整原文。</p>
   </figure>
 </template>

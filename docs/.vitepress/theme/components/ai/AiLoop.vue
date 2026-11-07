@@ -39,19 +39,19 @@ const presets: Record<'agent' | 'api', { title: string; steps: Step[] }> = {
         text: '上下文里现在有三样东西：你的一句话、项目规则文件、可用工具清单。模型能「看到」的只有这些。',
         add: [
           { kind: 'you', text: '你：npm test 挂了，帮我修好' },
-          { kind: 'rule', text: 'CLAUDE.md：测试命令是 npm test' },
+          { kind: 'rule', text: 'AGENTS.md：测试命令是 npm test' },
         ],
       },
       {
         phase: 'think',
         label: '先看报错',
-        text: '还不知道哪里错，模型决定先跑测试看失败信息，于是输出一个调用 Bash 的请求。它只是「请求」，自己不执行任何东西。',
-        add: [{ kind: 'model', text: '模型：调用 Bash，命令 npm test' }],
+        text: '还不知道哪里错，模型决定先跑测试看失败信息，于是输出一个执行命令的请求。它只是「请求」，自己不执行任何东西。',
+        add: [{ kind: 'model', text: '模型：请求执行 npm test' }],
       },
       {
         phase: 'act',
         label: '跑测试',
-        text: 'Agent 程序在你的终端里执行 npm test。按默认设置，跑命令前会先问你同意。',
+        text: 'Agent 程序在你的终端里执行 npm test。是否需要批准，由当前沙箱、审批策略和规则共同决定。',
       },
       {
         phase: 'result',
@@ -63,7 +63,7 @@ const presets: Record<'agent' | 'api', { title: string; steps: Step[] }> = {
         phase: 'think',
         label: '读实现',
         text: '第二圈：报错指向 sum，模型决定先读源码再改，不靠猜。',
-        add: [{ kind: 'model', text: '模型：调用 Read，路径 src/sum.ts' }],
+        add: [{ kind: 'model', text: '模型：请求读取 src/sum.ts' }],
       },
       {
         phase: 'result',
@@ -75,7 +75,7 @@ const presets: Record<'agent' | 'api', { title: string; steps: Step[] }> = {
         phase: 'act',
         label: '改代码',
         text: '第三圈：模型请求编辑文件，Agent 写入改动，再跑一次测试确认。',
-        add: [{ kind: 'model', text: '模型：Edit src/sum.ts，再跑 npm test' }],
+        add: [{ kind: 'model', text: '模型：请求修改 src/sum.ts，再跑 npm test' }],
       },
       {
         phase: 'result',
@@ -92,81 +92,86 @@ const presets: Record<'agent' | 'api', { title: string; steps: Step[] }> = {
     ],
   },
   api: {
-    title: '一次工具调用的 API 往返',
+    title: 'OpenAI Responses API：一次函数调用往返',
     steps: [
       {
         phase: 'observe',
         label: '发请求',
-        text: '你的程序把工具定义（名字、说明、参数结构）和用户的问题一起发给模型。模型拿到的只是这份说明，看不到工具的实现代码。',
+        text: '注册 function 工具，parameters 描述参数结构。这里省略 model 等字段，只演示 OpenAI Responses API；不是 Codex CLI 的内部报文。',
         add: [{ kind: 'you', text: '用户：北京现在多少度？' }],
-        codeTitle: '请求（节选）',
-        code: `{
-  "tools": [{
-    "name": "get_weather",
-    "description": "查询城市的当前天气",
-    "input_schema": {
-      "type": "object",
-      "properties": { "city": { "type": "string" } },
-      "required": ["city"]
-    }
-  }],
-  "messages": [
-    { "role": "user", "content": "北京现在多少度？" }
-  ]
-}`,
+        codeTitle: '请求体节选',
+        code: JSON.stringify({
+          tools: [{
+            type: 'function',
+            name: 'get_weather',
+            description: '查询城市的当前天气',
+            parameters: {
+              type: 'object',
+              properties: { city: { type: 'string' } },
+              required: ['city'],
+              additionalProperties: false,
+            },
+            strict: true,
+          }],
+          input: '北京现在多少度？',
+        }, null, 2),
       },
       {
         phase: 'think',
         label: '模型要调用',
-        text: '模型判断需要实时数据，回复里带一个 tool_use 块，stop_reason 是 "tool_use"。参数按 input_schema 填好。',
-        add: [{ kind: 'model', text: 'tool_use：get_weather({ city: "北京" })' }],
-        codeTitle: '响应（节选）',
-        code: `{
-  "stop_reason": "tool_use",
-  "content": [{
-    "type": "tool_use",
-    "id": "toolu_01",
-    "name": "get_weather",
-    "input": { "city": "北京" }
-  }]
-}`,
+        text: '响应 output 里出现 function_call。arguments 是 JSON 字符串；call_id 用来关联后续执行结果。响应完成不代表你的函数已经执行。',
+        add: [{ kind: 'model', text: 'function_call：get_weather，city 为北京' }],
+        codeTitle: '响应节选（ID 为示意）',
+        code: JSON.stringify({
+          id: 'resp_01',
+          output: [{
+            type: 'function_call',
+            id: 'fc_01',
+            call_id: 'call_01',
+            name: 'get_weather',
+            arguments: JSON.stringify({ city: '北京' }),
+          }],
+        }, null, 2),
       },
       {
         phase: 'act',
         label: '你的代码执行',
-        text: '真正去查天气的是你的代码。模型从头到尾没有执行任何东西，它只输出了一段结构化的请求。',
-        codeTitle: '你的程序',
-        code: `// 伪代码：按名字找到函数，用模型给的参数调用
-const output = tools[block.name](block.input)
-// → "晴，12°C"`,
+        text: '程序解析参数，检查授权、校验输入，再执行天气查询。模型给出的是调用请求，不会自动替你执行这个函数。',
+        codeTitle: '应用侧伪代码',
+        code: `const args = JSON.parse(call.arguments)
+// 先验证工具名、参数与授权，再执行；示例省略实现
+const output = await tools[call.name](args)
+// 示例结果：晴，12°C`,
       },
       {
         phase: 'result',
         label: '回传结果',
-        text: '把执行结果包成 tool_result，用 tool_use_id 对上是哪一次调用，连同之前的消息一起再发一次请求。',
-        add: [{ kind: 'result', text: 'tool_result：晴，12°C' }],
-        codeTitle: '第二次请求追加的消息',
-        code: `{
-  "role": "user",
-  "content": [{
-    "type": "tool_result",
-    "tool_use_id": "toolu_01",
-    "content": "晴，12°C"
-  }]
-}`,
+        text: '用 function_call_output 回传执行结果，call_id 对应刚才的调用。previous_response_id 接续先前响应；也可以自行保留完整输入与输出历史。',
+        add: [{ kind: 'result', text: 'function_call_output：晴，12°C（示例）' }],
+        codeTitle: '后续请求节选（省略 model、tools）',
+        code: JSON.stringify({
+          previous_response_id: 'resp_01',
+          input: [{
+            type: 'function_call_output',
+            call_id: 'call_01',
+            output: '晴，12°C',
+          }],
+        }, null, 2),
       },
       {
         phase: 'done',
         label: '模型作答',
-        text: '模型读到结果后用文字回答，stop_reason 变成 "end_turn"。只要 stop_reason 还是 "tool_use"，你的程序就继续执行工具、回传结果。',
-        add: [{ kind: 'model', text: '模型：北京现在晴，12°C。' }],
-        codeTitle: '响应（节选）',
-        code: `{
-  "stop_reason": "end_turn",
-  "content": [
-    { "type": "text", "text": "北京现在晴，12°C。" }
-  ]
-}`,
+        text: '模型根据结果回答。如果 output 里仍有 function_call，就继续检查和处理；没有调用时，还要检查 status、错误与验收条件，不能仅凭文字宣告完成。',
+        add: [{ kind: 'model', text: '模型：北京现在晴，12°C。（虚构示例）' }],
+        codeTitle: '最终响应节选',
+        code: JSON.stringify({
+          status: 'completed',
+          output: [{
+            type: 'message',
+            role: 'assistant',
+            content: [{ type: 'output_text', text: '北京现在晴，12°C。' }],
+          }],
+        }, null, 2),
       },
     ],
   },
@@ -239,7 +244,7 @@ const kindName: Record<Ctx['kind'], string> = {
               v-for="r in [-45, 45, 135, 225]"
               :key="r"
               class="ax-loop-head"
-              d="M172 95l6 6 6-6"
+              d="M172.5 96h11l-5.5 7z"
               :transform="`rotate(${r} 100 100)`"
             />
           </svg>

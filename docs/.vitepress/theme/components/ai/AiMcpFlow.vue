@@ -6,7 +6,7 @@ import { useStepper } from './useStepper'
 
 const lanes = [
   { key: 'you', name: '你' },
-  { key: 'client', name: 'Host / Client', sub: '如 Claude Code' },
+  { key: 'client', name: 'Host / Client', sub: '如 Codex' },
   { key: 'model', name: '模型' },
   { key: 'server', name: 'MCP Server' },
   { key: 'ext', name: '外部系统', sub: '如工单系统 API' },
@@ -142,7 +142,7 @@ function rowStyle(m: Msg) {
       </span>
     </div>
     <ol class="ax-seq-body">
-      <span v-for="(l, i) in lanes" :key="l.key" class="ax-seq-life" :style="{ '--c': i }" aria-hidden="true" />
+      <li v-for="(l, i) in lanes" :key="l.key" class="ax-seq-life" :style="{ '--c': i }" aria-hidden="true" />
       <li v-for="(m, i) in msgs" :key="i" class="ax-seq-row" :class="{ 'is-past': i < step, 'is-cur': i === step, 'is-future': i > step }">
         <button
           type="button"

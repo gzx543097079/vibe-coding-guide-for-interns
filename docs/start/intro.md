@@ -93,7 +93,7 @@ AI 只能猜：用什么框架、要不要记住密码、错误怎么提示、�
 ## 这份指南怎么读
 
 <RPoints cols="3">
-<RPoint icon="layers" title="模块与级别">8 个模块，每个模块内按基础、进阶、精通分级。先读基础，遇到需要再往下。</RPoint>
+<RPoint icon="layers" title="模块与级别">9 个模块，每个模块内按基础、进阶、精通分级。先读基础，遇到需要再往下。</RPoint>
 <RPoint icon="path" title="学习路径">每章开头的路径条标出前置章节和下一步，按顺序读最省力。</RPoint>
 <RPoint icon="check" title="三问收尾">每章最后是三问：必须先懂什么、怎么验证、AI 常错在哪。答得上再动手。</RPoint>
 </RPoints>

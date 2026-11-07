@@ -22,6 +22,7 @@
 /* 组件里的 code 不套正文行内代码的底色 */
 .vp-doc .ax-fig :is(.ax-rl-path, .ax-perm-stage code) {
   padding: 0;
+  border: 0;
   border-radius: 0;
   background: transparent;
 }
@@ -193,6 +194,8 @@
   padding: 12px 14px;
   overflow-x: auto;
   background: transparent;
+  font-size: 12.5px;
+  line-height: 1.65;
 }
 .vp-doc .ax-code code {
   padding: 0;
@@ -332,11 +335,7 @@
   stroke-dasharray: 3 5;
 }
 .ax-loop-head {
-  fill: none;
-  stroke: var(--ink-3);
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  fill: var(--ink-3);
 }
 .ax-loop-arm {
   position: absolute;
@@ -346,14 +345,13 @@
 }
 .ax-loop-dot {
   position: absolute;
-  top: 11%;
+  top: 25%;
   left: 50%;
-  width: 14px;
+  width: 16px;
   height: 14px;
-  margin: -7px 0 0 -7px;
-  border-radius: 50%;
+  margin: -7px 0 0 -8px;
   background: var(--mod);
-  box-shadow: 0 0 0 4px color-mix(in oklab, var(--mod) 22%, transparent), 0 2px 6px rgb(0 0 0 / 0.2);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
 }
 .ax-loop.is-done .ax-loop-dot {
   opacity: 0;
@@ -707,7 +705,7 @@
   transition: opacity var(--dur-3) var(--ease);
 }
 .ax-seq-row.is-future {
-  opacity: 0.38;
+  color: var(--ink-3);
 }
 .ax-seq-msg {
   position: relative;
@@ -1005,7 +1003,7 @@
   transition: opacity var(--dur-2) var(--ease);
 }
 .vp-doc .ax-pb-guess li.is-solved {
-  opacity: 0.45;
+  color: var(--ink-2);
   text-decoration: line-through;
 }
 .ax-pb-dot {
@@ -1195,7 +1193,7 @@
   transition: opacity var(--dur-2) var(--ease);
 }
 .ax-perm-stage.is-skip {
-  opacity: 0.42;
+  background: var(--paper-3);
 }
 .vp-doc .ax-perm-stage-head {
   display: flex;
@@ -1413,7 +1411,7 @@
   transform: translateY(-2px);
 }
 .ax-tp-kind.is-no {
-  opacity: 0.5;
+  background: var(--paper-3);
 }
 .vp-doc .ax-tp-head {
   display: flex;
@@ -1468,6 +1466,12 @@
     margin-left: -8px;
     margin-right: -8px;
     padding: 14px;
+  }
+  .ax-chip,
+  .ax-play,
+  .ax-btn,
+  .ax-nt-cand {
+    min-height: 44px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

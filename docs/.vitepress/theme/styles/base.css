@@ -65,6 +65,11 @@ textarea {
   letter-spacing: -0.01em;
   color: var(--ink);
 }
+@media (max-width: 359px) {
+  .VPNavBar .title {
+    font-size: 15px;
+  }
+}
 .VPNavBarMenuLink {
   font-size: 14px !important;
   font-weight: 500 !important;

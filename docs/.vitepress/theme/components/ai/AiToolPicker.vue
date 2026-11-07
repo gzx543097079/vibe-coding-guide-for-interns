@@ -6,9 +6,9 @@ type Kind = 'chat' | 'complete' | 'agent'
 type Fit = 'best' | 'ok' | 'no'
 
 const kinds: { key: Kind; name: string; sees: string; does: string }[] = [
-  { key: 'chat', name: '对话助手', sees: '只看得到你贴进去的内容', does: '回答、解释、起草，不碰你的文件' },
+  { key: 'chat', name: '纯对话', sees: '你提供的文字、文件和已有上下文', does: '回答、解释、起草；接工具后能力另看权限' },
   { key: 'complete', name: '编辑器补全', sees: '光标附近的代码和打开的文件', does: '边写边给下一行、下一段的建议' },
-  { key: 'agent', name: 'Agent', sees: '整个项目目录，自己搜文件', does: '读写文件、跑命令，循环到做完' },
+  { key: 'agent', name: 'Agent', sees: '授权目录和已连接的数据源', does: '按权限读写文件、跑命令，依据结果继续' },
 ]
 
 const scenes: { name: string; fit: Record<Kind, Fit>; why: string }[] = [

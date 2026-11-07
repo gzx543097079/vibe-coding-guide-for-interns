@@ -17,7 +17,7 @@ description: 命名、格式化、注释、提交规范与代码审查要点。
 <RPoint icon="warn" title="检查配置">如 <code>eslint.config.js</code>，规定哪些写法算错误或警告。</RPoint>
 <RPoint icon="script" title="package.json 的 scripts">看有没有 <code>lint</code>、<code>format</code>、<code>test</code>，提交前跑它们。</RPoint>
 <RPoint icon="book" title="CONTRIBUTING.md">团队的提交、分支、审查约定，常和 README 放在一起。</RPoint>
-<RPoint icon="bot" title="AI 规则文件">如 <code>CLAUDE.md</code>、<code>AGENT.md</code>，写给 Agent 的约定，人也该读。</RPoint>
+<RPoint icon="bot" title="AI 规则文件">如 Codex 的 <code>AGENTS.md</code>，写给 Agent 的项目约定，人也该读。</RPoint>
 </RPoints>
 
 ## 命名

@@ -1,68 +1,53 @@
 <script setup lang="ts">
-// 权限规则求值：选一条命令，按 deny → ask → allow 的顺序找第一条命中的规则
-// 简化版匹配：Bash(…) 里的 * 匹配任意字符；cat / head / tail 读文件时套用 Read 规则
+// 只演示 Codex prefix_rule 对简单命令的匹配，不执行任何输入
 import { computed, ref, useId } from 'vue'
 
 const uid = useId()
 const rules = {
-  deny: ['Read(./.env)', 'Bash(git push *)', 'Bash(rm *)'],
-  ask: ['Bash(npm install *)'],
-  allow: ['Bash(npm run *)', 'Bash(git commit *)'],
+  forbidden: [['rm']],
+  prompt: [['git', 'push'], ['npm', 'install']],
+  allow: [['npm', 'run', 'build']],
 }
 type Stage = keyof typeof rules
 
 const samples: { cmd: string; note?: string }[] = [
-  { cmd: 'npm run test' },
+  { cmd: 'npm run build', note: 'allow 仅是前缀规则的决策，实际执行还要结合沙箱和其他限制。' },
   { cmd: 'npm install lodash' },
-  { cmd: 'git push origin main', note: '想推送只能你自己在终端里执行，allow 规则也开不了这个口子。' },
+  { cmd: 'git push origin main', note: '这里只检查前缀，不会推送。本仓库仍要求在功能分支上提 PR。' },
   { cmd: 'rm -rf dist' },
-  { cmd: 'cat .env', note: 'cat、head、tail 这类能认出来的读文件命令，也受 Read 规则约束。' },
-  {
-    cmd: 'node scripts/print-env.js',
-    note: '脚本自己去打开 .env 时，Read(./.env) 拦不住：规则只管认得出的文件命令。要从系统层面挡住，得开沙箱。',
-  },
-  { cmd: 'curl https://example.com' },
+  { cmd: 'git status', note: '没有显式命中，并不表示禁止或允许，要结合当前会话设置。' },
+  { cmd: 'node scripts/check.js', note: '命令前缀不分析脚本的内容；要审查脚本和执行边界。' },
 ]
-
 const cmd = ref(samples[0].cmd)
-
-function toRegex(glob: string) {
-  return new RegExp('^' + glob.split('*').map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('.*') + '$')
-}
-function matches(rule: string, command: string) {
-  const m = rule.match(/^(\w+)\((.*)\)$/)
-  if (!m) return false
-  const [, tool, spec] = m
-  const c = command.trim()
-  if (tool === 'Bash') return toRegex(spec).test(c)
-  if (tool === 'Read') {
-    const f = c.match(/^(?:cat|head|tail|less)\s+(?:-\S+\s+)*(\S+)$/)
-    if (!f) return false
-    const norm = (p: string) => p.replace(/^\.\//, '')
-    return norm(f[1]) === norm(spec)
-  }
-  return false
-}
-
+const tokens = computed(() => {
+  const text = cmd.value.trim()
+  // 引号、转义、重定向和命令组合需要真正的 shell 解析，本演示不模拟
+  return text && /^[a-zA-Z0-9_./:=@%+,\s-]+$/.test(text) ? text.split(/\s+/) : null
+})
+const ruleText = (stage: Stage, pattern: string[]) =>
+  `prefix_rule(pattern=${JSON.stringify(pattern)}, decision="${stage}")`
 const trace = computed(() => {
   const out: { stage: Stage; hit?: string }[] = []
-  for (const stage of ['deny', 'ask', 'allow'] as Stage[]) {
-    const hit = rules[stage].find((r) => matches(r, cmd.value))
-    out.push({ stage, hit })
-    if (hit) break
+  if (!tokens.value) return out
+  // 按严格程度检查，等价于对本例所有匹配规则取最严格的决策
+  for (const stage of ['forbidden', 'prompt', 'allow'] as Stage[]) {
+    const pattern = rules[stage].find((p) => p.every((t, i) => tokens.value![i] === t))
+    out.push({ stage, hit: pattern ? ruleText(stage, pattern) : undefined })
+    if (pattern) break
   }
   return out
 })
 const final = computed(() => trace.value.find((t) => t.hit))
 const verdict = computed(() => {
+  if (!tokens.value) return { tone: 'ask', text: '请输入简单命令。本演示不解析空输入、引号、变量或复合 shell 语法；不要用这里的结果判断真实命令安全。' }
   const f = final.value
-  if (!f) return { tone: 'ask', text: '三类规则都没命中，按当前权限模式处理。默认模式下，跑命令前会先问你。' }
-  if (f.stage === 'deny') return { tone: 'deny', text: `命中 deny 规则 ${f.hit}，直接拒绝，后面的规则不再看。` }
-  if (f.stage === 'ask') return { tone: 'ask', text: `命中 ask 规则 ${f.hit}，每次都弹窗问你。` }
-  return { tone: 'allow', text: `命中 allow 规则 ${f.hit}，不用问你就执行。` }
+  if (!f) return { tone: 'ask', text: '未命中本例规则，实际行为还要看沙箱、审批策略和其他规则。' }
+  if (f.stage === 'forbidden') return { tone: 'deny', text: '命中 forbidden：这条规则禁止该调用。' }
+  if (f.stage === 'prompt') return { tone: 'ask', text: '命中 prompt：规则要求进入审批流程，不等于已经批准。' }
+  return { tone: 'allow', text: '命中 allow：前缀规则允许该调用；仍需结合执行环境的其他限制。' }
 })
 const note = computed(() => samples.find((s) => s.cmd === cmd.value.trim())?.note)
-const stageName: Record<Stage, string> = { deny: '拒绝 deny', ask: '询问 ask', allow: '允许 allow' }
+const stageName: Record<Stage, string> = { forbidden: '禁止 forbidden', prompt: '询问 prompt', allow: '允许 allow' }
 </script>
 
 <template>
@@ -89,11 +74,11 @@ const stageName: Record<Stage, string> = { deny: '拒绝 deny', ask: '询问 ask
 
     <ol class="ax-perm-stages">
       <li
-        v-for="stage in (['deny', 'ask', 'allow'] as const)"
+        v-for="stage in (['forbidden', 'prompt', 'allow'] as const)"
         :key="stage"
         class="ax-perm-stage"
         :class="[
-          `is-${stage}`,
+          `is-${stage === 'forbidden' ? 'deny' : stage === 'prompt' ? 'ask' : 'allow'}`,
           {
             'is-hit': final?.stage === stage,
             'is-skip': !trace.some((t) => t.stage === stage),
@@ -108,8 +93,8 @@ const stageName: Record<Stage, string> = { deny: '拒绝 deny', ask: '询问 ask
           </span>
         </p>
         <ul>
-          <li v-for="r in rules[stage]" :key="r" :class="{ 'is-rule-hit': final?.hit === r }">
-            <code>{{ r }}</code>
+          <li v-for="r in rules[stage]" :key="r.join(' ')" :class="{ 'is-rule-hit': final?.hit === ruleText(stage, r) }">
+            <code>{{ ruleText(stage, r) }}</code>
           </li>
         </ul>
       </li>
@@ -118,6 +103,6 @@ const stageName: Record<Stage, string> = { deny: '拒绝 deny', ask: '询问 ask
     <figcaption class="ax-cap ax-verdict" :class="`is-${verdict.tone}`" aria-live="polite">
       {{ verdict.text }}<template v-if="note"> {{ note }}</template>
     </figcaption>
-    <p class="ax-note">简化演示：只模拟了 * 通配和几个读文件命令。真实的匹配规则更细，以 Claude Code 权限文档为准。</p>
+    <p class="ax-note">只做简单参数前缀匹配，不会执行命令。真实 Codex 会解析更多 shell 结构；请用 codex execpolicy check 检查实际规则。</p>
   </figure>
 </template>

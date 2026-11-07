@@ -17,7 +17,7 @@ description: token 怎么计数，上下文窗口装下什么、装不下会怎�
 <RPoint icon="code" title="代码">缩进、括号、长变量名都要算 token。一个几百行的文件，很容易就是几千个 token。</RPoint>
 </RPoints>
 
-想知道一段文字到底多少 token，用厂商提供的计数接口或工具算，不要凭字数估。例如 Anthropic 提供 [token counting API](https://platform.claude.com/docs/en/build-with-claude/token-counting)，每次调用的响应里也会在 `usage` 字段报告这次用了多少 token。
+想知道一段文字到底多少 token，用对应模型的计数工具，不要凭字数估。OpenAI Responses API 提供 [输入 token 计数接口](https://developers.openai.com/api/docs/guides/token-counting)，响应的 `usage` 还会报告实际输入、输出用量。使用 Codex CLI 时可查看 `/status` 的会话用量；不需要为了读这一章额外调用付费 API。
 
 ## 窗口里装了什么
 
@@ -25,19 +25,19 @@ description: token 怎么计数，上下文窗口装下什么、装不下会怎�
 
 <AiContext />
 
-按 Anthropic 的 [上下文窗口文档](https://platform.claude.com/docs/en/build-with-claude/context-windows)，计入窗口的有：系统提示、所有消息（包括工具结果、图片和文档）、工具定义，以及模型这一轮生成的输出。三种结局各由谁负责：
+按 OpenAI 的 [会话状态文档](https://developers.openai.com/api/docs/guides/conversation-state)，输入、输出以及部分模型的推理 token 都要考虑在窗口预算内；读入的文件、工具定义和结果也会占空间。下面把常见处理方式分成三类；实际行为由 API 配置和应用共同决定：
 
 <RPoints cols="3">
-<RPoint icon="cross" title="直接报错" tone="warn">输入本身就超过窗口时，API 返回 400 错误（prompt is too long），不会悄悄截断。</RPoint>
-<RPoint icon="clock" title="丢掉最早的">部分聊天应用按「先进先出」丢弃早期对话。你最开始交代的需求，可能就在被丢的那部分里。</RPoint>
-<RPoint icon="layers" title="压缩成摘要">Agent 工具常在快满时把历史总结成一段摘要。空间腾出来了，但原始报错、具体数值这些细节可能没保留。</RPoint>
+<RPoint icon="cross" title="直接报错" tone="warn">超过窗口且未启用截断时，请求可能直接失败。不要把所有服务的错误码和错误文案当成一样。</RPoint>
+<RPoint icon="clock" title="丢掉较早内容">应用或 API 的截断配置可能移除早期内容。最开始交代的需求，也可能受到影响。</RPoint>
+<RPoint icon="layers" title="压缩历史">Codex 等 Agent 可压缩历史以继续长任务。压缩后的表示不等于完整原文，要把关键约束和验证结果另行保存。</RPoint>
 </RPoints>
 
-窗口有多大，各模型不同，而且变化很快。写这一章时（2026 年 11 月）Anthropic 文档列出的是 100 万和 20 万 token 两档，具体到哪个模型以 [官方模型对比表](https://platform.claude.com/docs/en/models/overview#latest-models-comparison) 为准；其他厂商的数字 <RTbd />。
+窗口上限取决于具体模型和产品配置，变化也快。查 [OpenAI 官方模型文档](https://developers.openai.com/api/docs/models) 核对 API 模型；Codex 的可用上下文还要看当前会话和客户端设置，这里不写一个通用固定值。
 
 ## 窗口大不等于越多越好
 
-同一份文档还提到：token 越多，模型的准确度和回忆能力会下降（他们称为 context rot）。所以重点不是塞满，而是只放需要的。
+能放进窗口，只说明长度没有超限，不保证模型会正确利用每条信息。无关文件、重复日志和过时要求都可能干扰判断，优先给与当前任务有关的内容。
 
 <RCompare bad-title="什么都丢进去" good-title="只给这次任务需要的">
 <template #bad>
@@ -69,7 +69,7 @@ token 也直接决定费用：多数 API 按输入和输出的 token 数分别�
 
 - token 是模型处理文字的单位，按分词器切分，和字数、词数都不一一对应。
 - 上下文窗口装着规则、工具定义、历史对话、文件和正在生成的回答，是一个总量上限。
-- 超出窗口时，API 会报错；丢弃或压缩是应用层做的，会丢掉信息。
+- 超出窗口时可能报错、截断或压缩，取决于 API 与应用配置；原文细节可能丢失。
 
 </template>
 <template #verify>

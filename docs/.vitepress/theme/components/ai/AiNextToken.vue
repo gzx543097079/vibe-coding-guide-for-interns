@@ -72,7 +72,6 @@ const options = computed<Cand[]>(() => {
   return lastPick.next ?? []
 })
 const finished = computed(() => options.value.length === 0)
-const top = computed(() => Math.max(...options.value.map((c) => c.p), 0.01))
 
 function choose(c: Cand) {
   picked.value = [...picked.value, c]
@@ -129,13 +128,13 @@ const pct = (p: number) => `${Math.round(p * 100)}%`
         <li v-for="c in options" :key="c.t">
           <button type="button" class="ax-nt-cand" @click="choose(c)">
             <span class="ax-nt-tok-name">{{ c.t }}</span>
-            <span class="ax-nt-bar" aria-hidden="true"><i :style="{ transform: `scaleX(${c.p / top})` }" /></span>
+            <span class="ax-nt-bar" aria-hidden="true"><i :style="{ transform: `scaleX(${c.p})` }" /></span>
             <span class="ax-nt-p">{{ pct(c.p) }}</span>
           </button>
         </li>
       </ul>
     </div>
-    <p v-else class="ax-nt-done">生成到句号，这一句结束了。</p>
+    <p v-else class="ax-nt-done">这一句生成结束了，可以点「重来」再试一次。</p>
 
     <div class="ax-nt-actions">
       <button type="button" class="ax-btn" :disabled="finished" @click="sample">按概率抽一个</button>

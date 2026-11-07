@@ -1,6 +1,5 @@
 <script setup lang="ts">
-// 规则文件加载层级（以 Claude Code 为例）：点每一层看路径和作用；
-// 两个开关演示「按需加载」：子目录的 CLAUDE.md、skill 的完整内容
+// Codex 规则发现：全局约定、项目路径及同层 override；Skill 按需加载
 import { computed, ref } from 'vue'
 
 interface Layer {
@@ -14,66 +13,44 @@ interface Layer {
 
 const layers: Layer[] = [
   {
-    key: 'org',
-    name: '组织策略',
-    path: '由 IT 部署到系统目录',
-    who: '公司统一下发，所有人生效',
-    when: '每次启动都加载',
+    key: 'user', name: '全局约定', path: '~/.codex/AGENTS.md',
+    who: '你的跨项目约定；配置目录可由 CODEX_HOME 调整',
+    when: '会话建立时发现；同层有 AGENTS.override.md 时取后者',
   },
   {
-    key: 'user',
-    name: '用户级',
-    path: '~/.claude/CLAUDE.md',
-    who: '只给你自己，所有项目生效',
-    when: '每次启动都加载',
+    key: 'project', name: '项目约定', path: './AGENTS.md',
+    who: '团队共享的项目规则', when: '从项目根目录到启动目录逐层发现，每层最多取一个文件',
   },
   {
-    key: 'project',
-    name: '项目级',
-    path: './CLAUDE.md 或 ./.claude/CLAUDE.md',
-    who: '提交进仓库，整个团队共享',
-    when: '每次启动都加载；没有 CLAUDE.md 时可以读 AGENTS.md',
+    key: 'override', name: '同层替代', path: './AGENTS.override.md',
+    who: '替代同一目录的 AGENTS.md', when: '发现时优先于同层 AGENTS.md，不是再加一份',
   },
   {
-    key: 'local',
-    name: '本地级',
-    path: './CLAUDE.local.md',
-    who: '只给你自己、只在这个项目；加进 .gitignore',
-    when: '每次启动都加载',
+    key: 'sub', name: '子项目约定', path: 'packages/web/AGENTS.md',
+    who: '该子项目的更具体约定', when: '从 packages/web 启动时纳入发现路径', ondemand: 'sub',
   },
   {
-    key: 'sub',
-    name: '子目录',
-    path: 'packages/web/CLAUDE.md',
-    who: '只管这个子目录',
-    when: '读到这个目录里的文件时才加载',
-    ondemand: 'sub',
-  },
-  {
-    key: 'skill',
-    name: 'Skill',
-    path: '.claude/skills/<名字>/SKILL.md',
-    who: '一套具体做法，比如发布流程',
-    when: '平时只加载 description；被调用时才加载全文',
-    ondemand: 'skill',
+    key: 'skill', name: 'Skill', path: '.agents/skills/<名字>/SKILL.md',
+    who: '某类任务的工作流程', when: '先发现名称与描述，选用时读取完整说明', ondemand: 'skill',
   },
 ]
 
 const sel = ref('project')
 const cur = computed(() => layers.find((l) => l.key === sel.value)!)
 const inSub = ref(false)
+const useOverride = ref(false)
 const useSkill = ref(false)
 
-// 右侧上下文：按加载顺序，后加载的排在后面
+// 路径规则与 Skill 分开展示，避免暗示打开子目录即可自动加载规则
 const ctx = computed(() => {
   const out: { key: string; text: string; small?: boolean }[] = [
-    { key: 'org', text: '组织策略' },
-    { key: 'user', text: '用户级 CLAUDE.md' },
-    { key: 'project', text: '项目级 CLAUDE.md' },
-    { key: 'local', text: 'CLAUDE.local.md' },
-    { key: 'skill', text: useSkill.value ? 'SKILL.md 全文' : 'skill 的 description', small: !useSkill.value },
+    { key: 'user', text: '全局 AGENTS.md' },
+    useOverride.value
+      ? { key: 'override', text: '项目 AGENTS.override.md（替代同层 AGENTS.md）' }
+      : { key: 'project', text: '项目 AGENTS.md' },
   ]
-  if (inSub.value) out.push({ key: 'sub', text: 'packages/web/CLAUDE.md' })
+  if (inSub.value) out.push({ key: 'sub', text: 'packages/web/AGENTS.md' })
+  out.push({ key: 'skill', text: useSkill.value ? 'SKILL.md 完整说明' : 'Skill 名称与描述', small: !useSkill.value })
   out.push({ key: 'chat', text: '你的消息、读到的文件……' })
   return out
 })
@@ -108,7 +85,7 @@ const ctx = computed(() => {
           </dl>
         </div>
         <div class="ax-rl-ctx">
-          <p class="ax-rl-ctx-head">上下文里的顺序</p>
+          <p class="ax-rl-ctx-head">本例加载的内容</p>
           <ol>
             <li
               v-for="c in ctx"
@@ -121,18 +98,22 @@ const ctx = computed(() => {
           <div class="ax-rl-toggles">
             <label class="ax-check">
               <input v-model="inSub" type="checkbox" />
-              <span>Agent 读到 packages/web/ 里的文件</span>
+              <span>从 packages/web/ 启动新会话</span>
+            </label>
+            <label class="ax-check">
+              <input v-model="useOverride" type="checkbox" />
+              <span>项目根目录有 AGENTS.override.md</span>
             </label>
             <label class="ax-check">
               <input v-model="useSkill" type="checkbox" />
-              <span>调用这个 skill</span>
+              <span>调用这个 Skill</span>
             </label>
           </div>
         </div>
       </div>
     </div>
     <figcaption class="ax-cap">
-      从宽到窄依次加载，后加载的排在上下文更后面。所有这些都只是「上下文」，模型会参考，但不保证照做；要硬性拦住某个操作，用权限规则。
+      示意前提：这些文件都存在且在加载上限内。路径规则从全局到启动目录逐层收集，同层 override 替代普通文件；Skill 按需加载。规则不能替代沙箱与审批。
     </figcaption>
   </figure>
 </template>
