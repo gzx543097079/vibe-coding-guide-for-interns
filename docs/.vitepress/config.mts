@@ -1,44 +1,7 @@
-import { defineConfig, type DefaultTheme } from 'vitepress'
-import { modules } from './theme/data/modules'
+import { defineConfig } from 'vitepress'
 
 const REPO = 'https://github.com/gzx543097079/vibe-coding-guide-for-interns'
 const BASE = '/vibe-coding-guide-for-interns/'
-
-// 由模块数据生成侧边栏：每个模块一个可折叠分组，模块内的子分组再嵌套一层
-function buildSidebar(): DefaultTheme.SidebarItem[] {
-  return modules.map((mod) => {
-    const items: DefaultTheme.SidebarItem[] = []
-    let current: DefaultTheme.SidebarItem | null = null
-    for (const st of mod.chapters) {
-      // 基础是默认级别不加标签，进阶 / 精通在标题后显示小标签
-      const lv = st.level === '基础' ? '' : `<span class="sb-lv" data-lv="${st.level}">${st.level}</span>`
-      const item: DefaultTheme.SidebarItem = {
-        text: `<span class="sb-title">${st.title}</span>${lv}`,
-        link: st.link,
-        docFooterText: st.title,
-      }
-      if (st.group) {
-        if (!current || current.text !== groupText(st.group)) {
-          current = { text: groupText(st.group), collapsed: false, items: [] }
-          items.push(current)
-        }
-        current.items!.push(item)
-      } else {
-        current = null
-        items.push(item)
-      }
-    }
-    return {
-      text: `<span class="sb-mod" data-mod="${mod.id}" aria-hidden="true">${mod.no}</span><span class="sb-text">${mod.name}</span><span class="sb-count">${mod.chapters.length} 章</span>`,
-      collapsed: false,
-      items,
-    }
-  })
-}
-
-function groupText(name: string) {
-  return `<span class="sb-sub">${name}</span>`
-}
 
 export default defineConfig({
   base: BASE,
@@ -77,13 +40,11 @@ export default defineConfig({
     logo: { src: '/favicon.svg', alt: '' },
     siteTitle: 'Vibe Coding 开发指南',
     nav: [
-      { text: '开始阅读', link: '/start/intro' },
-      { text: '控件与提示词', link: '/controls/overview' },
-      { text: '提示词模板', link: '/growth/prompt-templates' },
+      { text: '探索课程', link: '/learn' },
+      { text: '学习路线', link: '/paths' },
+      { text: '组件实验室', link: '/lab' },
+      { text: '提示词', link: '/growth/prompt-templates' },
     ],
-    sidebar: {
-      '/': buildSidebar(),
-    },
     outline: { level: [2, 3], label: '本页目录' },
     socialLinks: [{ icon: 'github', link: REPO, ariaLabel: 'GitHub 仓库' }],
     editLink: {
