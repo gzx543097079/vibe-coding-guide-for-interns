@@ -46,7 +46,7 @@ const steps = [
           </a>
           <a class="btn btn-ghost" :href="withBase('/growth/prompt-templates')">看提示词模板</a>
         </div>
-        <p class="hero-meta">{{ modules.length }} 个模块、{{ totalChapters }} 章，正文持续补充中，以 MIT 协议开源。</p>
+        <p class="hero-meta">{{ modules.length }} 个模块、{{ totalChapters }} 章正文，含交互演示与实践示例，以 MIT 协议开源。</p>
       </div>
 
       <figure class="hero-code" aria-label="提示词模板示例：修 bug">
@@ -92,9 +92,9 @@ const steps = [
       </section>
 
       <section class="oss" aria-labelledby="oss-title" data-reveal>
-        <h2 id="oss-title" class="oss-title">一起把每一章写完</h2>
+        <h2 id="oss-title" class="oss-title">一起把指南打磨得更好</h2>
         <p class="oss-lead">
-          内容用 Markdown 写，以 MIT 协议开源。发现错误或想补一章，直接提 Issue 或 PR；每页底部也有「在 GitHub 上编辑此页」。
+          内容用 Markdown 写，以 MIT 协议开源。发现错误、验证平台示例或补充实践经验，直接提 Issue 或 PR；每页底部也有「在 GitHub 上编辑此页」。
         </p>
         <div class="oss-actions">
           <a class="btn btn-primary" :href="REPO" target="_blank" rel="noopener">GitHub 仓库</a>

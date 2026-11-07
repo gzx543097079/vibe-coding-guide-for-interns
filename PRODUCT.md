@@ -25,7 +25,7 @@ VitePress + 自定义主题，部署到 GitHub Pages 子路径 /vibe-coding-guid
 ## Capabilities and Constraints
 
 - 内容用 Markdown 维护，开源（MIT），欢迎 PR 共建。
-- 已有正文、演示与未完成章节；草稿须明确标注，不得编造案例、数据或用户评价。
+- 已覆盖 108 篇登记章节正文与既有交互演示；原生片段保留待校对状态，不得编造案例、数据或用户评价。
 - 简体中文为主，中英文混排需精致。
 - 内容规划：9 个模块（起步、AI 与 Agent、Git 与协作、前端与客户端、UI 控件与提示词、大前端 / 跨端、后端与数据、质量与交付、提升），模块内按「基础 / 进阶 / 精通」分级；章节数据统一维护在 `docs/.vitepress/theme/data/modules.ts`。
 - 控件页的提示词要经过还原验证（独立 agent 只看提示词写实现，再与站内演示逐状态截图对比），验证状态与日期记在 `docs/.vitepress/theme/data/controlPrompts.ts`；没验证的不得标「已验证」。
@@ -38,7 +38,7 @@ VitePress + 自定义主题，部署到 GitHub Pages 子路径 /vibe-coding-guid
 
 ## Evidence on Hand
 
-无真实案例、数据或评价；不得虚构。
+`growth/cases` 采用本仓库 commit `a8a0324` 的真实结构调整作为案例。无企业生产数据或用户评价；不得虚构。
 
 ## Product Principles
 
