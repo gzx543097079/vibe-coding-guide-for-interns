@@ -109,21 +109,10 @@ description: 用 Dart 写一套 UI，自绘引擎覆盖多端。
 
 <PromptCard id="mobile-screen" />
 
-## 三问
-
-答得上这三个问题，再把这个方向的任务交给 AI。下面是计划展开的要点。
-
-### 必须先懂什么
+## 计划覆盖
 
 - StatelessWidget 与 StatefulWidget 的区别
 - BuildContext 的作用
-
-### 怎么验证
-
 - 在 iOS 与 Android 上分别运行
 - 用 Flutter DevTools 检查重建与性能
-
-### AI 常错在哪
-
-- 使用已废弃的 Widget 或参数
-- 在 build 方法中执行副作用
+- 常见错误及排查：使用已废弃的 Widget 或参数；在 build 方法中执行副作用。

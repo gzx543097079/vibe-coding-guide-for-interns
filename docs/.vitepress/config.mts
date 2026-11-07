@@ -49,7 +49,7 @@ export default defineConfig({
   cleanUrls: true,
   lastUpdated: true,
   srcExclude: ['snippets/**'],
-  // 正文还在写的章节（frontmatter status: draft）加上 is-draft 类，用于「计划覆盖」「三问」的概览版式
+  // 正文还在写的章节（frontmatter status: draft）加上 is-draft 类，用于「计划覆盖」的概览版式
   transformPageData(pageData) {
     if (pageData.frontmatter.status === 'draft') {
       const cls = pageData.frontmatter.pageClass

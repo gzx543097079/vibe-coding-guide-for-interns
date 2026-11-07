@@ -2,7 +2,6 @@ import type { App } from 'vue'
 import RPath from './RPath.vue'
 import RPoints from './RPoints.vue'
 import RPoint from './RPoint.vue'
-import RAsk from './RAsk.vue'
 import RCompare from './RCompare.vue'
 import RSteps from './RSteps.vue'
 import RStep from './RStep.vue'
@@ -16,7 +15,6 @@ export function registerRich(app: App) {
   app.component('RPath', RPath)
   app.component('RPoints', RPoints)
   app.component('RPoint', RPoint)
-  app.component('RAsk', RAsk)
   app.component('RCompare', RCompare)
   app.component('RSteps', RSteps)
   app.component('RStep', RStep)

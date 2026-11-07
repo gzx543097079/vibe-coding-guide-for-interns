@@ -1,7 +1,7 @@
 ---
 status: draft
 title: 上下文管理
-description: CLAUDE.md / AGENT.md、文件范围与敏感信息。
+description: Codex 的 AGENTS.md、文件范围与敏感信息。
 ---
 
 ## 提示词示例

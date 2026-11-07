@@ -9,6 +9,8 @@ description: 终端、包管理器、Node / Python / JDK 等运行时与 Git 的
 
 下面的命令块按系统分标签，选一次后全站记住。Windows 一律用 PowerShell。
 
+复制安装命令前，先确认系统、shell 和安装来源。AI 给出的包名、地址要对照官网核对；不要把其他系统的命令直接粘进终端。
+
 ## 先认识终端
 
 终端是你和 AI 工具都会频繁用到的地方。记住下面几个概念，后面大部分「装了却用不了」的问题都能自己排查。
@@ -157,29 +159,3 @@ JDK 有多个发行版，选哪个、装哪个大版本，**先问团队**。下
 />
 
 找不到：说明安装目录不在 PATH 里，回到安装步骤看提示，或新开终端。找到的路径不是你预期的：说明装了不止一份，卸掉多余的那份。
-
-## 动手前的三问
-
-<RAsk>
-<template #know>
-
-- 终端的当前目录、PATH 和环境变量分别是什么。
-- 项目要求的运行时版本写在哪：`.nvmrc`、`package.json` 的 `engines`、README。
-- 你的系统和 shell：macOS 用 zsh，Windows 用 PowerShell，命令写法不通用。
-
-</template>
-<template #verify>
-
-- 每装一个工具，用 `--version` 确认版本。
-- 关掉终端再新开一个，确认配置在新窗口里仍然生效。
-- 用 `which`（macOS）或 `Get-Command`（Windows）确认找到的是你装的那一份。
-
-</template>
-<template #pitfall>
-
-- 给出别的操作系统的命令，比如在 Windows 上让你用 `brew`、`sudo`。
-- 让你同时装多个版本管理器，导致 PATH 冲突、版本来回跳。
-- 编造包名或安装地址。照做之前，对照官网核对一遍。
-
-</template>
-</RAsk>

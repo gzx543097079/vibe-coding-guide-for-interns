@@ -134,21 +134,10 @@ description: Kotlin / Compose 与 Android Studio 的基本工作流。
 
 <PromptCard id="mobile-screen" />
 
-## 三问
-
-答得上这三个问题，再把这个方向的任务交给 AI。下面是计划展开的要点。
-
-### 必须先懂什么
+## 计划覆盖
 
 - View 与 Compose 是两套 UI 体系
 - Gradle 依赖与版本管理方式
-
-### 怎么验证
-
 - 在不同系统版本的模拟器上运行
 - 用 Logcat 查看运行时报错
-
-### AI 常错在哪
-
-- 依赖版本与项目不匹配
-- Compose 实验性 API 在不同版本间变化
+- 常见错误及排查：依赖版本与项目不匹配；Compose 实验性 API 在不同版本间变化。

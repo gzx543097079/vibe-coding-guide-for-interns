@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import { withBase } from 'vitepress'
 import ModuleGrid from './ModuleGrid.vue'
-import AskCards from './AskCards.vue'
 import { modules, totalChapters } from '../data/modules'
 import { getPrompt } from '../data/prompts'
 import { copyText } from '../composables/clipboard'
@@ -30,7 +29,7 @@ async function copySample() {
 const steps = [
   { t: '先读「起步」和「AI 与 Agent」的基础部分', d: '装好环境、配好 AI 工具，弄清模型和 Agent 能做什么、会错在哪。后面每一章都用得到。' },
   { t: '挑你的方向，由浅入深', d: '做前端看「前端与客户端」「大前端 / 跨端」，做后端看「后端与数据」。每个模块按基础、进阶、精通排列，先读完基础再往下。' },
-  { t: '读完回答三问', d: '答得上来，再把任务交给 AI；答不上来，先回到这一章。' },
+  { t: '用一个小任务试一遍', d: '结合你手上的项目运行示例，按预期结果检查输出，再查看实际改动。遇到错误，就回到对应段落排查。' },
 ]
 </script>
 
@@ -76,14 +75,6 @@ const steps = [
         <p class="sec-lead">目录里列出了全部章节。不知道从哪看起，就点开离你手上工作最近的模块。</p>
       </div>
       <ModuleGrid />
-    </section>
-
-    <section class="sec" aria-labelledby="ask-title">
-      <div class="sec-head" data-reveal>
-        <h2 id="ask-title" class="sec-title">每个技术章节最后都回答三个问题</h2>
-        <p class="sec-lead">答不上来，就先别把任务交给 AI。</p>
-      </div>
-      <AskCards />
     </section>
 
     <div class="sec split">

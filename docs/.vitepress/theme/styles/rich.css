@@ -13,19 +13,19 @@
   stroke-linejoin: round;
 }
 /* 组件内部的 Markdown 段落、列表不继承正文的大间距 */
-.vp-doc :is(.rx-point-text, .rx-ask-body, .rx-cmp-body, .rx-step-body) > :first-child {
+.vp-doc :is(.rx-point-text, .rx-cmp-body, .rx-step-body) > :first-child {
   margin-top: 0;
 }
-.vp-doc :is(.rx-point-text, .rx-ask-body, .rx-cmp-body, .rx-step-body) > :last-child {
+.vp-doc :is(.rx-point-text, .rx-cmp-body, .rx-step-body) > :last-child {
   margin-bottom: 0;
 }
-.vp-doc :is(.rx-ask-body, .rx-cmp-body, .rx-step-body) :is(p, ul, ol) {
+.vp-doc :is(.rx-cmp-body, .rx-step-body) :is(p, ul, ol) {
   margin: 10px 0;
 }
-.vp-doc :is(.rx-ask-body, .rx-cmp-body, .rx-step-body) li + li {
+.vp-doc :is(.rx-cmp-body, .rx-step-body) li + li {
   margin-top: 4px;
 }
-.vp-doc :is(.rx-ask-body, .rx-cmp-body, .rx-step-body) ul {
+.vp-doc :is(.rx-cmp-body, .rx-step-body) ul {
   padding-left: 1.15em;
 }
 
@@ -226,71 +226,7 @@
   color: var(--ink-2);
 }
 
-/* ---------- 三问 ---------- */
-.rx-ask {
-  margin: 20px 0 8px;
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-lg);
-  background: var(--raised);
-  overflow: hidden;
-}
-.rx-ask-item + .rx-ask-item {
-  border-top: 1px solid var(--rule);
-}
-.rx-ask-sum {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  grid-template-areas: 'ico q caret' 'ico hint caret';
-  align-items: center;
-  gap: 0 14px;
-  padding: 14px 18px;
-  cursor: pointer;
-  list-style: none;
-  transition: background-color var(--dur-1) var(--ease);
-}
-.rx-ask-sum::-webkit-details-marker {
-  display: none;
-}
-.rx-ask-sum:hover {
-  background: var(--paper-2);
-}
-.rx-ask-sum:focus-visible {
-  outline-offset: -2px;
-  border-radius: 0;
-}
-.rx-ask-ico {
-  grid-area: ico;
-  display: grid;
-  place-items: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: var(--paper-3);
-  color: var(--ink-2);
-}
-.rx-ask-item.is-verify .rx-ask-ico {
-  background: var(--tip-soft);
-  color: var(--tip);
-}
-.rx-ask-item.is-pitfall .rx-ask-ico {
-  background: var(--warn-soft);
-  color: var(--warn);
-}
-.rx-ask-q {
-  grid-area: q;
-  font-family: var(--font-serif);
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 1.4;
-  color: var(--ink);
-}
-.rx-ask-hint {
-  grid-area: hint;
-  font-size: 13.5px;
-  line-height: 1.5;
-  color: var(--ink-3);
-}
-.rx-ask-caret,
+/* ---------- 折叠步骤的箭头与展开动效 ---------- */
 .rx-step-caret {
   grid-area: caret;
   display: grid;
@@ -301,34 +237,18 @@
   color: var(--ink-3);
   transition: transform var(--dur-2) var(--ease);
 }
-:is(.rx-ask-caret, .rx-step-caret) path {
+.rx-step-caret path {
   fill: none;
   stroke: currentColor;
   stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.rx-ask-item[open] .rx-ask-caret,
 .rx-step[open] .rx-step-caret {
   transform: rotate(180deg);
 }
-.vp-doc .rx-ask-body {
-  padding: 0 22px 16px 70px;
-  font-size: 15px;
-  line-height: 1.75;
-}
-.rx-ask-item[open] .rx-ask-body,
 .rx-step[open] .rx-step-body {
   animation: rx-in var(--dur-3) var(--ease);
-}
-@media (max-width: 639px) {
-  .rx-ask-sum {
-    padding: 12px 14px;
-    gap: 0 12px;
-  }
-  .vp-doc .rx-ask-body {
-    padding: 0 16px 14px 18px;
-  }
 }
 @keyframes rx-in {
   from {
@@ -1200,7 +1120,6 @@ button.rx-tree-name[aria-expanded='true'] .rx-tree-caret {
 
 /* ---------- 减少动态效果 ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .rx-ask-item[open] .rx-ask-body,
   .rx-step[open] .rx-step-body,
   .rx-term-screen,
   .rx-ea .rx-ea-link.is-on svg {

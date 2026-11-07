@@ -17,7 +17,7 @@ description: 命名、格式化、注释、提交规范与代码审查要点。
 <RPoint icon="warn" title="检查配置">如 <code>eslint.config.js</code>，规定哪些写法算错误或警告。</RPoint>
 <RPoint icon="script" title="package.json 的 scripts">看有没有 <code>lint</code>、<code>format</code>、<code>test</code>，提交前跑它们。</RPoint>
 <RPoint icon="book" title="CONTRIBUTING.md">团队的提交、分支、审查约定，常和 README 放在一起。</RPoint>
-<RPoint icon="bot" title="AI 规则文件">如 <code>CLAUDE.md</code>、<code>AGENT.md</code>，写给 Agent 的约定，人也该读。</RPoint>
+<RPoint icon="bot" title="AI 规则文件">如 Codex 的 <code>AGENTS.md</code>，写给 Agent 的项目约定，人也该读。</RPoint>
 </RPoints>
 
 ## 命名
@@ -66,6 +66,8 @@ function sendWelcomeEmail(user) { /* ... */ }
 />
 
 编辑器里打开「保存时格式化」，就不用每次手动跑格式化。格式化产生的改动最好单独提交，别和逻辑改动混在一个提交里，否则审查的人很难看出真正改了什么。
+
+检查失败时先看具体原因。AI 可能用 `eslint-disable` 之类的注释让报错消失；需要修正的是问题本身，确有理由的例外再按项目约定处理。
 
 ## 注释
 
@@ -172,29 +174,3 @@ AI 生成的代码通常能走通正常路径，边界情况最容易漏。
 ## 工具速查
 
 <TechCard ids="prettier,eslint" />
-
-## 动手前的三问
-
-<RAsk>
-<template #know>
-
-- 项目的规范文件在哪，以及 `package.json` 里有哪些检查命令。
-- 格式化工具和静态检查工具的区别。
-- 团队的提交信息格式和提交粒度要求。
-
-</template>
-<template #verify>
-
-- 提交前本地跑一遍 lint、格式化检查和测试，全部通过再提交。
-- 用 `git diff --stat` 看改动范围，确认格式化没有波及无关文件。
-- 对照规范文件检查 AI 生成的代码，而不是凭感觉。
-
-</template>
-<template #pitfall>
-
-- 用了与项目不一致的命名、引号、缩进或目录风格。
-- 加一堆复述代码的注释，或删掉原有的有用注释。
-- 为了让检查通过直接加禁用注释（如 `eslint-disable`），而不是修正问题。
-
-</template>
-</RAsk>
