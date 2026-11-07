@@ -2,6 +2,7 @@ import type { Theme } from 'vitepress'
 // 不引入默认主题自带的 Inter 字体，统一使用系统字体栈
 import DefaultTheme from 'vitepress/theme-without-fonts'
 import { registerRich } from './components/rich'
+import { registerAi } from './components/ai'
 
 import Layout from './Layout.vue'
 import HomePage from './components/HomePage.vue'
@@ -16,12 +17,14 @@ import './styles/tokens.css'
 import './styles/base.css'
 import './styles/sidebar.css'
 import './styles/rich.css'
+import './styles/ai-rich.css'
 
 export default {
   extends: DefaultTheme,
   Layout,
   enhanceApp({ app }) {
     registerRich(app)
+    registerAi(app)
     app.component('HomePage', HomePage)
     app.component('CodeTabs', CodeTabs)
     app.component('ControlDemo', ControlDemo)
