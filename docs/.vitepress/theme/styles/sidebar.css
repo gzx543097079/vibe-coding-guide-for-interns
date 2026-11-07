@@ -1,0 +1,220 @@
+/* 侧边栏：模块分组可折叠，标题前为模块色块标签，当前页色块高亮 */
+
+.VPSidebar {
+  border-right: 1px solid var(--rule);
+}
+@media (min-width: 960px) {
+  .VPSidebar {
+    padding-top: calc(var(--vp-nav-height) + 8px) !important;
+  }
+}
+@media (max-width: 959px) {
+  .VPSidebar {
+    width: min(320px, 86vw) !important;
+    box-shadow: var(--shadow-3);
+  }
+}
+
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='start']) { --mod: var(--mod-start); }
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='ai']) { --mod: var(--mod-ai); }
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='git']) { --mod: var(--mod-git); }
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='frontend']) { --mod: var(--mod-frontend); }
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='controls']) { --mod: var(--mod-controls); }
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='cross']) { --mod: var(--mod-cross); }
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='backend']) { --mod: var(--mod-backend); }
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='quality']) { --mod: var(--mod-quality); }
+#VPSidebarNav .VPSidebarItem.level-0:has(> .item .sb-mod[data-mod='growth']) { --mod: var(--mod-growth); }
+
+#VPSidebarNav .group {
+  padding-top: 6px !important;
+}
+#VPSidebarNav .group + .group {
+  border-top: 0 !important;
+}
+
+/* 模块标题 */
+#VPSidebarNav .VPSidebarItem.level-0 > .item {
+  min-height: 36px;
+}
+#VPSidebarNav .VPSidebarItem.level-0 > .item > .text {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  font-weight: 650;
+  color: var(--ink);
+}
+#VPSidebarNav .sb-mod {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  background: var(--mod);
+  color: var(--on-mod);
+  font-size: 11.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+#VPSidebarNav .sb-count {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+#VPSidebarNav .VPSidebarItem.level-0 > .item .caret {
+  color: var(--ink-3);
+  align-self: center;
+}
+#VPSidebarNav .VPSidebarItem.level-0 {
+  padding-bottom: 12px;
+}
+#VPSidebarNav .VPSidebarItem.collapsed.level-0 {
+  padding-bottom: 4px;
+}
+#VPSidebarNav .VPSidebarItem .indicator {
+  display: none;
+}
+
+/* 章节条目 */
+#VPSidebarNav .VPSidebarItem.level-0 > .items {
+  margin-top: 2px;
+  padding-left: 0;
+}
+#VPSidebarNav .VPSidebarItem.level-1 .items,
+#VPSidebarNav .VPSidebarItem.level-2 .items {
+  border-left: 0;
+  padding-left: 0;
+}
+#VPSidebarNav .VPSidebarItem.is-link > .item > .link {
+  padding: 0 10px 0 30px;
+  border-radius: var(--radius-sm);
+}
+#VPSidebarNav .VPSidebarItem.level-2.is-link > .item > .link {
+  padding-left: 42px;
+}
+#VPSidebarNav .VPSidebarItem.is-link > .item > .link > .text {
+  padding: 6px 0;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 450;
+  color: var(--ink-3);
+}
+#VPSidebarNav .VPSidebarItem.is-link > .item > .link:hover {
+  background: var(--paper-2);
+}
+#VPSidebarNav .VPSidebarItem.is-link > .item > .link:hover > .text {
+  color: var(--ink);
+}
+
+/* 级别小标签：进阶描边、精通实底 */
+#VPSidebarNav .VPSidebarItem.is-link > .item > .link > .text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#VPSidebarNav .sb-title {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+#VPSidebarNav .sb-lv {
+  flex: none;
+  padding: 0 6px;
+  border-radius: 4px;
+  border: 1px solid var(--rule-strong);
+  font-size: 11px;
+  line-height: 17px;
+  font-weight: 600;
+  color: var(--ink-3);
+}
+#VPSidebarNav .sb-lv[data-lv='精通'] {
+  border-color: transparent;
+  background: var(--paper-3);
+  color: var(--ink-2);
+}
+
+/* 当前页 */
+#VPSidebarNav .VPSidebarItem.is-active > .item > .link {
+  background: var(--mod-soft, var(--paper-3));
+  background: color-mix(in oklab, var(--mod) 13%, var(--paper));
+}
+#VPSidebarNav .VPSidebarItem.is-active > .item > .link > .text {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* 子分组标题（如「性能优化」） */
+#VPSidebarNav .VPSidebarItem.level-1:not(.is-link) > .item {
+  padding-left: 30px;
+}
+#VPSidebarNav .sb-sub {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-3);
+}
+#VPSidebarNav .VPSidebarItem.level-1:not(.is-link) > .item .caret {
+  color: var(--ink-3);
+}
+
+/* 触屏：条目至少 44px 高 */
+@media (max-width: 959px), (pointer: coarse) {
+  #VPSidebarNav .VPSidebarItem.is-link > .item > .link {
+    min-height: 44px;
+    align-items: center;
+  }
+  #VPSidebarNav .VPSidebarItem.level-0 > .item {
+    min-height: 44px;
+  }
+}
+
+/* 桌面端整体折叠：侧栏宽度做成可过渡的自定义属性，
+   侧栏滑动、正文铺开、顶栏标题收拢用同一条曲线同步完成 */
+@property --vp-sidebar-width {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 272px;
+}
+:root {
+  --sb-ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --sb-dur: 360ms;
+}
+@media (min-width: 960px) {
+  html.sb-anim {
+    transition: --vp-sidebar-width var(--sb-dur) var(--sb-ease);
+  }
+  html.sidebar-collapsed {
+    --vp-sidebar-width: 0px;
+  }
+  .VPNavBar.has-sidebar .title {
+    min-width: max-content;
+    padding-left: 44px;
+    padding-right: 16px;
+  }
+  html.sb-anim .VPSidebar {
+    transition:
+      transform var(--sb-dur) var(--sb-ease),
+      opacity calc(var(--sb-dur) * 0.6) var(--sb-ease),
+      visibility 0s linear 0s;
+  }
+  html.sidebar-collapsed .VPSidebar {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateX(-24px);
+    border-right-color: transparent;
+  }
+  html.sb-anim.sidebar-collapsed .VPSidebar {
+    transition:
+      transform var(--sb-dur) var(--sb-ease),
+      opacity calc(var(--sb-dur) * 0.6) var(--sb-ease),
+      visibility 0s linear var(--sb-dur);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html,
+  .VPSidebar,
+  html.sidebar-collapsed .VPSidebar {
+    transition: none !important;
+  }
+}
