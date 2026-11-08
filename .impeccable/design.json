@@ -1,0 +1,1179 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-07T23:45:48.224429+00:00",
+  "title": "Design System: Vibe Coding 开发笔记",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "暖白纸面",
+        "canonical": "#f8f6f0",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "paper-2": {
+        "role": "neutral",
+        "displayName": "浅纸分区",
+        "canonical": "#f1eee6",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "paper-3": {
+        "role": "neutral",
+        "displayName": "纸面弱底",
+        "canonical": "#e9e5dc",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "paper-4": {
+        "role": "neutral",
+        "displayName": "纸面描边",
+        "canonical": "#ded9ce",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "raised": {
+        "role": "neutral",
+        "displayName": "浅白纸面",
+        "canonical": "#fffefb",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "墨色文字",
+        "canonical": "#181714",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "正文棕灰",
+        "canonical": "#4c4841",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "ink-3": {
+        "role": "neutral",
+        "displayName": "辅助棕灰",
+        "canonical": "#756f64",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "普通纸边",
+        "canonical": "#ded9cc",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "rule-soft": {
+        "role": "neutral",
+        "displayName": "弱纸边",
+        "canonical": "#ebe7dd",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "rule-strong": {
+        "role": "neutral",
+        "displayName": "强纸边",
+        "canonical": "#c6bfb1",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "shell": {
+        "role": "shell",
+        "displayName": "浅色顶栏",
+        "canonical": "#f8f6f0",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "shell-2": {
+        "role": "shell",
+        "displayName": "顶栏浅层",
+        "canonical": "#f1eee6",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "shell-line": {
+        "role": "shell",
+        "displayName": "顶栏细边",
+        "canonical": "#ded9cc",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "shell-ink": {
+        "role": "shell",
+        "displayName": "顶栏文字",
+        "canonical": "#181714",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "shell-ink-2": {
+        "role": "shell",
+        "displayName": "顶栏次文字",
+        "canonical": "#756f64",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "低饱和陶土",
+        "canonical": "#a6563d",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "accent-hover": {
+        "role": "primary",
+        "displayName": "深陶土",
+        "canonical": "#8f4632",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "accent-ink": {
+        "role": "primary",
+        "displayName": "陶土链接",
+        "canonical": "#914a34",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "accent-soft": {
+        "role": "primary",
+        "displayName": "浅陶土底",
+        "canonical": "#f5e8df",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "on-accent": {
+        "role": "primary",
+        "displayName": "主色上的文字",
+        "canonical": "#fffefb",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "focus": {
+        "role": "primary",
+        "displayName": "键盘焦点",
+        "canonical": "#914a34",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "tip": {
+        "role": "primary",
+        "displayName": "读过陶土",
+        "canonical": "#8b5c48",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "tip-soft": {
+        "role": "secondary",
+        "displayName": "读过浅陶土",
+        "canonical": "#f5e8df",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "warn": {
+        "role": "secondary",
+        "displayName": "警示棕金",
+        "canonical": "#7b5a1f",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "warn-soft": {
+        "role": "secondary",
+        "displayName": "警示浅金",
+        "canonical": "#f8efd9",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "danger": {
+        "role": "secondary",
+        "displayName": "错误砖红",
+        "canonical": "#a3443d",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "danger-soft": {
+        "role": "secondary",
+        "displayName": "错误浅红",
+        "canonical": "#f8e5e1",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "info-soft": {
+        "role": "secondary",
+        "displayName": "信息浅纸",
+        "canonical": "#f0ece4",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "live": {
+        "role": "primary",
+        "displayName": "状态陶土",
+        "canonical": "#a6563d",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "code-bg": {
+        "role": "code",
+        "displayName": "暖炭代码底",
+        "canonical": "#201e1a",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "code-head": {
+        "role": "code",
+        "displayName": "代码顶栏",
+        "canonical": "#2a2722",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "code-rule": {
+        "role": "code",
+        "displayName": "代码描边",
+        "canonical": "#413c34",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "dark-paper": {
+        "role": "dark-neutral",
+        "displayName": "深色暖纸",
+        "canonical": "#181714",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "dark-paper-2": {
+        "role": "dark-neutral",
+        "displayName": "深色分区",
+        "canonical": "#211f1b",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "dark-paper-3": {
+        "role": "dark-neutral",
+        "displayName": "深色弱底",
+        "canonical": "#2a2722",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "dark-raised": {
+        "role": "dark-neutral",
+        "displayName": "深色纸面",
+        "canonical": "#211f1b",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "dark-ink": {
+        "role": "dark-neutral",
+        "displayName": "深色文字",
+        "canonical": "#f6f1e7",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "dark-ink-2": {
+        "role": "dark-neutral",
+        "displayName": "深色正文",
+        "canonical": "#d1c8ba",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "dark-ink-3": {
+        "role": "dark-neutral",
+        "displayName": "深色辅助",
+        "canonical": "#a89e90",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "dark-rule": {
+        "role": "dark-neutral",
+        "displayName": "深色细边",
+        "canonical": "#36322c",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "dark-rule-strong": {
+        "role": "dark-neutral",
+        "displayName": "深色强边",
+        "canonical": "#514b42",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "dark-shell": {
+        "role": "dark-neutral",
+        "displayName": "深色顶栏",
+        "canonical": "#181714",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "dark-accent": {
+        "role": "dark-neutral",
+        "displayName": "深色陶土",
+        "canonical": "#e1a188",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "dark-accent-hover": {
+        "role": "dark-neutral",
+        "displayName": "深色陶土悬停",
+        "canonical": "#edb59e",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "dark-accent-ink": {
+        "role": "dark-neutral",
+        "displayName": "深色陶土链接",
+        "canonical": "#e8ae96",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "dark-accent-soft": {
+        "role": "dark-neutral",
+        "displayName": "深色浅陶土",
+        "canonical": "#392720",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "dark-on-accent": {
+        "role": "dark-neutral",
+        "displayName": "深色主色文字",
+        "canonical": "#181714",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "dark-tip": {
+        "role": "dark-neutral",
+        "displayName": "深色读过陶土",
+        "canonical": "#e1a188",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "dark-tip-soft": {
+        "role": "dark-neutral",
+        "displayName": "深色读过浅底",
+        "canonical": "#392720",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "dark-warn": {
+        "role": "dark-neutral",
+        "displayName": "深色警示金",
+        "canonical": "#d9b675",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "dark-warn-soft": {
+        "role": "dark-neutral",
+        "displayName": "深色警示浅金",
+        "canonical": "#3a2e19",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "dark-danger": {
+        "role": "dark-neutral",
+        "displayName": "深色错误红",
+        "canonical": "#e79a92",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "dark-danger-soft": {
+        "role": "dark-neutral",
+        "displayName": "深色错误浅红",
+        "canonical": "#3e2724",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "app-ink-2": {
+        "role": "app",
+        "displayName": "参考画布辅助文字",
+        "canonical": "#66635c",
+        "tonalRamp": [
+          "oklch(15% 0.025 70)",
+          "oklch(26.4% 0.025 70)",
+          "oklch(37.9% 0.025 70)",
+          "oklch(49.3% 0.025 70)",
+          "oklch(60.7% 0.025 70)",
+          "oklch(72.1% 0.025 70)",
+          "oklch(83.6% 0.025 70)",
+          "oklch(95% 0.025 70)"
+        ]
+      },
+      "app-live": {
+        "role": "app",
+        "displayName": "参考画布活动点",
+        "canonical": "#4f9272",
+        "tonalRamp": [
+          "oklch(15% 0.025 145)",
+          "oklch(26.4% 0.025 145)",
+          "oklch(37.9% 0.025 145)",
+          "oklch(49.3% 0.025 145)",
+          "oklch(60.7% 0.025 145)",
+          "oklch(72.1% 0.025 145)",
+          "oklch(83.6% 0.025 145)",
+          "oklch(95% 0.025 145)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "首页标题",
+        "purpose": "一句普通介绍，固定 42px。"
+      },
+      "headline": {
+        "displayName": "页面标题",
+        "purpose": "目录、路线与方向页，38px。"
+      },
+      "reader-title": {
+        "displayName": "章节标题",
+        "purpose": "阅读页 34px，保持正文优先。"
+      },
+      "section-title": {
+        "displayName": "区段标题",
+        "purpose": "首页区段 25px。"
+      },
+      "reader-heading": {
+        "displayName": "正文二级标题",
+        "purpose": "章节正文 25px，维持阅读层级。"
+      },
+      "card-title": {
+        "displayName": "目录行标题",
+        "purpose": "15px，连续列表里的方向名称。"
+      },
+      "body": {
+        "displayName": "正文",
+        "purpose": "16px / 2，阅读页保持 65～75ch 宽度。"
+      },
+      "body-small": {
+        "displayName": "辅助说明",
+        "purpose": "13px，只用于界面辅助信息。"
+      },
+      "action": {
+        "displayName": "动作标签",
+        "purpose": "13px，按钮与链接命名具体操作。"
+      },
+      "nav": {
+        "displayName": "顶栏导航",
+        "purpose": "13px，当前态由文字粗细与陶土下划线表达。"
+      },
+      "label": {
+        "displayName": "状态标签",
+        "purpose": "12px，配合文字或 aria 属性说明状态。"
+      },
+      "compact-label": {
+        "displayName": "紧凑标签",
+        "purpose": "11px，既存目录与阅读辅助信息。"
+      },
+      "micro-label": {
+        "displayName": "小号标签",
+        "purpose": "10px，既存组件工具栏与页内定位。"
+      },
+      "tiny-label": {
+        "displayName": "极小标签",
+        "purpose": "9px，仅供既存微型标记。"
+      },
+      "code": {
+        "displayName": "代码",
+        "purpose": "系统等宽字体，用于代码、命令与测量数据。"
+      },
+      "legacy-size-17": {
+        "displayName": "既存 17px 字号",
+        "purpose": "历史页面与响应式降级保留的字号，新组件不优先使用。"
+      },
+      "legacy-size-18": {
+        "displayName": "既存 18px 字号",
+        "purpose": "历史页面与响应式降级保留的字号，新组件不优先使用。"
+      },
+      "legacy-size-19": {
+        "displayName": "既存 19px 字号",
+        "purpose": "历史页面与响应式降级保留的字号，新组件不优先使用。"
+      },
+      "legacy-size-20": {
+        "displayName": "既存 20px 字号",
+        "purpose": "历史页面与响应式降级保留的字号，新组件不优先使用。"
+      },
+      "legacy-size-21": {
+        "displayName": "既存 21px 字号",
+        "purpose": "历史页面与响应式降级保留的字号，新组件不优先使用。"
+      },
+      "legacy-size-22": {
+        "displayName": "既存 22px 字号",
+        "purpose": "历史页面与响应式降级保留的字号，新组件不优先使用。"
+      },
+      "legacy-size-23": {
+        "displayName": "既存 23px 字号",
+        "purpose": "历史页面与响应式降级保留的字号，新组件不优先使用。"
+      },
+      "legacy-size-24": {
+        "displayName": "既存 24px 字号",
+        "purpose": "历史页面与响应式降级保留的字号，新组件不优先使用。"
+      },
+      "legacy-size-26": {
+        "displayName": "既存 26px 字号",
+        "purpose": "历史页面与响应式降级保留的字号，新组件不优先使用。"
+      },
+      "legacy-size-27": {
+        "displayName": "既存 27px 字号",
+        "purpose": "历史页面与响应式降级保留的字号，新组件不优先使用。"
+      },
+      "legacy-size-28": {
+        "displayName": "既存 28px 字号",
+        "purpose": "历史页面与响应式降级保留的字号，新组件不优先使用。"
+      },
+      "legacy-size-29": {
+        "displayName": "既存 29px 字号",
+        "purpose": "历史页面与响应式降级保留的字号，新组件不优先使用。"
+      },
+      "legacy-size-30": {
+        "displayName": "既存 30px 字号",
+        "purpose": "历史页面与响应式降级保留的字号，新组件不优先使用。"
+      },
+      "legacy-size-31": {
+        "displayName": "既存 31px 字号",
+        "purpose": "历史页面与响应式降级保留的字号，新组件不优先使用。"
+      },
+      "legacy-size-32": {
+        "displayName": "既存 32px 字号",
+        "purpose": "历史页面与响应式降级保留的字号，新组件不优先使用。"
+      },
+      "legacy-size-33": {
+        "displayName": "既存 33px 字号",
+        "purpose": "历史页面与响应式降级保留的字号，新组件不优先使用。"
+      },
+      "legacy-size-35": {
+        "displayName": "既存 35px 字号",
+        "purpose": "历史页面与响应式降级保留的字号，新组件不优先使用。"
+      },
+      "legacy-size-36": {
+        "displayName": "既存 36px 字号",
+        "purpose": "历史页面与响应式降级保留的字号，新组件不优先使用。"
+      },
+      "legacy-size-37": {
+        "displayName": "既存 37px 字号",
+        "purpose": "历史页面与响应式降级保留的字号，新组件不优先使用。"
+      },
+      "legacy-size-39": {
+        "displayName": "既存 39px 字号",
+        "purpose": "历史页面与响应式降级保留的字号，新组件不优先使用。"
+      },
+      "legacy-size-40": {
+        "displayName": "既存 40px 字号",
+        "purpose": "历史页面与响应式降级保留的字号，新组件不优先使用。"
+      },
+      "legacy-size-14": {
+        "displayName": "既存 14px 字号",
+        "purpose": "历史页面与响应式降级保留的字号，新组件不优先使用。"
+      },
+      "legacy-size-46": {
+        "displayName": "既存 46px 字号",
+        "purpose": "历史页面与响应式降级保留的字号，新组件不优先使用。"
+      },
+      "legacy-size-48": {
+        "displayName": "既存 48px 字号",
+        "purpose": "历史页面与响应式降级保留的字号，新组件不优先使用。"
+      }
+    },
+    "shadows": [
+      {
+        "name": "shadow-1",
+        "value": "0 2px 6px rgb(48 42 34 / 0.05)",
+        "purpose": "分段控件选中面的轻层。"
+      },
+      {
+        "name": "shadow-2",
+        "value": "0 4px 12px rgb(48 42 34 / 0.05), 0 18px 36px -24px rgb(48 42 34 / 0.22)",
+        "purpose": "旧演示浮面与参考演示设备。"
+      },
+      {
+        "name": "shadow-3",
+        "value": "0 8px 16px rgb(48 42 34 / 0.08), 0 30px 64px -28px rgb(48 42 34 / 0.3)",
+        "purpose": "命令面板等浮层。"
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+        "purpose": "状态与导航微调。"
+      },
+      {
+        "name": "duration-state",
+        "value": "160ms",
+        "purpose": "描边、背景与按钮反馈。"
+      },
+      {
+        "name": "duration-control",
+        "value": "200ms",
+        "purpose": "开关与组件状态变化。"
+      },
+      {
+        "name": "reduced-motion",
+        "value": "0.01ms",
+        "purpose": "动画与过渡降级，scroll-behavior:auto。"
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "desktop-density",
+        "value": "1250px"
+      },
+      {
+        "name": "compact-window",
+        "value": "1000px"
+      },
+      {
+        "name": "single-column-fallback",
+        "value": "760px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "主要按钮",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "写一个具体动作，不用悬停位移替代状态。",
+      "html": "<button class=\"ds-btn-primary\">接着读</button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:42px;padding:0 18px;border:1px solid transparent;border-radius:4px;background:var(--accent,#a6563d);color:var(--on-accent,#fffefb);font:600 13px -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', sans-serif;}.ds-btn-primary:hover{background:var(--accent-hover,#8f4632);}.ds-btn-primary:focus-visible{outline:2px solid var(--focus,#914a34);outline-offset:4px;}"
+    },
+    {
+      "name": "文字入口",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "常用入口排成一行，用下划线与陶土色说明去处。",
+      "html": "<nav class=\"ds-links\"><a href=\"#\">翻目录</a><a href=\"#\">挑条路线</a><a href=\"#\">看组件</a></nav>",
+      "css": ".ds-links{display:flex;gap:24px;padding-top:22px;border-top:1px solid var(--rule,#ded9cc);}.ds-links a{color:var(--accent-ink,#914a34);font:600 14px -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', sans-serif;text-decoration:none;}.ds-links a:hover{text-decoration:underline;text-underline-offset:5px;}"
+    },
+    {
+      "name": "继续阅读卡片",
+      "kind": "card",
+      "refersTo": "resume-card",
+      "description": "首页右侧显示上次停留、本机进度与继续按钮。",
+      "html": "<aside class=\"ds-resume\"><h2>接着读</h2><h3>代码规范与工程素养</h3><p>起步 · 基础</p><button>接着读</button></aside>",
+      "css": ".ds-resume{padding:26px;border:1px solid var(--rule,#ded9cc);border-radius:6px;background:var(--raised,#fffefb);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', sans-serif;}.ds-resume h2{font-size:16px;font-weight:650;}.ds-resume h3{margin:22px 0 6px;font-size:21px;font-weight:650;}.ds-resume p{color:var(--accent-ink,#914a34);font-size:12px;}.ds-resume button{width:100%;min-height:42px;border:0;border-radius:4px;background:var(--accent,#a6563d);color:var(--on-accent,#fffefb);font:600 13px -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', sans-serif;}"
+    },
+    {
+      "name": "目录行",
+      "kind": "list",
+      "refersTo": "directory-row",
+      "description": "首页方向列表用连续行承载方向名、简介与篇数，标题跨两列、列表在左列，悬停只换底色。",
+      "html": "<a class=\"ds-row\"><strong>起步</strong><small>装好开发环境，了解 AI 能做什么</small><em>5 篇</em></a>",
+      "css": ".ds-row{display:grid;grid-template-columns:1fr 46px 18px;gap:16px;padding:16px 2px;border-bottom:1px solid var(--rule,#ded9cc);color:var(--ink,#181714);text-decoration:none;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', sans-serif;}.ds-row:hover{background:var(--paper-2,#f1eee6);}.ds-row strong{font-size:15px;font-weight:600;}.ds-row small{grid-column:1;color:var(--ink-3,#756f64);font-size:12px;}.ds-row em{grid-column:2;grid-row:1;color:var(--ink-3,#756f64);font-size:11px;font-style:normal;text-align:right;}"
+    },
+    {
+      "name": "需求填写",
+      "kind": "form",
+      "refersTo": "note-composer",
+      "description": "左侧字段、右侧实时文字；复制失败时给出手动选择提示。",
+      "html": "<section class=\"ds-composer\"><form><label>目标<input placeholder=\"修复登录页密码含空格时校验失败\"></label></form><pre>要做什么：修 bug\\n已知情况：…\\n怎么检查：…</pre></section>",
+      "css": ".ds-composer{display:grid;grid-template-columns:.96fr 1.04fr;gap:48px;border-top:1px solid var(--rule-strong,#c6bfb1);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', sans-serif;}.ds-composer form{display:grid;gap:16px;}.ds-composer input{width:100%;padding:9px 11px;border:1px solid var(--rule-strong,#c6bfb1);border-radius:5px;background:var(--paper,#f8f6f0);color:var(--ink,#181714);font:13px -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', sans-serif;}.ds-composer input:focus{border-color:var(--accent,#a6563d);box-shadow:0 0 0 2px var(--accent-soft,#f5e8df);}.ds-composer pre{padding:18px;white-space:pre-wrap;border:1px solid var(--rule,#ded9cc);border-radius:4px;background:var(--raised,#fffefb);font:12px/1.9 -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', sans-serif;}"
+    },
+    {
+      "name": "阅读工具栏",
+      "kind": "toolbar",
+      "refersTo": "reader-taskbar",
+      "description": "阅读页滚动时保留当前文章、组件入口与读过标记。",
+      "html": "<div class=\"ds-taskbar\"><span>正在读<strong>起步 / 入门须知</strong></span><a>看组件</a><button aria-pressed=\"false\">记一下读过</button></div>",
+      "css": ".ds-taskbar{position:sticky;top:66px;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:48px;padding:6px 0;border-bottom:1px solid var(--rule,#ded9cc);background:var(--paper,#f8f6f0);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', sans-serif;}.ds-taskbar span{color:var(--ink-3,#756f64);font-size:10px;}.ds-taskbar strong{display:block;color:var(--ink,#181714);font-size:12px;}.ds-taskbar a,.ds-taskbar button{min-height:32px;padding:0 11px;border:1px solid var(--rule-strong,#c6bfb1);border-radius:4px;background:var(--raised,#fffefb);color:var(--ink-2,#4c4841);font:600 11px -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', sans-serif;}.ds-taskbar button{background:var(--accent,#a6563d);border-color:var(--accent,#a6563d);color:var(--on-accent,#fffefb);}.ds-taskbar button[aria-pressed=\"true\"]{background:var(--tip-soft,#f5e8df);border-color:var(--tip,#8b5c48);color:var(--tip,#8b5c48);}"
+    },
+    {
+      "name": "读完以后",
+      "kind": "nav",
+      "refersTo": "reading-next",
+      "description": "把组件、相关文章与读过标记写成普通选项。",
+      "html": "<section class=\"ds-next\"><h2>读完以后</h2><div><p><strong>看看实际效果</strong><a>打开组件页</a></p><p><strong>相关的检查文章</strong><a>代码审查</a></p><p><strong>留个记号</strong><button>记一下读过</button></p></div></section>",
+      "css": ".ds-next{padding-top:24px;border-top:1px solid var(--rule-strong,#c6bfb1);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', sans-serif;}.ds-next h2{font:600 22px 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Songti SC', 'Noto Serif SC', serif;}.ds-next>div{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:22px;}.ds-next p{display:flex;flex-direction:column;align-items:flex-start;gap:9px;}.ds-next a,.ds-next button{color:var(--accent-ink,#914a34);font-size:12px;}.ds-next a:hover{text-decoration:underline;text-underline-offset:4px;}"
+    },
+    {
+      "name": "命令面板",
+      "kind": "overlay",
+      "refersTo": "command-palette",
+      "description": "空查询显示最近停留与常用页面；全文搜索是显式动作。",
+      "html": "<dialog class=\"ds-palette\"><input placeholder=\"输入章节名\"><div role=\"listbox\"><p>最近停留</p><div aria-selected=\"true\">接着读 · 代码规范</div></div></dialog>",
+      "css": ".ds-palette{width:min(640px,100%);border:1px solid var(--rule-strong,#c6bfb1);border-radius:7px;background:var(--paper,#f8f6f0);box-shadow:var(--shadow-3);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', sans-serif;}.ds-palette input{height:56px;border:0;background:transparent;color:var(--ink,#181714);font:16px -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', sans-serif;}.ds-palette [aria-selected=\"true\"]{background:var(--paper-2,#f1eee6);}"
+    }
+  ],
+  "narrative": {
+    "northStar": "一本能翻、能点、能接着读的开发笔记",
+    "overview": "暖白纸面、墨色文字和浅色常驻顶栏构成网站外壳。首页以「写代码时，随手翻两页。」开场，顶栏使用「首页 / 目录 / 路线 / 组件 / 模板」这组普通入口，下面接连续目录；章节页回到正文，工具栏和完成标记安静地留在一旁。标题用系统衬线字，界面与正文用系统无衬线字，陶土色只落在链接、当前导航和主要按钮上。\n\n旧「工程交付台」的任务口号、四段编号、图标方块、三张同构卡片和深灰绿仪表盘配色已整体替换。产品事实、108 篇章节地址、正文、组件演示和已经过还原验证的提示词规格继续保留；组件实验室内部的参考画布仍用自己的暖纸色和赤陶色，不随外壳换色。",
+    "keyCharacteristics": [
+      "浅暖纸色顶栏与页面连成一体，当前导航用文字粗细和细下划线表达。",
+      "陶土色用于链接、选中态和主要动作，不铺满页面，也不做彩色状态体系。",
+      "首页方向列表使用连续行，目录页保留可筛选课程卡片网格；标题跨两列，侧栏固定在右列。",
+      "中文标题用系统衬线字，正文保持舒适列宽与舒展行高；界面标签沿用系统无衬线字。",
+      "桌面端为本轮验收范围；窄屏只有代码降级。"
+    ],
+    "rules": [
+      {
+        "name": "The Shell and Canvas Rule",
+        "body": "站点外壳属于暖纸色 / 墨色的阅读系统；实验室经过提示词验证的参考演示画布属于局部独立环境，参考配色不提升为全站品牌色。",
+        "section": "colors"
+      },
+      {
+        "name": "The Reading Rhythm Rule",
+        "body": "中文阅读正文以列宽、行高和标题间距建立层级；界面密度不侵入正文排版。",
+        "section": "typography"
+      },
+      {
+        "name": "The Quiet Entry Rule",
+        "body": "首页、阅读页和快速跳转先让读者找到想看的内容；章节翻页只走当前方向。目录和搜索是常态入口，不用任务口号重新包装。",
+        "section": "layout"
+      },
+      {
+        "name": "The State Before Lift Rule",
+        "body": "当前态由文字、语义属性、描边和状态色共同表达；悬停位移与阴影不承担唯一说明。",
+        "section": "elevation"
+      },
+      {
+        "name": "The Verification Path Rule",
+        "body": "读完一章后仍能就近进入组件演示、代码审查文章和读过记录；本地进度可取消。",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do 使用 `website.css` 与 `desk.css` 的语义颜色；新增外壳组件优先引用 CSS custom properties。",
+      "Do 为当前页面、读过状态和快速跳转结果同时保留文字与语义属性。",
+      "Do 让需求填写字段、组件演示和本机记录保持真实可操作。",
+      "Do 保持 108 篇章节地址、组件参考画布和已验证提示词规格。",
+      "Do 用普通、具体的动作名称，尊重 `prefers-reduced-motion`，并维持桌面 1280～1600px 布局稳定。"
+    ],
+    "donts": [
+      "Don't 把首页改回任务口号、四阶段编号、三张同构卡片或深灰绿工作栏。",
+      "Don't 把命令面板空状态变成 108 章的全量列表。",
+      "Don't 把阅读页读过按钮藏在正文底部，或让翻页跨到无关方向。",
+      "Don't 把实验室参考画布的暖纸色或赤陶色提升为全站品牌色。",
+      "Don't 用「验证先于信任」「可验收」「任务简报」等整齐口号替代具体说明。",
+      "Don't 把窄屏代码降级描述为已完成手机端设计与验收。"
+    ]
+  }
+}

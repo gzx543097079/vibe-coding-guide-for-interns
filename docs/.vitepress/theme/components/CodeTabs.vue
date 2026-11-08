@@ -18,10 +18,13 @@ const copied = ref(false)
 
 // 位于控件演示内时，登记分组，供提示词与方案对比读取当前语言
 const host = inject(tabsHostKey, null)
-if (host) {
-  host.group = props.group
-  host.labels = props.labels
-}
+// 子插槽挂载后再向外层登记，保持服务端和客户端首帧一致。
+onMounted(() => {
+  if (host) {
+    host.group = props.group
+    host.labels = props.labels
+  }
+})
 
 const current = computed(() => {
   const label = selectedTab[props.group]

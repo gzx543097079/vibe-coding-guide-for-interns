@@ -2,6 +2,7 @@
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRouter, withBase } from 'vitepress'
 import { modules } from '../data/modules'
+import { useLearning } from '../composables/useLearning'
 
 interface Item {
   id: string
@@ -12,10 +13,11 @@ interface Item {
   group: string
 }
 
-const pages: Item[] = [
-  { id: 'p-home', title: '首页', sub: '模块总览与使用方法', link: '/', group: '页面' },
-  { id: 'p-controls', title: '控件总览', sub: '控件演示与复制提示词', link: '/controls/overview', group: '页面' },
-  { id: 'p-prompts', title: '场景提示词模板', sub: '写功能、修 bug、重构等模板', link: '/growth/prompt-templates', group: '页面' },
+const actions: Item[] = [
+  { id: 'p-home', title: '首页', sub: '继续读，或者整理一段需求', link: '/', group: '常用页面' },
+  { id: 'p-lab', title: '组件演示', sub: '17 个可操作的组件例子', link: '/lab', group: '常用页面' },
+  { id: 'p-prompts', title: '需求模板', sub: '写功能、修 bug 和审查的模板', link: '/growth/prompt-templates', group: '常用页面' },
+  { id: 'p-review', title: '质量与交付', sub: '测试、调试、审查和发布', link: '/courses/quality', group: '常用页面' },
 ]
 const chapters: Item[] = modules.flatMap((m) =>
   m.chapters.map((c) => ({ id: c.id, title: c.title, sub: `${c.level} · ${c.summary}`, link: c.link, mod: m.id, group: m.name })),
@@ -28,12 +30,27 @@ const input = ref<HTMLInputElement>()
 const list = ref<HTMLElement>()
 const router = useRouter()
 let opener: HTMLElement | null = null
+const { last } = useLearning()
 
 const norm = (s: string) => s.toLowerCase().replace(/\s+/g, '')
+const recent = computed<Item[]>(() => {
+  if (!last.value) return []
+  const ref = last.value
+  return [
+    {
+      id: 'r-' + ref.chapter.id,
+      title: '接着读 · ' + ref.chapter.title,
+      sub: `${ref.module.name} · 第 ${ref.index + 1} 篇`,
+      link: ref.chapter.link,
+      mod: ref.module.id,
+      group: '最近停留',
+    },
+  ]
+})
 const results = computed(() => {
   const k = norm(q.value)
-  const all = [...pages, ...chapters]
-  if (!k) return all
+  const all = [...recent.value, ...actions, ...chapters]
+  if (!k) return [...recent.value, ...actions]
   return all
     .map((it) => {
       const t = norm(it.title)
@@ -79,7 +96,7 @@ function go(it: Item | undefined) {
   hide(false)
   router.go(withBase(it.link))
 }
-// 交给内置全文搜索：写入搜索词后用 "/" 快捷键打开
+// 交给内置全文搜索：写入搜索词后用「/」快捷键打开
 function fullText() {
   const text = q.value
   hide(false)
@@ -165,7 +182,7 @@ function mark(text: string) {
               aria-controls="cp-list"
               aria-autocomplete="list"
               :aria-activedescendant="activeId"
-              placeholder="输入章节名或关键词，例如：Git、数据库、性能"
+              placeholder="输入章节名；Shift + Enter 查全文"
               autocomplete="off"
               spellcheck="false"
               @keydown="onKey"
@@ -196,7 +213,7 @@ function mark(text: string) {
               </div>
             </div>
             <div v-if="!flat.length" class="cp-empty">
-              <p>没有匹配的章节。</p>
+              <p>没有匹配的页面或章节。</p>
               <button type="button" class="cp-full" @click="fullText">在全文中搜索「{{ q }}」</button>
             </div>
           </div>
@@ -204,6 +221,7 @@ function mark(text: string) {
           <div class="cp-foot">
             <span><kbd>↑</kbd><kbd>↓</kbd> 选择</span>
             <span><kbd>↵</kbd> 打开</span>
+            <span v-if="!q" class="cp-hint">输入关键词可以搜索全部章节</span>
             <button type="button" class="cp-foot-btn" @click="fullText"><kbd>⇧</kbd><kbd>↵</kbd> 全文搜索</button>
           </div>
           <p class="sr-only" aria-live="polite">{{ q ? `找到 ${flat.length} 个结果` : '' }}</p>
@@ -229,7 +247,7 @@ function mark(text: string) {
   flex-direction: column;
   width: min(640px, 100%);
   max-height: min(560px, 76vh);
-  border-radius: var(--radius-lg);
+  border-radius: 7px;
   border: 1px solid var(--rule-strong);
   background: var(--paper);
   box-shadow: var(--shadow-3);
@@ -291,13 +309,14 @@ kbd {
   cursor: pointer;
 }
 .cp-item[aria-selected='true'] {
-  background: var(--accent-soft);
+  background: var(--paper-2);
+  box-shadow: inset 3px 0 0 var(--accent);
 }
 .cp-dot {
   flex: none;
   width: 8px;
   height: 8px;
-  border-radius: 2px;
+  border-radius: var(--radius);
   background: var(--mod);
 }
 .cp-dot.page {
@@ -339,6 +358,9 @@ kbd {
   text-align: center;
   color: var(--ink-3);
   font-size: 14px;
+}
+.cp-hint {
+  color: var(--ink-3);
 }
 .cp-empty p {
   margin: 0 0 12px;
