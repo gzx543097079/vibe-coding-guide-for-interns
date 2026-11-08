@@ -7,7 +7,7 @@
   grid-template-columns: minmax(0, 1fr) 340px;
   gap: 72px;
   align-items: center;
-  padding-block: 78px 68px;
+  padding-block: 54px 42px;
 }
 .desk-intro h1 {
   max-width: 16em;
@@ -31,6 +31,59 @@
   color: var(--ink-3);
   font-size: 12px;
   font-variant-numeric: tabular-nums;
+}
+.desk-problem-entry {
+  margin-top: 28px;
+  padding: 18px 0 0;
+  border-top: 1px solid var(--rule);
+}
+.desk-problem-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+}
+.desk-problem-head strong {
+  font-size: 13px;
+  font-weight: 650;
+}
+.desk-problem-head span {
+  color: var(--ink-3);
+  font-size: 11px;
+}
+.desk-problem-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin-top: 13px;
+}
+.desk-problem-list a {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 3px 8px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink);
+  text-decoration: none;
+}
+.desk-problem-list a:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.desk-problem-list strong {
+  font-size: 15px;
+  font-weight: 650;
+}
+.desk-problem-list small {
+  grid-column: 1 / -1;
+  color: var(--ink-3);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.desk-problem-list svg {
+  grid-column: 2;
+  grid-row: 1;
+  color: var(--accent-ink);
 }
 .desk-quick-links {
   display: flex;
@@ -266,6 +319,40 @@
 .task-composer {
   margin-top: 72px;
   border-top: 1px solid var(--rule-strong);
+}
+.desk-composer-disclosure {
+  margin-top: 62px;
+  border-top: 1px solid var(--rule-strong);
+}
+.desk-composer-disclosure > summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 21px 0;
+  color: var(--ink);
+  cursor: pointer;
+  list-style: none;
+  font-size: 15px;
+  font-weight: 650;
+}
+.desk-composer-disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+.desk-composer-disclosure > summary span {
+  color: var(--ink-3);
+  font-size: 12px;
+  font-weight: 400;
+}
+.desk-composer-disclosure > summary svg {
+  margin-left: auto;
+  transition: transform 180ms var(--ease);
+}
+.desk-composer-disclosure[open] > summary svg {
+  transform: rotate(90deg);
+}
+.desk-composer-disclosure .task-composer {
+  margin-top: 0;
+  border-top: 0;
 }
 .task-composer-head {
   display: flex;
@@ -579,6 +666,14 @@
   }
   .task-composer-grid {
     grid-template-columns: 1fr;
+  }
+  .desk-problem-list {
+    grid-template-columns: 1fr;
+  }
+  .desk-problem-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
   }
   .task-fields {
     border-right: 0;

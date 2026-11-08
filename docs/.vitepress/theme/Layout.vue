@@ -142,7 +142,7 @@ onBeforeUnmount(() => observer?.disconnect())
               <strong>{{ here.module.name }} / {{ here.chapter.short }}</strong>
             </div>
             <div class="taskbar-actions">
-              <a :href="verificationLink">
+              <a v-if="demoSlug" :href="verificationLink">
                 {{ demoSlug ? '看这个组件' : '看组件' }}
                 <SiteIcon name="lab" :size="15" />
               </a>
@@ -159,16 +159,6 @@ onBeforeUnmount(() => observer?.disconnect())
             </div>
           </div>
           <header class="reader-header">
-            <nav aria-label="面包屑">
-              <a :href="withBase('/learn')">目录</a
-              ><SiteIcon name="chevron" :size="12" /><a
-                v-if="here"
-                :href="withBase('/courses/' + here.module.id)"
-                >{{ here.module.name }}</a
-              ><SiteIcon v-if="here" name="chevron" :size="12" /><span>{{
-                page.title
-              }}</span>
-            </nav>
             <div v-if="here" class="reader-badges">
               <span>{{ here.chapter.level }}</span
               ><span>{{ here.module.tag }}</span
@@ -176,6 +166,12 @@ onBeforeUnmount(() => observer?.disconnect())
             </div>
             <h1>{{ page.title }}</h1>
             <p v-if="frontmatter.description">{{ frontmatter.description }}</p>
+            <details v-if="toc.length" class="reader-inline-toc">
+              <summary>本页目录 <span>{{ toc.length }} 个小节</span></summary>
+              <nav aria-label="本页目录">
+                <a v-for="h in toc" :key="h.link" :href="h.link" :class="{ 'is-child': h.level === 3 }">{{ h.title }}</a>
+              </nav>
+            </details>
             <div v-if="frontmatter.status === 'draft'" class="reader-draft">
               这篇还在写，请结合已有内容和项目实际情况看。
             </div>
@@ -229,25 +225,6 @@ onBeforeUnmount(() => observer?.disconnect())
             >发现问题？在 GitHub 上编辑此页<SiteIcon name="arrow" :size="15"
           /></a>
         </main>
-        <aside class="reader-outline">
-          <h2>这一页</h2>
-          <nav aria-label="本页目录">
-            <a
-              v-for="h in toc"
-              :key="h.link"
-              :href="h.link"
-              :class="{
-                active: activeHeading === h.id,
-                'is-child': h.level === 3,
-              }"
-              >{{ h.title }}</a
-            >
-          </nav>
-          <a class="outline-lab" :href="verificationLink"
-            ><SiteIcon name="lab" :size="20" /><strong>看组件</strong
-            ><span>{{ demoSlug ? '打开这个组件的演示' : '打开组件页' }}<SiteIcon name="arrow" :size="15" /></span
-          ></a>
-        </aside>
       </div>
     </template>
     <main v-else id="main-content" class="website-page"><Content /></main>

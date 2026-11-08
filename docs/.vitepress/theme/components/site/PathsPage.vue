@@ -57,6 +57,7 @@ onBeforeUnmount(() => window.removeEventListener('hashchange', fromHash))
         <div class="path-detail-head">
           <h2>{{ path.title }}</h2>
           <p>{{ path.description }}</p>
+          <p class="path-outcome-lead"><strong>读完你会：</strong>{{ path.outcome }}</p>
           <a class="action-primary" :href="withBase(next.link)"
             >从下一篇开始<SiteIcon name="arrow" :size="18"
           /></a>
@@ -79,10 +80,6 @@ onBeforeUnmount(() => window.removeEventListener('hashchange', fromHash))
             </div>
           </li>
         </ol>
-        <div class="path-outcome">
-          <SiteIcon name="quality" :size="23" />
-          <p><strong>读完之后</strong>{{ path.outcome }}</p>
-        </div>
       </section>
     </div>
   </div>

@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { withBase } from 'vitepress'
-import { modules, totalChapters } from '../../data/modules'
+import { allChapters, modules, totalChapters } from '../../data/modules'
 import CourseCard from './CourseCard.vue'
 import SiteIcon from './SiteIcon.vue'
 const filter = ref('全部方向')
 const query = ref('')
 const filters = ['全部方向', '通用', '前端', '后端']
+const problemEntrances = [
+  { title: '刚开始一个项目', detail: '从环境、AI 协作和 Git 开始', href: withBase('/paths#first-project') },
+  { title: '正在改界面', detail: '先看前端和组件状态', href: withBase('/paths#interface') },
+  { title: '准备提交 PR', detail: '补齐审查、测试和交付', href: withBase('/git/github') },
+]
 const results = computed(() =>
   modules.filter(
     (m) =>
@@ -16,6 +21,14 @@ const results = computed(() =>
         .includes(query.value.trim().toLowerCase()),
   ),
 )
+const chapterResults = computed(() => {
+  const term = query.value.trim().toLowerCase()
+  if (!term) return []
+  return allChapters.filter(({ chapter, module }) =>
+    (filter.value === '全部方向' || module.tag === filter.value) &&
+    `${chapter.title} ${chapter.summary} ${module.name}`.toLowerCase().includes(term),
+  )
+})
 function reset() {
   query.value = ''
   filter.value = '全部方向'
@@ -65,10 +78,22 @@ function reset() {
           <SiteIcon name="close" :size="16" /></button
       ></label>
     </div>
+    <div class="catalog-problems" aria-label="按问题找入口">
+      <span>按问题找：</span>
+      <a v-for="entry in problemEntrances" :key="entry.title" :href="entry.href">
+        <strong>{{ entry.title }}</strong><small>{{ entry.detail }}</small><SiteIcon name="arrow" :size="14" />
+      </a>
+    </div>
     <p class="result-count" aria-live="polite">
-      {{ results.length }} 个方向{{ query ? ' · 与「' + query + '」相关' : '' }}
+      {{ query.trim() ? `${chapterResults.length} 篇相关文章` : `${results.length} 个方向` }}
     </p>
-    <div v-if="results.length" class="course-grid">
+    <div v-if="query.trim() && chapterResults.length" class="chapter-search-results">
+      <a v-for="item in chapterResults" :key="item.chapter.id" :href="withBase(item.chapter.link)">
+        <div><span>{{ item.module.name }} · {{ item.chapter.level }}</span><h2>{{ item.chapter.title }}</h2><p>{{ item.chapter.summary }}</p></div>
+        <SiteIcon name="arrow" :size="18" />
+      </a>
+    </div>
+    <div v-else-if="!query.trim() && results.length" class="course-grid">
       <CourseCard v-for="m in results" :key="m.id" :course="m" />
     </div>
     <div v-else class="empty-state">

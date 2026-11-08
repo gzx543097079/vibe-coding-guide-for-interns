@@ -19,7 +19,7 @@ const playing = ref(false)
 const stack = ref('HTML + CSS + JS')
 const options = reactive({ ...defaultOptions })
 const copied = ref<'idle' | 'done' | 'fail'>('idle')
-const panel = ref('prompt')
+const panel = ref('guide')
 const info = computed(() => demos[active.value])
 const spec = computed(() => getControl(active.value))
 const prompt = computed(() =>
@@ -157,12 +157,12 @@ function play() {
         <div class="lab-detail">
           <div class="lab-detail-tabs" role="group" aria-label="组件资料">
             <button
-              :aria-pressed="panel === 'prompt'"
-              @click="panel = 'prompt'"
+              :aria-pressed="panel === 'guide'"
+              @click="panel = 'guide'"
             >
-              提示词</button
-            ><button :aria-pressed="panel === 'guide'" @click="panel = 'guide'">
-              实现说明</button
+              检查行为</button
+            ><button :aria-pressed="panel === 'prompt'" @click="panel = 'prompt'">
+              复制提示词</button
             ><a :href="withBase('/controls/' + active)"
               >查看实现代码<SiteIcon name="arrow" :size="15"
             /></a>

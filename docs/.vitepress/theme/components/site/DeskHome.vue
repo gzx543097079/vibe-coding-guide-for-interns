@@ -7,6 +7,12 @@ import { useLearning } from '../../composables/useLearning'
 import SiteIcon from './SiteIcon.vue'
 import TaskComposer from './TaskComposer.vue'
 
+const problemEntrances = [
+  { title: '刚开始一个项目', detail: '环境、AI 协作和 Git 的第一轮准备', href: '/paths#first-project' },
+  { title: '正在改界面', detail: '前端基础、组件状态和多端实现', href: '/paths#interface' },
+  { title: '准备提交 PR', detail: '分支、审查、测试和交付检查', href: '/git/github' },
+]
+
 const { last, state, isComplete } = useLearning()
 const completed = computed(() => state.completed.length)
 const percent = computed(() => Math.round((completed.value / totalChapters) * 100))
@@ -31,6 +37,19 @@ const href = (link: string) => (link.startsWith('#') ? link : withBase(link))
           这里整理了环境配置、Git、前后端、调试和交付相关的 108 篇笔记，也放了一些能直接操作的组件例子。遇到问题时按目录查，想从头看可以挑一条阅读路线。
         </p>
         <p class="desk-meta">{{ totalChapters }} 篇笔记 · 9 个方向 · 阅读记录只存在这台电脑</p>
+        <div class="desk-problem-entry" aria-labelledby="problem-entry-title">
+          <div class="desk-problem-head">
+            <strong id="problem-entry-title">你现在更像哪一种情况？</strong>
+            <span>选一个入口，直接开始。</span>
+          </div>
+          <div class="desk-problem-list">
+            <a v-for="entry in problemEntrances" :key="entry.title" :href="href(entry.href)">
+              <strong>{{ entry.title }}</strong>
+              <small>{{ entry.detail }}</small>
+              <SiteIcon name="arrow" :size="15" />
+            </a>
+          </div>
+        </div>
         <nav class="desk-quick-links" aria-label="常用入口">
           <a :href="href('/learn')">翻目录<SiteIcon name="arrow" :size="16" /></a>
           <a :href="href('/paths')">挑条路线<SiteIcon name="arrow" :size="16" /></a>
@@ -88,12 +107,15 @@ const href = (link: string) => (link.startsWith('#') ? link : withBase(link))
           <p>写功能、修 bug 或准备审查前，把已知信息整理成一段能直接使用的文字。</p>
           <a class="desk-side-more" :href="href('/growth/prompt-templates')">查看模板<SiteIcon name="arrow" :size="16" /></a>
         </div>
-        <p class="desk-note"><a :href="href('#task-composer-title')">在下面直接写一份</a>，填写时会同步生成文本。</p>
+        <p class="desk-note"><a :href="href('#task-composer-entry')">在下面直接写一份</a>，填写时会同步生成文本。</p>
       </aside>
     </section>
 
     <div class="site-width">
-      <TaskComposer />
+      <details class="desk-composer-disclosure">
+        <summary id="task-composer-entry">写一份需求<span>把已知信息整理成一段可复制的文字</span><SiteIcon name="chevron" :size="16" /></summary>
+        <TaskComposer />
+      </details>
     </div>
   </div>
 </template>
