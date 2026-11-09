@@ -1,6 +1,6 @@
 ---
 title: 编辑器与 AI 工具
-description: VS Code、JetBrains、Cursor、Codex 的安装、插件与 AI 配置文件。
+description: VS Code 与 Codex 的安装、插件与 AI 配置文件。
 ---
 
 <RPath />
@@ -9,14 +9,12 @@ description: VS Code、JetBrains、Cursor、Codex 的安装、插件与 AI 配�
 
 <REditorAgent />
 
-## 选哪个编辑器
+## 用哪个编辑器
 
-团队有统一要求就按团队的来。没有的话，按项目类型选：
+团队有统一要求就按团队的来。没有的话，VS Code 加对应语言的插件就能覆盖大多数项目；AI 工具用命令行 Agent，不依赖特定编辑器。
 
 <RPoints>
 <RPoint icon="code" title="VS Code">前端、Node、Python、脚本类项目的通用选择，靠插件支持各种语言。免费。</RPoint>
-<RPoint icon="layers" title="JetBrains 系列">IntelliJ IDEA、WebStorm、PyCharm 等，重构和代码分析更强，适合 Java / Kotlin 大型项目。部分产品收费 <RTbd />。</RPoint>
-<RPoint icon="cursor" title="Cursor">基于 VS Code 的 AI 编辑器，插件和快捷键基本通用。收费方案 <RTbd />。</RPoint>
 <RPoint icon="terminal" title="Codex">OpenAI 的编码 Agent，可从 CLI、IDE 扩展或桌面应用使用。登录方式、可用功能和额度以账号与官方文档为准。</RPoint>
 </RPoints>
 
@@ -79,7 +77,7 @@ Windows 可按 [官方 Windows 指南](https://developers.openai.com/codex/windo
 
 ## 每天都会用的操作
 
-下面是 VS Code 的默认快捷键，左边 macOS，右边 Windows。Cursor 基本相同。
+下面是 VS Code 的默认快捷键，左边 macOS，右边 Windows。
 
 <RPoints>
 <RPoint icon="keyboard" title="命令面板" meta="⌘⇧P / Ctrl+Shift+P">所有功能的入口，忘了快捷键就在这里搜。</RPoint>
@@ -131,4 +129,4 @@ Windows 可按 [官方 Windows 指南](https://developers.openai.com/codex/windo
 
 ## 工具速查
 
-<TechCard ids="vscode,jetbrains,cursor,codex" />
+<TechCard ids="vscode,codex" />

@@ -43,4 +43,4 @@ description: Kotlin Multiplatform、Electron / Tauri、Capacitor 简述。
 
 <PromptCard id="plan-first" />
 
-继续查阅：[Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)、[Electron 安全](https://www.electronjs.org/docs/latest/tutorial/security)、[Tauri](https://v2.tauri.app/concept/)、[Capacitor](https://capacitorjs.com/docs)。
+继续查阅：[Kotlin Multiplatform](https://kotlinlang.org/docs/multiplatform.html)、[Electron 安全](https://www.electronjs.org/docs/latest/tutorial/security)、[Tauri](https://v2.tauri.app/concept/)、[Capacitor](https://capacitorjs.com/docs)。
