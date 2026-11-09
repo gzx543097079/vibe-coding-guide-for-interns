@@ -39,7 +39,7 @@ function reset() {
     <header class="page-intro">
       <h1>目录</h1>
       <div>
-        <p>按方向筛选，或者直接搜章节标题。原来的网址都还在。</p>
+        <p>按方向筛选，或者直接搜章节标题。</p>
         <span
           >{{ modules.length }} 个方向、{{
             totalChapters

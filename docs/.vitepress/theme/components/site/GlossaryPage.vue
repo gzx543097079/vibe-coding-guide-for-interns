@@ -61,7 +61,7 @@ onMounted(jumpToHash)
     <header class="kb-glossary-head">
       <h1>名词解释</h1>
       <p>
-        这里收开发中常遇到、又容易混淆的词，按分类排；也可以直接搜中文、英文或缩写。
+        开发中常遇到、又容易混淆的词，按分类排；也可以直接搜中文、英文或缩写。
       </p>
       <div class="kb-glossary-tools">
         <label class="kb-glossary-search">
