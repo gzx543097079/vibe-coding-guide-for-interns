@@ -1,58 +1,22 @@
 ---
 title: 编辑器与 AI 工具
-description: VS Code 与 Codex 的安装、插件与 AI 配置文件。
+description: Codex CLI 的安装、AI 配置文件，以及编辑器与 AI 工具的分工。
 ---
 
-<RPath />
+**编辑器**：读代码、改代码、看 diff 的地方。具体用哪个按团队要求来。
 
-编辑器是你读代码、改代码的地方；AI 工具（Agent）是一个**会读文件、改文件、跑命令的助手**，它住在编辑器里（插件）或旁边的终端里（命令行工具），真正「想」下一步的是云端的模型服务。弄清这三者的关系，就知道该在哪一环把关。
+**AI 工具（Agent）**：在授权范围内读文件、改文件、跑命令的助手，可以做成编辑器插件，也可以是终端里的命令行工具。
+
+**模型服务**：在云端，根据上下文生成下一步。要不要接受改动，由你决定。
 
 <REditorAgent />
 
-## 用哪个编辑器
-
-团队有统一要求就按团队的来。没有的话，VS Code 加对应语言的插件就能覆盖大多数项目；AI 工具用命令行 Agent，不依赖特定编辑器。
-
-<RPoints>
-<RPoint icon="code" title="VS Code">前端、Node、Python、脚本类项目的通用选择，靠插件支持各种语言。免费。</RPoint>
-<RPoint icon="terminal" title="Codex">OpenAI 的编码 Agent，可从 CLI、IDE 扩展或桌面应用使用。登录方式、可用功能和额度以账号与官方文档为准。</RPoint>
-</RPoints>
-
-iOS 用 Xcode，Android 用 Android Studio，鸿蒙用 DevEco Studio，这些平台专用 IDE 在[前端与客户端](/frontend/ios)模块里介绍。
-
-## 安装
-
-<RSteps>
-<RStep title="安装 VS Code" note="或团队指定的编辑器" open>
-
-也可以直接到 [code.visualstudio.com](https://code.visualstudio.com) 下载安装包。用包管理器安装：
-
-<RTerm
-  :mac='["brew install --cask visual-studio-code"]'
-  :win='["winget install Microsoft.VisualStudioCode"]'
-  note="Homebrew cask 名与 winget 包 ID 待核实。"
-/>
-
-</RStep>
-<RStep title="在终端里用 code 命令打开项目" note="以后 code . 就能打开当前目录">
-
-macOS：打开 VS Code，按 <kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>P</kbd> 打开命令面板，输入 `shell command`，选「Install 'code' command in PATH」。Windows 安装时默认已加入 PATH。
-
-<RTerm
-  :cmd='["cd ~/projects/my-app", "code ."]'
-/>
-
-</RStep>
-<RStep title="装几个必备插件" note="格式化、检查、语言支持">
-
-先装项目在用的：项目里有 `.prettierrc` 就装 Prettier 插件，有 `eslint.config.js` 就装 ESLint 插件，再加上你所用语言的官方插件。项目根目录的 `.vscode/extensions.json` 如果存在，VS Code 会提示你安装推荐插件。
-
-装好后，在练习文件里打乱一处缩进并保存，确认格式化确实生效。没有变化时，检查默认格式化工具和「保存时格式化」设置。
-
-</RStep>
-<RStep title="安装 Codex CLI" note="需要先安装 Node.js 与 npm">
+## 安装 Codex CLI
 
 本章沿用前一章装好的 Node.js，通过 npm 安装 Codex CLI。其他安装方式与平台说明见 [Codex CLI 官方文档](https://developers.openai.com/codex/cli)。
+
+<RSteps>
+<RStep title="安装 Codex CLI" note="需要先安装 Node.js 与 npm" open>
 
 <RTerm
   :cmd='["npm install -g @openai/codex", "codex --version"]'
@@ -75,17 +39,19 @@ Windows 可按 [官方 Windows 指南](https://developers.openai.com/codex/windo
 </RStep>
 </RSteps>
 
-## 每天都会用的操作
+装好项目在用的格式化、检查和语言插件。项目里通常会有推荐插件配置，按提示安装即可；保存文件后确认格式化确实生效。
 
-下面是 VS Code 的默认快捷键，左边 macOS，右边 Windows。
+## 编辑器里常做的几件事
+
+以下操作多数编辑器都有，具体键位以你用的编辑器为准。
 
 <RPoints>
-<RPoint icon="keyboard" title="命令面板" meta="⌘⇧P / Ctrl+Shift+P">所有功能的入口，忘了快捷键就在这里搜。</RPoint>
-<RPoint icon="file" title="按文件名打开" meta="⌘P / Ctrl+P">输入文件名的一部分就能跳过去，比在文件树里翻快。</RPoint>
-<RPoint icon="search" title="全局搜索" meta="⌘⇧F / Ctrl+Shift+F">在整个项目里搜文字，看 AI 改的函数还有谁在用。</RPoint>
-<RPoint icon="path" title="跳到定义" meta="F12">在函数或变量上按一下，看它是怎么写的。</RPoint>
-<RPoint icon="cursor" title="多光标" meta="⌥ 点击 / Alt 点击">同时在多处输入，适合批量改相似的几行。</RPoint>
-<RPoint icon="terminal" title="内置终端" meta="Ctrl+`">在编辑器里开终端，跑命令不用切窗口。</RPoint>
+<RPoint icon="keyboard" title="命令面板">所有功能的入口，忘了快捷键就在这里搜。</RPoint>
+<RPoint icon="file" title="按文件名打开">输入文件名的一部分就能跳过去，比在文件树里翻快。</RPoint>
+<RPoint icon="search" title="全局搜索">在整个项目里搜文字，看 AI 改的函数还有谁在用。</RPoint>
+<RPoint icon="path" title="跳到定义">在函数或变量上按一下，看它是怎么写的。</RPoint>
+<RPoint icon="cursor" title="多光标">同时在多处输入，适合批量改相似的几行。</RPoint>
+<RPoint icon="terminal" title="内置终端">在编辑器里开终端，跑命令不用切窗口。</RPoint>
 </RPoints>
 
 ## AI 配置文件
@@ -129,4 +95,4 @@ Windows 可按 [官方 Windows 指南](https://developers.openai.com/codex/windo
 
 ## 工具速查
 
-<TechCard ids="vscode,codex" />
+<TechCard ids="codex" />

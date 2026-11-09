@@ -62,7 +62,7 @@ const rawModules: Module[] = [
     chapters: [
       s('start', 'intro', '入门须知', '入门须知', '什么是 Vibe Coding，AI 能帮你做什么、哪些事必须你自己判断。'),
       s('start', 'setup', '软件与环境安装', '环境安装', '终端、包管理器、Node / Python / JDK 等运行时与 Git 的安装。'),
-      s('start', 'editor', '编辑器与 AI 工具', '编辑器与 AI', 'VS Code 与 Codex 的安装、插件与 AI 配置文件。'),
+      s('start', 'editor', '编辑器与 AI 工具', '编辑器与 AI', 'Codex CLI 的安装、AI 配置文件，以及编辑器与 AI 工具的分工。'),
       s('start', 'conventions', '代码规范与工程素养', '代码规范', '命名、格式化、注释、提交规范与代码审查要点。'),
       s('start', 'structure', '项目结构与文件夹架构', '项目结构', '常见目录约定、分层与模块化、monorepo 与配置文件。'),
     ],
