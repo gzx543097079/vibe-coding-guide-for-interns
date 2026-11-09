@@ -136,11 +136,7 @@ onBeforeUnmount(() => observer?.disconnect())
                 <p class="kb-doc-code">{{ chapterCode(here) }} · {{ here.module.name }}</p>
                 <h1>{{ page.title }}</h1>
                 <p v-if="frontmatter.description" class="kb-doc-deck">{{ frontmatter.description }}</p>
-                <div class="kb-doc-meta">
-                  <span>本方向第 {{ here.index + 1 }} / {{ here.module.chapters.length }} 篇</span>
-                  <span>{{ here.chapter.level }}</span>
-                  <span>全站第 {{ here.order + 1 }} / {{ totalChapters }} 篇</span>
-                </div>
+                <p class="kb-doc-meta-line">第 {{ here.index + 1 }} / {{ here.module.chapters.length }} 篇 · {{ here.chapter.level }} · 全站 {{ here.order + 1 }} / {{ totalChapters }}</p>
                 <div v-if="frontmatter.status === 'draft'" class="kb-doc-draft">
                   这篇还在写，请结合已有内容和项目实际情况看。
                 </div>
@@ -155,6 +151,23 @@ onBeforeUnmount(() => observer?.disconnect())
               </details>
 
               <Content class="vp-doc kb-body" />
+
+              <div class="kb-doc-foot">
+                <button
+                  class="kb-mark-btn"
+                  type="button"
+                  :class="{ done: isComplete(here.chapter.id) }"
+                  :aria-pressed="isComplete(here.chapter.id)"
+                  @click="toggle(here.chapter.id)"
+                >
+                  <SiteIcon v-if="isComplete(here.chapter.id)" name="check" :size="14" />
+                  {{ isComplete(here.chapter.id) ? '已读过' : '记一下读过' }}
+                </button>
+                <span class="kb-doc-foot-sep">·</span>
+                <a :href="verificationLink">{{ demoSlug ? '组件演示' : '组件实验室' }}</a>
+                <a :href="withBase('/glossary')">名词解释</a>
+                <span class="kb-doc-foot-note">记录只在当前浏览器</span>
+              </div>
 
               <nav class="kb-related" aria-label="相关页面">
                 <span>相关</span>
@@ -203,24 +216,7 @@ onBeforeUnmount(() => observer?.disconnect())
               </div>
               <div class="kb-aside-block">
                 <h2>本篇</h2>
-                <p class="kb-aside-line">{{ chapterCode(here) }} · {{ here.module.name }} · {{ here.chapter.level }} · {{ here.index + 1 }}/{{ here.module.chapters.length }}</p>
-                <button
-                  class="kb-mark-btn"
-                  type="button"
-                  :class="{ done: isComplete(here.chapter.id) }"
-                  :aria-pressed="isComplete(here.chapter.id)"
-                  @click="toggle(here.chapter.id)"
-                >
-                  <SiteIcon v-if="isComplete(here.chapter.id)" name="check" :size="15" />
-                  {{ isComplete(here.chapter.id) ? '已读过 · 取消' : '记一下读过' }}
-                </button>
-                <p class="kb-aside-note">只记在这台电脑。</p>
-                <a class="kb-aside-link" :href="verificationLink">
-                  {{ demoSlug ? '组件演示' : '组件实验室' }}<SiteIcon name="arrow" :size="13" />
-                </a>
-                <a class="kb-aside-link" :href="withBase('/glossary')">
-                  名词解释<SiteIcon name="arrow" :size="13" />
-                </a>
+                <p class="kb-aside-line">{{ chapterCode(here) }} · {{ here.module.name }} · {{ here.chapter.level }}</p>
               </div>
             </aside>
           </div>

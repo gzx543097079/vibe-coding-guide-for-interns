@@ -11,6 +11,11 @@ const emit = defineEmits<{ close: [] }>()
 const { page } = useData()
 const { isComplete } = useLearning()
 const here = computed(() => findChapter(page.value.relativePath))
+const activeModuleId = computed(() => {
+  if (here.value) return here.value.module.id
+  const m = page.value.relativePath.match(/^courses\/([^/]+)\.md$/)
+  return m ? m[1] : ''
+})
 const navEl = ref<HTMLElement | null>(null)
 
 // 每个方向下的三级分组，空组不显示
@@ -31,7 +36,7 @@ const tree = computed(() =>
 const STORE_KEY = 'vcg:kb-open-modules'
 // 初始只展开当前方向，SSR 与客户端首帧一致
 const open = ref<Set<string>>(
-  new Set(here.value ? [here.value.module.id] : [modules[0].id]),
+  new Set(activeModuleId.value ? [activeModuleId.value] : [modules[0].id]),
 )
 function toggleModule(id: string) {
   const next = new Set(open.value)
@@ -54,7 +59,7 @@ onMounted(() => {
       const valid = new Set(modules.map((m) => m.id))
       const next = new Set<string>(saved.filter((id: unknown) => typeof id === 'string' && valid.has(id)))
       // 当前方向始终展开，保证「我在哪」可见
-      if (here.value) next.add(here.value.module.id)
+      if (activeModuleId.value) next.add(activeModuleId.value)
       open.value = next
     }
   } catch {
@@ -73,7 +78,7 @@ async function scrollCurrentIntoView() {
   box.scrollTop = Math.max(0, target)
 }
 watch(() => page.value.relativePath, () => {
-  if (here.value && !open.value.has(here.value.module.id)) toggleModule(here.value.module.id)
+  if (activeModuleId.value && !open.value.has(activeModuleId.value)) toggleModule(activeModuleId.value)
   scrollCurrentIntoView()
   emit('close')
 })
@@ -99,7 +104,7 @@ watch(() => page.value.relativePath, () => {
             type="button"
             :aria-expanded="open.has(item.module.id)"
             :aria-controls="'kb-group-' + item.module.id"
-            :class="{ 'is-active': here?.module.id === item.module.id }"
+            :class="{ 'is-active': activeModuleId === item.module.id }"
             @click="toggleModule(item.module.id)"
           >
             <span class="kb-nav-no">{{ String(item.module.no).padStart(2, '0') }}</span>
@@ -110,7 +115,7 @@ watch(() => page.value.relativePath, () => {
 
           <div v-show="open.has(item.module.id)" :id="'kb-group-' + item.module.id" class="kb-nav-chapters">
             <div v-for="g in item.groups" :key="g.level" class="kb-nav-level">
-              <p class="kb-nav-level-name">{{ g.level }}<span>{{ g.chapters.length }} 篇</span></p>
+              <p class="kb-nav-level-name">{{ g.level }}</p>
               <a
                 v-for="x in g.chapters"
                 :key="x.chapter.id"
@@ -120,9 +125,7 @@ watch(() => page.value.relativePath, () => {
                 :aria-current="here?.chapter.id === x.chapter.id ? 'page' : undefined"
                 :title="x.chapter.title"
               >
-                <span class="kb-nav-code">{{ code(item.module.no, x.index) }}</span>
                 <span class="kb-nav-item-name">{{ x.chapter.short }}</span>
-                <SiteIcon v-if="isComplete(x.chapter.id)" name="check" :size="13" class="kb-nav-done" />
               </a>
             </div>
           </div>

@@ -4,34 +4,30 @@ import { withBase } from 'vitepress'
 import { allChapters, modules, totalChapters } from '../../data/modules'
 import CourseCard from './CourseCard.vue'
 import SiteIcon from './SiteIcon.vue'
-const filter = ref('全部方向')
+
 const query = ref('')
-const filters = ['全部方向', '通用', '前端', '后端']
 const problemEntrances = [
   { title: '刚开始一个项目', detail: '从环境、AI 协作和 Git 开始', href: withBase('/paths#first-project') },
   { title: '正在改界面', detail: '先看前端和组件状态', href: withBase('/paths#interface') },
   { title: '准备提交 PR', detail: '补齐审查、测试和交付', href: withBase('/git/github') },
 ]
-const results = computed(() =>
-  modules.filter(
-    (m) =>
-      (filter.value === '全部方向' || m.tag === filter.value) &&
-      (m.name + m.intro + m.chapters.map((c) => c.title).join(''))
-        .toLowerCase()
-        .includes(query.value.trim().toLowerCase()),
-  ),
-)
+const results = computed(() => {
+  const term = query.value.trim().toLowerCase()
+  return modules.filter((m) =>
+    `${m.name} ${m.intro} ${m.chapters.map((c) => c.title).join('')}`
+      .toLowerCase()
+      .includes(term),
+  )
+})
 const chapterResults = computed(() => {
   const term = query.value.trim().toLowerCase()
   if (!term) return []
   return allChapters.filter(({ chapter, module }) =>
-    (filter.value === '全部方向' || module.tag === filter.value) &&
     `${chapter.title} ${chapter.summary} ${module.name}`.toLowerCase().includes(term),
   )
 })
 function reset() {
   query.value = ''
-  filter.value = '全部方向'
 }
 </script>
 <template>
@@ -39,54 +35,31 @@ function reset() {
     <header class="page-intro">
       <h1>目录</h1>
       <div>
-        <p>按方向筛选，或者直接搜章节标题。</p>
-        <span
-          >{{ modules.length }} 个方向、{{
-            totalChapters
-          }} 篇笔记，按基础、进阶和精通分了组。</span
-        >
+        <p>{{ modules.length }} 个方向、{{ totalChapters }} 篇笔记，按基础、进阶和精通分组；也可以直接搜章节标题。</p>
       </div>
     </header>
+
     <div class="catalog-toolbar">
-      <div class="filter-buttons" role="group" aria-label="按方向筛选">
-        <button
-          v-for="name in filters"
-          :key="name"
-          :aria-pressed="filter === name"
-          @click="filter = name"
-        >
-          {{
-            name === '前端'
-              ? '前端与跨端'
-              : name === '后端'
-                ? '后端与数据'
-                  : name === '通用'
-                  ? '通用'
-                  : name
-          }}
+      <label class="catalog-search">
+        <SiteIcon name="search" :size="18" />
+        <input v-model="query" aria-label="搜索方向或章节" placeholder="搜索方向或章节" />
+        <button v-if="query" type="button" aria-label="清空搜索" @click="query = ''">
+          <SiteIcon name="close" :size="16" />
         </button>
-      </div>
-      <label class="catalog-search"
-        ><SiteIcon name="search" :size="18" /><input
-          v-model="query"
-          aria-label="搜索方向或章节"
-          placeholder="搜索方向或章节" /><button
-          v-if="query"
-          @click="query = ''"
-          aria-label="清空搜索"
-        >
-          <SiteIcon name="close" :size="16" /></button
-      ></label>
+      </label>
     </div>
+
     <div class="catalog-problems" aria-label="按问题找入口">
       <span>按问题找：</span>
       <a v-for="entry in problemEntrances" :key="entry.title" :href="entry.href">
         <strong>{{ entry.title }}</strong><small>{{ entry.detail }}</small><SiteIcon name="arrow" :size="14" />
       </a>
     </div>
+
     <p class="result-count" aria-live="polite">
-      {{ query.trim() ? `${chapterResults.length} 篇相关文章` : `${results.length} 个方向` }}
+      {{ query.trim() ? (chapterResults.length ? `${chapterResults.length} 篇相关文章` : '没有匹配的文章') : `${results.length} 个方向` }}
     </p>
+
     <div v-if="query.trim() && chapterResults.length" class="chapter-search-results">
       <a v-for="item in chapterResults" :key="item.chapter.id" :href="withBase(item.chapter.link)">
         <div><span>{{ item.module.name }} · {{ item.chapter.level }}</span><h2>{{ item.chapter.title }}</h2><p>{{ item.chapter.summary }}</p></div>
@@ -99,18 +72,14 @@ function reset() {
     <div v-else class="empty-state">
       <SiteIcon name="search" :size="34" />
       <h2>没有找到相关内容</h2>
-      <p>换个关键词试试，比如「AI」「界面」「数据」，也可以看全部方向。</p>
-      <button class="action-primary" @click="reset">看全部方向</button>
+      <p>换个关键词试试，比如「AI」「界面」「数据」。</p>
+      <button class="action-primary" type="button" @click="reset">看全部方向</button>
     </div>
+
     <aside class="catalog-tip">
       <SiteIcon name="route" :size="25" />
-      <div>
-        <h2>阅读路线</h2>
-        <p>几条路线把相关章节串在了一起。</p>
-      </div>
-      <a class="text-link" :href="withBase('/paths')"
-        >看阅读路线 <SiteIcon name="arrow" :size="18"
-      /></a>
+      <div><h2>阅读路线</h2><p>几条路线把相关章节串在了一起。</p></div>
+      <a class="text-link" :href="withBase('/paths')">看阅读路线 <SiteIcon name="arrow" :size="18" /></a>
     </aside>
   </div>
 </template>

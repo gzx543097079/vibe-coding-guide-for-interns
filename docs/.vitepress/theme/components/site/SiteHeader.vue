@@ -9,9 +9,7 @@ const menu = ref(false)
 const nav = [
   { name: '首页', link: '/', key: 'home' },
   { name: '目录', link: '/learn', key: 'learn' },
-  { name: '路线', link: '/paths', key: 'paths' },
   { name: '组件', link: '/lab', key: 'lab' },
-  { name: '模板', link: '/growth/prompt-templates', key: 'briefs' },
   { name: '名词', link: '/glossary', key: 'glossary' },
 ]
 const chapter = computed(() => findChapter(page.value.relativePath))
