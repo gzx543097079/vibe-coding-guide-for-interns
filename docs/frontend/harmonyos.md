@@ -3,8 +3,6 @@ title: 鸿蒙 HarmonyOS
 description: ArkTS / ArkUI 与 DevEco Studio 的基本工作流。
 ---
 
-<RPath />
-
 鸿蒙应用开发先分清 **ArkTS 的语言约束、ArkUI 的声明式界面机制，以及 DevEco Studio 和 SDK 的工程配置**。已有 JavaScript / TypeScript 经验有帮助，但不能把 Web 代码直接当作 ArkTS 使用。
 
 ## 从工程约束开始

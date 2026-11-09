@@ -3,8 +3,6 @@ title: Android
 description: Kotlin / Compose 与 Android Studio 的基本工作流。
 ---
 
-<RPath />
-
 Android 开发中，**Kotlin 是语言，Compose 或 View 系统负责界面，Android Studio 与 Gradle 负责开发和构建流程**。先认识现有工程的模块、入口 Activity 和依赖配置，再让 Codex 修改页面。
 
 ## 一次页面改动的工作流

@@ -3,8 +3,6 @@ title: Taro
 description: 用 React 或 Vue 开发多端小程序。
 ---
 
-<RPath />
-
 Taro 为 React 等开发方式提供多端应用开发能力。它的组件、编译链和目标端约束共同决定代码能运行在哪里。**语法像 React，不代表宿主环境就是浏览器。**
 
 ## 开始前看清四件事

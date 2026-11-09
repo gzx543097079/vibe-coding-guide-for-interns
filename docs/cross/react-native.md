@@ -3,8 +3,6 @@ title: React Native
 description: 用 React + TypeScript 调用原生组件。
 ---
 
-<RPath />
-
 React Native 用 React 组织界面与状态，并接入原生平台的组件和能力。它不是在 App 里运行普通 DOM 页面；**React 的思路可以复用，Web 的元素、CSS 和浏览器 API 不一定可用。**
 
 ## 先确认工程路线

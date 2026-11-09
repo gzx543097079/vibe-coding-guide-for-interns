@@ -3,8 +3,6 @@ title: MCP 协议
 description: Model Context Protocol：把外部工具和数据源接入 AI 应用的开放协议。
 ---
 
-<RPath />
-
 MCP（Model Context Protocol）是一个开放协议，**规定 AI 应用怎样发现和调用外部工具、读取外部数据**。有了它，一个工单系统、数据库或浏览器只要做成 MCP Server，就能接进任何支持 MCP 的工具里，不用每家单独适配。接入一个 MCP Server，等于把它的能力和它手里的凭据一起交给了模型，所以**先确认来源可信，再决定装不装。**
 
 ## 一次调用经过谁

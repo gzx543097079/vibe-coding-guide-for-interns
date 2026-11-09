@@ -3,8 +3,6 @@ title: iOS
 description: Swift / SwiftUI 与 Xcode 的基本工作流。
 ---
 
-<RPath />
-
 iOS 开发先分清 **Swift 是语言，SwiftUI / UIKit 是界面框架，Xcode 是构建、调试和签名工具**。现有工程用哪种界面方案，就先沿用；不要让 Codex 把一个局部修复变成整页框架迁移。
 
 ## 从工程运行起来

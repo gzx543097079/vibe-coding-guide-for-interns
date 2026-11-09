@@ -3,8 +3,6 @@ title: Web 前端
 description: HTML / CSS / JS、React / Vue、构建工具与 DevTools。
 ---
 
-<RPath />
-
 Web 页面由 **HTML 表达结构，CSS 安排样式，JavaScript 处理行为**。React、Vue 和构建工具建立在这些基础之上；框架能帮助组织代码，不能替你决定按钮是否可操作、失败时显示什么。
 
 ## 先看一次交互经过哪里

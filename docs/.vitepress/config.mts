@@ -42,9 +42,8 @@ export default defineConfig({
     nav: [
       { text: '首页', link: '/' },
       { text: '目录', link: '/learn' },
-      { text: '路线', link: '/paths' },
       { text: '组件', link: '/lab' },
-      { text: '模板', link: '/growth/prompt-templates' },
+      { text: '名词', link: '/glossary' },
     ],
     outline: { level: [2, 3], label: '本页目录' },
     socialLinks: [{ icon: 'github', link: REPO, ariaLabel: 'GitHub 仓库' }],

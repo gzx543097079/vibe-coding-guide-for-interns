@@ -2,56 +2,56 @@
 name: "Vibe Coding 开发指南"
 description: "暖纸色页面、浅色顶栏与低饱和陶土色构成的开发笔记设计系统。"
 colors:
-  paper: "#f8f6f0"
-  paper-2: "#f1eee6"
-  paper-3: "#e9e5dc"
-  paper-4: "#ded9ce"
-  raised: "#fffefb"
-  ink: "#181714"
-  ink-2: "#4c4841"
-  ink-3: "#756f64"
-  rule: "#ded9cc"
-  rule-soft: "#ebe7dd"
-  rule-strong: "#c6bfb1"
-  shell: "#f8f6f0"
-  shell-2: "#f1eee6"
-  shell-line: "#ded9cc"
-  shell-ink: "#181714"
-  shell-ink-2: "#756f64"
-  accent: "#a6563d"
-  accent-hover: "#8f4632"
-  accent-ink: "#914a34"
-  accent-soft: "#f5e8df"
-  on-accent: "#fffefb"
-  focus: "#914a34"
-  tip: "#8b5c48"
-  tip-soft: "#f5e8df"
-  warn: "#7b5a1f"
-  warn-soft: "#f8efd9"
-  danger: "#a3443d"
-  danger-soft: "#f8e5e1"
-  info-soft: "#f0ece4"
-  code-bg: "#201e1a"
-  code-head: "#2a2722"
-  code-rule: "#413c34"
-  live: "#a6563d"
-  dark-paper: "#181714"
-  dark-paper-2: "#211f1b"
-  dark-paper-3: "#2a2722"
-  dark-raised: "#211f1b"
-  dark-ink: "#f6f1e7"
-  dark-ink-2: "#d1c8ba"
-  dark-ink-3: "#a89e90"
-  dark-rule: "#36322c"
-  dark-rule-strong: "#514b42"
+  paper: "#ffffff"
+  paper-2: "#f7f7f8"
+  paper-3: "#f1f2f4"
+  paper-4: "#e8e9ee"
+  raised: "#ffffff"
+  ink: "#1a1a1a"
+  ink-2: "#4b5563"
+  ink-3: "#6b7280"
+  rule: "#e5e7eb"
+  rule-soft: "#f1f2f4"
+  rule-strong: "#d1d5db"
+  shell: "#ffffff"
+  shell-2: "#f7f7f8"
+  shell-line: "#e5e7eb"
+  shell-ink: "#1a1a1a"
+  shell-ink-2: "#6b7280"
+  accent: "#6d28d9"
+  accent-hover: "#5b21b6"
+  accent-ink: "#6d28d9"
+  accent-soft: "#f3eefe"
+  on-accent: "#ffffff"
+  focus: "#6d28d9"
+  tip: "#15803d"
+  tip-soft: "#ecfdf3"
+  warn: "#b45309"
+  warn-soft: "#fffbeb"
+  danger: "#b91c1c"
+  danger-soft: "#fef2f2"
+  info-soft: "#f3f4f6"
+  code-bg: "#1f2430"
+  code-head: "#262c3a"
+  code-rule: "#343b4a"
+  live: "#6d28d9"
+  dark-paper: "#1b1b1f"
+  dark-paper-2: "#232326"
+  dark-paper-3: "#2b2b30"
+  dark-raised: "#232326"
+  dark-ink: "#f5f6f8"
+  dark-ink-2: "#c4c7ce"
+  dark-ink-3: "#9a9ea8"
+  dark-rule: "#33343a"
+  dark-rule-strong: "#474851"
   dark-shell: "#181714"
-  dark-accent: "#e1a188"
-  dark-accent-hover: "#edb59e"
-  dark-accent-ink: "#e8ae96"
-  dark-accent-soft: "#392720"
+  dark-accent: "#c4b5fd"
+  dark-accent-hover: "#ddd6fe"
+  dark-accent-ink: "#c4b5fd"
+  dark-accent-soft: "#2e2a40"
   dark-on-accent: "#181714"
-  dark-tip: "#e1a188"
-  dark-tip-soft: "#392720"
+  dark-tip: "#86efac"
+  dark-tip-soft: "#1b3527"
   dark-warn: "#d9b675"
   dark-warn-soft: "#3a2e19"
   dark-danger: "#e79a92"
@@ -177,7 +177,7 @@ typography:
     fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
     fontSize: "40px"
   code:
-    fontFamily: "ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace"
+    fontFamily: "ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace"
 rounded:
   sm: "4px"
   base: "6px"
@@ -408,3 +408,36 @@ components:
 - **Don't** 把实验室参考画布的暖纸色或赤陶色提升为全站品牌色。
 - **Don't** 用「验证先于信任」「可验收」「任务简报」等整齐口号替代具体说明。
 - **Don't** 把窄屏代码降级描述为已完成手机端设计与验收。
+
+---
+
+## 知识库改版（2026-11-08）
+
+用户确认改回「知识库那种，但要清晰」，站点信息架构与页面骨架从「开发笔记」调整为标准文档知识库。视觉令牌（暖纸色 / 赤陶强调）不变，变的是布局与信息层级：
+
+- **全站左侧目录**：9 个方向可折叠，方向内按「基础 / 进阶 / 精通」分组，列出全部 108 篇；每项带编号（如 `1.05`），当前篇用左侧竖条 + 背景 + 加粗 + `aria-current="page"` 四重表达，不只靠颜色；已读篇带勾。
+- **阅读页三栏**：左侧全站目录 272px、中间正文 760px、右侧本页目录 208px；右栏另含「这一篇」元信息与读过按钮。正文与右栏在 1080px 以下合并为单栏，本页目录转为可折叠。
+- **首页改为知识库索引**：一句说明 + 搜索入口 + 9 个方向块，每块列出全部章节、编号、级别与篇数。
+- **面包屑与翻页**：面包屑为「知识库 › 方向 › 级别 › 编号」；底部上一篇 / 下一篇只在同一方向内，最后一篇明确回到该方向目录。
+- **字号与对比**：正文 16px / 行高 1.95，方向名与编号用等宽字体，辅助信息不小于 11px；深色模式同步。
+- **窄屏**：860px 以下左侧目录变为抽屉（顶栏「目录」按钮打开），390px 实测 `innerWidth = scrollWidth = 390`，无横向溢出。
+
+新增文件：`theme/components/site/KnowledgeNav.vue`、`KnowledgeHome.vue`、`styles/kb.css`；`Layout.vue` 的阅读页分支整体重写；`index.ts` 将首页组件指向 `KnowledgeHome` 并最后引入 `kb.css`。
+
+### 配色校准（2026-11-09）
+
+用户反馈「颜色看着不对、视觉难受、混乱」。原因是所有颜色挤在暖黄褐同一色相：纸色 `#f8f6f0` 偏黄、强调陶土、提示与警告危险全是黄褐红，`--tip` 甚至被覆盖成褐色，深色下 `--tip` 与 `--accent` 同值。调整为：
+
+- 画布改为近白中性底 `#fbfbf9`（深色 `#171614`），去掉黄灰感；正文与次要文字改为中性灰，`ink-3` 对比度 4.9:1。
+- 强调色保留陶土但收敛为单一色 `#b0523a`；只用于按钮、当前项竖条、链接与编号，不再用大面积桃色填充。
+- 语义色分开：`tip` 恢复为绿 `#3f6b4c`（用于「读过」），`warn` 琥珀、`danger` 红，互不混淆。
+- 9 个模块辅助色统一映射到强调色，流程图与演示不再出现紫、蓝、绿等额外色相。
+- 左栏当前项改为中性底 `--paper-3` + 陶土竖条 + 深色加粗文字，减少粉色块。
+- 深色模式对应调整为中性炭黑，`tip` 改为绿 `#8fc0a0`，不再与强调色同值。
+- 代码块背景同步中性化 `#1c1d1f`。
+
+对比度：浅色正文 16.8:1、次要 8.3:1、辅助 4.9:1、白字按钮 5.1:1；深色各项 6.3～15.9:1。
+
+### Starlight 改版（2026-11-09）
+
+用户选定 Astro Starlight 风格。实际站点改为：白底 / 中性灰 / 紫罗兰单一强调 `#6d28d9`；首页居中 Hero + 3×3 卡片；左栏白底 + 激活项浅紫底紫字；文章页 40px 无衬线标题、16px/1.85 正文、右侧目录；深色为中性炭黑 + 浅紫强调。

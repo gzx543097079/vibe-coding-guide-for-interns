@@ -3,8 +3,6 @@ title: 后端语言与框架
 description: Spring Boot、Express / NestJS、FastAPI / Django、Go 等。
 ---
 
-<RPath />
-
 后端接收请求，验证身份和输入，执行业务规则，读写数据并返回结果。选语言和框架时先看**已有团队能力、部署环境和业务约束**，不根据一个性能榜单推翻现有工程。
 
 ## 常见技术栈怎样定位

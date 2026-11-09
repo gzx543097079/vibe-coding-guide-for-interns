@@ -3,8 +3,6 @@ title: API 设计
 description: HTTP / REST、OpenAPI 接口文档、JWT / OAuth 鉴权。
 ---
 
-<RPath />
-
 API 是调用方和服务方的契约，包含**字段、错误、授权、分页、超时与重试语义**。返回一段 JSON 只是其中一部分；接口能在手动请求中成功，不代表客户端可以稳定依赖它。
 
 ## 先定义资源与行为

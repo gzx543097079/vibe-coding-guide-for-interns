@@ -7,12 +7,13 @@ import SiteIcon from './SiteIcon.vue'
     <div class="footer-inner">
       <div>
         <a class="footer-brand" :href="withBase('/')"
-          ><SiteIcon name="code" />Vibe Coding 开发笔记</a
+          ><SiteIcon name="code" />Vibe Coding 开发指南</a
         >
-        <p>写代码时，随手翻两页。</p>
+        <p>环境、代码、调试和交付，随手查。</p>
       </div>
       <nav aria-label="页脚导航">
-        <a :href="withBase('/learn')">目录</a
+        <a :href="withBase('/learn')">全部方向</a
+        ><a :href="withBase('/paths')">阅读路线</a
         ><a :href="withBase('/growth/prompt-templates')">需求模板</a
         ><a :href="withBase('/lab')">组件演示</a
         ><a
@@ -24,7 +25,7 @@ import SiteIcon from './SiteIcon.vue'
       </nav>
     </div>
     <div class="footer-bottom">
-      <span>内容以 MIT 协议开源</span><span>108 篇，网址一直有效。</span>
+      <span>内容以 MIT 协议开源</span><span>108 篇 · 网址一直有效 · 阅读记录只存本机</span>
     </div>
   </footer>
 </template>

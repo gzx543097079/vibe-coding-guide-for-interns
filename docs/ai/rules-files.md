@@ -3,8 +3,6 @@ title: 规则文件与 Skills
 description: 用 AGENTS.md 和 Skills 把项目约定与操作流程交给 Codex。
 ---
 
-<RPath />
-
 Codex 用 **AGENTS.md 保存项目约定，用 SKILL.md 保存具体工作流程**。前者告诉它项目怎么构建、怎样验证、哪些不能碰；后者描述一类任务应该怎样做。两者会影响模型的判断，真正的文件与命令边界仍要靠权限设置。
 
 ## 文件名先说清楚

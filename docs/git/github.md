@@ -3,8 +3,6 @@ title: GitHub 与 PR 协作
 description: 分支策略、PR 描述、Code Review 与 Issue。
 ---
 
-<RPath />
-
 Git 管理本地历史，GitHub 托管仓库并提供 Issue、PR、审查和自动检查。**推送分支不等于批准合并**；PR 的价值是让别人看清问题、变更和验证证据。
 
 ## 从功能分支提出改动

@@ -9,7 +9,7 @@ interface Step {
   on: string[]
 }
 const steps: Step[] = [
-  { label: '总览', text: '编辑器是你看代码、改代码的地方；Agent 住在编辑器里（插件）或旁边的终端里（命令行工具），替你读文件、改文件、跑命令；真正「想」下一步的是云端的模型服务。', on: [] },
+  { label: '总览', text: '下面按一次任务的顺序，逐步看这三者怎么配合。', on: [] },
   { label: '描述任务', text: '你用自然语言说清目标、范围和验收标准。Agent 只知道你告诉它的和它自己读到的。', on: ['you', 'a1', 'agent'] },
   { label: '读规则和文件', text: 'Codex 读取 AGENTS.md 等已加载的规则和相关源码，作为上下文。', on: ['agent', 'rules', 'files'] },
   { label: '发给模型', text: '读到的内容会连同你的话一起发送到模型服务。所以不该外发的代码和密钥，不要让它读。', on: ['agent', 'a2', 'model'] },

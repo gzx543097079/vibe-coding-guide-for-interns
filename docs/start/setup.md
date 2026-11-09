@@ -3,8 +3,6 @@ title: 软件与环境安装
 description: 终端、包管理器、Node / Python / JDK 等运行时与 Git 的安装。
 ---
 
-<RPath />
-
 开发环境就是四样东西：**终端、包管理器、Git、项目要用的语言运行时**。编辑器放在[下一章](./editor)。每装一样，都用 `--version` 确认装上了；版本以项目要求为准，不是越新越好。
 
 下面的命令块按系统分标签，选一次后全站记住。Windows 一律用 PowerShell。

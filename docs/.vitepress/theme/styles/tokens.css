@@ -2,52 +2,52 @@
 
 :root {
   /* 画布与表面 */
-  --paper: #faf9f5;
-  --paper-2: #f5f0e8;
-  --paper-3: #efe9de;
-  --paper-4: #e8e0d2;
-  --raised: #fffefb;
-  --code-bg: #1f1e1b;
-  --code-head: #262420;
-  --code-rule: #34312c;
+  --paper: #ffffff;
+  --paper-2: #f7f7f8;
+  --paper-3: #f1f2f4;
+  --paper-4: #e8e9ee;
+  --raised: #ffffff;
+  --code-bg: #1f2430;
+  --code-head: #262c3a;
+  --code-rule: #343b4a;
 
   /* 文字 */
-  --ink: #141413;
-  --ink-2: #3d3d3a;
-  --ink-3: #66635c;
+  --ink: #1a1a1a;
+  --ink-2: #4b5563;
+  --ink-3: #6b7280;
 
   /* 描边 */
-  --rule: #e6dfd8;
-  --rule-soft: #ede8e1;
-  --rule-strong: #d3cabd;
+  --rule: #e5e7eb;
+  --rule-soft: #f1f2f4;
+  --rule-strong: #d1d5db;
 
   /* 强调色（主按钮、当前态、链接） */
-  --accent: #b3573a;
-  --accent-hover: #9c4a30;
-  --accent-ink: #9c4a30;
-  --accent-soft: #f6e6dd;
+  --accent: #6d28d9;
+  --accent-hover: #5b21b6;
+  --accent-ink: #6d28d9;
+  --accent-soft: #f3eefe;
   --on-accent: #ffffff;
-  --focus: #b3573a;
+  --focus: #6d28d9;
 
   /* 提示块 */
-  --tip: #436a46;
-  --tip-soft: #edf2e8;
-  --warn: #835a10;
-  --warn-soft: #f7efdc;
-  --danger: #b0413a;
-  --danger-soft: #f8e6e2;
-  --info-soft: #f1ede6;
+  --tip: #15803d;
+  --tip-soft: #ecfdf3;
+  --warn: #b45309;
+  --warn-soft: #fffbeb;
+  --danger: #b91c1c;
+  --danger-soft: #fef2f2;
+  --info-soft: #f3f4f6;
 
-  /* 模块辅助色：低饱和中间色 / 文字色 / 浅底 */
-  --mod-start: oklch(0.5 0.07 145);
-  --mod-ai: oklch(0.5 0.08 335);
-  --mod-git: oklch(0.5 0.08 5);
-  --mod-frontend: oklch(0.5 0.07 250);
-  --mod-controls: oklch(0.5 0.07 110);
-  --mod-cross: oklch(0.5 0.06 195);
-  --mod-backend: oklch(0.5 0.07 305);
-  --mod-quality: oklch(0.52 0.08 50);
-  --mod-growth: oklch(0.52 0.08 85);
+  /* 模块辅助色：统一使用强调色，避免多个色相把页面搅乱 */
+  --mod-start: var(--accent);
+  --mod-ai: var(--accent);
+  --mod-git: var(--accent);
+  --mod-frontend: var(--accent);
+  --mod-controls: var(--accent);
+  --mod-cross: var(--accent);
+  --mod-backend: var(--accent);
+  --mod-quality: var(--accent);
+  --mod-growth: var(--accent);
   --on-start: #fff;
   --on-ai: #fff;
   --on-git: #fff;
@@ -78,36 +78,36 @@
     'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif;
   --font-serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Songti SC', 'Noto Serif SC',
     'Noto Serif CJK SC', 'Source Han Serif SC', 'Source Han Serif CN', STSong, SimSun, serif;
-  --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
 }
 
 .dark {
-  --paper: #1b1a17;
-  --paper-2: #211f1c;
-  --paper-3: #2a2824;
-  --paper-4: #33302b;
-  --raised: #24221f;
-  --code-bg: #151412;
-  --code-head: #1c1b18;
-  --code-rule: #2f2c27;
+  --paper: #1b1b1f;
+  --paper-2: #232326;
+  --paper-3: #2b2b30;
+  --paper-4: #35353b;
+  --raised: #232326;
+  --code-bg: #1f2430;
+  --code-head: #262c3a;
+  --code-rule: #343b4a;
 
-  --ink: #f3efe7;
-  --ink-2: #d6d0c5;
-  --ink-3: #a7a196;
+  --ink: #f5f6f8;
+  --ink-2: #c4c7ce;
+  --ink-3: #9a9ea8;
 
-  --rule: #34312c;
-  --rule-soft: #2c2a26;
-  --rule-strong: #4a463f;
+  --rule: #33343a;
+  --rule-soft: #2a2b30;
+  --rule-strong: #474851;
 
-  --accent: #e08b6b;
-  --accent-hover: #eaa085;
-  --accent-ink: #eb9a7c;
-  --accent-soft: #3a2a22;
-  --on-accent: #1b1a17;
-  --focus: #eb9a7c;
+  --accent: #c4b5fd;
+  --accent-hover: #ddd6fe;
+  --accent-ink: #c4b5fd;
+  --accent-soft: #2e2a40;
+  --on-accent: #1b1b1f;
+  --focus: #c4b5fd;
 
-  --tip: #93b98f;
-  --tip-soft: #232b21;
+  --tip: #86efac;
+  --tip-soft: #1b3527;
   --warn: #d9b061;
   --warn-soft: #302818;
   --danger: #e38d84;
