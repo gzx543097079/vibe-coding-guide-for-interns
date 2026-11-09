@@ -20,6 +20,8 @@
   min-height: calc(100vh - var(--kb-header-h));
 }
 .kb-shell-nav {
+  /* 撑满网格行高，内部的 sticky 目录才有行程；否则父容器与目录等高，会跟着整页滚走 */
+  align-self: stretch;
   border-right: 1px solid var(--rule);
   background: var(--paper-2);
 }
