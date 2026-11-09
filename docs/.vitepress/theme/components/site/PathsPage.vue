@@ -35,8 +35,7 @@ onBeforeUnmount(() => window.removeEventListener('hashchange', fromHash))
     <header class="page-intro">
       <h1>阅读路线</h1>
       <div>
-        <p>一条路线把相关的几组文章放在了一起，不必一次读完整个目录。</p>
-        <span>可以随时退出，直接点开想看的那一篇。</span>
+        <p>一条路线把相关的几组文章放在了一起。</p>
       </div>
     </header>
     <div class="paths-layout">
@@ -57,9 +56,9 @@ onBeforeUnmount(() => window.removeEventListener('hashchange', fromHash))
         <div class="path-detail-head">
           <h2>{{ path.title }}</h2>
           <p>{{ path.description }}</p>
-          <p class="path-outcome-lead"><strong>读完你会：</strong>{{ path.outcome }}</p>
+          <p class="path-outcome-lead">{{ path.outcome }}</p>
           <a class="action-primary" :href="withBase(next.link)"
-            >从下一篇开始<SiteIcon name="arrow" :size="18"
+            >接着读<SiteIcon name="arrow" :size="18"
           /></a>
         </div>
         <ol class="path-course-list">

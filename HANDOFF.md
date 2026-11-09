@@ -10,7 +10,7 @@ Vibe Coding 开发指南网站。VitePress 1.6.4 + 自定义主题，部署到 G
 
 | 部分 | 状态 |
 |---|---|
-| 网站体验：首页、目录、方向页、阅读路线、组件页 | 已改为普通开发笔记；暖白纸面、浅色顶栏、连续目录与低饱和陶土色 |
+| 网站体验：首页、目录、方向页、阅读路线、组件页 | 2026-11-08 改为标准知识库：首页为方向索引，全站左侧目录 + 三栏阅读页 |
 | 阅读页：当前方向导航、页内定位、粘性工具栏、读完以后、本机阅读记录 | 已改为安静的阅读外壳；翻页不跨方向，保留全文搜索、深浅色与原章节地址 |
 | 全站结构：9 个模块，108 个章节，带「基础 / 进阶 / 精通」分级 | 完成，数据源 `docs/.vitepress/theme/data/modules.ts` |
 | 「起步」模块：5 章真实内容 + 富组件版式（样板） | 完成 |
@@ -106,3 +106,42 @@ npm run build && npx vitepress preview docs --port 4173   # 构建并预览
 - 修正组件页两个标签误用同一绑定、PR 入口误跳服务路线，以及浅色 raised 令牌自引用。
 - 首页问题入口改为连续文字行，阅读区收窄为两栏并删除重复面包屑；非控件章节不显示无关的顶部组件动作。
 - 本轮构建与差异检查已通过；最新修改后的浏览器验收因 Work 设置禁用本地浏览器控制而未完成，不能沿用上一版的视觉验收或 ship 结论，也未宣称 UI / UE 已达 95 分。
+
+## 本轮：知识库改版（2026-11-08）
+
+用户明确要求「改回知识库那种，但要清晰」。改动集中在结构层，视觉令牌与 108 篇正文未动：
+
+- `theme/Layout.vue`：阅读页改为三栏（左侧全站目录 / 中间正文 / 右侧本页目录），新增面包屑、`kb-doc-head`、右栏「这一篇」与读过按钮、方向内上一篇 / 下一篇。
+- 新增 `theme/components/site/KnowledgeNav.vue`：全站 9 方向、108 篇目录树，方向可折叠、当前篇高亮、已读勾选、目录容器自动滚到当前篇；480 行内无外部依赖。
+- 新增 `theme/components/site/KnowledgeHome.vue`：首页改为知识库索引（9 个方向 × 全部章节 × 编号 / 级别 / 篇数）。
+- 新增 `theme/styles/kb.css`：`kb-*` 独立命名空间，覆盖布局、目录树、右栏、首页索引与 860 / 560 断点。
+- `theme/components/site/SiteHeader.vue`：章节页顶栏当前态归到「目录」，并保留方向名 context。
+- `theme/index.ts`：`HomePage` 指向 `KnowledgeHome`，最后引入 `kb.css`。
+- `README.md` / `PRODUCT.md` / `DESIGN.md` 同步为知识库描述。
+
+验收：`npm run build` 通过；108 篇章节路由 HTTP 全部 200；17 项浏览器交互断言全过；控制台 0 错误 / 警告；1440 与 390 视口无横向溢出；深浅色均截图检查。该分支已提交并推送，等待 PR 审核；未经用户明确允许不合并。
+
+注意：`docs/frontend/controls.md` 是未登记章节的 doc 页面，新版 Layout 对 `here` 为空的情况做了降级（只渲染正文，不显示面包屑与上下篇），后续如新增未登记页面需留意。
+
+## 本轮：名词解释（2026-11-08）
+
+新增术语页与相关入口，不改 108 篇正文：
+
+- `theme/data/glossary.ts`：60 条术语，6 个分类（AI 与模型 / Agent 与工具 / 开发与协作 / 前端与跨端 / 后端与数据 / 质量与交付），每条含中文名、英文缩写、定义、可选备注与站内相关文章。
+- `theme/components/site/GlossaryPage.vue`：分类分组、实时搜索（中文 / 英文 / 缩写，名称命中优先）、分类筛选、`#term-id` 锚点深链与目标高亮、空状态恢复。
+- `docs/glossary.md`：`layout: page` 的词条页。
+- 入口：顶栏「名词」、左侧目录底部「名词解释」、首页底部文字链接、阅读页右栏「名词解释」。
+- `theme/index.ts` 注册 `GlossaryPage`；`styles/kb.css` 追加 `kb-glossary-*` 样式（含 860px 单列降级）。
+
+验收：`npm run build` 通过；词条页 15 项交互断言全过（条数、分类、筛选、搜索排序、无结果、锚点、控制台 0 错误、390 无横向溢出）；108 篇路由仍全部 200。当前仍在 `feat/knowledge-base-layout`，未提交、未推送。
+
+## 本轮：页面跳转过渡（2026-11-08）
+
+用户要求「加入优雅的动画效果，使页面跳转不要太突兀」。VitePress 1.6.4 客户端没有内置 View Transition，改用 router 钩子驱动 CSS：
+
+- 新增 `theme/composables/useRouteTransition.ts`：注册 `onBeforeRouteChange` / `onAfterRouteChange`，维护 `idle → leaving → entering → idle`；淡出停 110ms 再放行导航，新内容渲染后淡入 300ms。链式保留原钩子，组件卸载时恢复；`prefers-reduced-motion` 下完全跳过。
+- `theme/Layout.vue` 最外层加 `:data-phase`，内容区（`.kb-doc-layout` / `.kb-page` / `.kb-home-page`）按 phase 淡出淡入并轻微位移；**顶栏与左侧目录保持静止**，避免整页闪动。顶部 2px 细线在跳转时推进、完成后淡出。
+- `styles/kb.css` 另加：左栏展开淡入、主题切换时颜色 260ms 过渡、卡片与按钮 180ms 状态过渡。
+- 同页锚点点击不经过 `go()`，因此不会误触发过渡；浏览器前进 / 后退只有 `onAfterRouteChange`，走纯淡入。
+
+验收：15/15 过渡断言通过（状态序列、页面切换、顶栏与左栏静止、锚点不触发、后退淡入、reduced-motion 无过渡仍能跳转、控制台 0 错误）；知识库 17/17、名词解释 15/15 均未回归。

@@ -105,8 +105,8 @@ function reset() {
     <aside class="catalog-tip">
       <SiteIcon name="route" :size="25" />
       <div>
-        <h2>想按顺序读？</h2>
-        <p>几条路线把相关章节放在了一起。</p>
+        <h2>阅读路线</h2>
+        <p>几条路线把相关章节串在了一起。</p>
       </div>
       <a class="text-link" :href="withBase('/paths')"
         >看阅读路线 <SiteIcon name="arrow" :size="18"

@@ -5,7 +5,7 @@ import { registerRich } from './components/rich'
 import { registerAi } from './components/ai'
 
 import Layout from './Layout.vue'
-import DeskHome from './components/site/DeskHome.vue'
+import KnowledgeHome from './components/site/KnowledgeHome.vue'
 import CodeTabs from './components/CodeTabs.vue'
 import ControlDemo from './components/ControlDemo.vue'
 import ControlGallery from './components/ControlGallery.vue'
@@ -19,10 +19,12 @@ import './styles/rich.css'
 import './styles/ai-rich.css'
 import './styles/website.css'
 import './styles/desk.css'
+import './styles/kb.css'
 import LearnPage from './components/site/LearnPage.vue'
 import CoursePage from './components/site/CoursePage.vue'
 import PathsPage from './components/site/PathsPage.vue'
 import LabPage from './components/site/LabPage.vue'
+import GlossaryPage from './components/site/GlossaryPage.vue'
 
 export default {
   extends: DefaultTheme,
@@ -30,7 +32,7 @@ export default {
   enhanceApp({ app }) {
     registerRich(app)
     registerAi(app)
-    app.component('HomePage', DeskHome)
+    app.component('HomePage', KnowledgeHome)
     app.component('CodeTabs', CodeTabs)
     app.component('ControlDemo', ControlDemo)
     app.component('ControlGallery', ControlGallery)
@@ -41,5 +43,6 @@ export default {
     app.component('CoursePage', CoursePage)
     app.component('PathsPage', PathsPage)
     app.component('LabPage', LabPage)
+    app.component('GlossaryPage', GlossaryPage)
   },
 } satisfies Theme

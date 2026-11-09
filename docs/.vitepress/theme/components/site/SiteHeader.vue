@@ -12,7 +12,9 @@ const nav = [
   { name: '路线', link: '/paths', key: 'paths' },
   { name: '组件', link: '/lab', key: 'lab' },
   { name: '模板', link: '/growth/prompt-templates', key: 'briefs' },
+  { name: '名词', link: '/glossary', key: 'glossary' },
 ]
+const chapter = computed(() => findChapter(page.value.relativePath))
 const current = computed(() => {
   const path = page.value.relativePath
   if (path === 'index.md' || page.value.isNotFound) return 'home'
@@ -20,9 +22,10 @@ const current = computed(() => {
   if (path === 'paths.md') return 'paths'
   if (path === 'lab.md') return 'lab'
   if (path === 'growth/prompt-templates.md') return 'briefs'
-  return ''
+  if (path === 'glossary.md') return 'glossary'
+  // 章节页归到「目录」，保证顶栏当前态始终明确
+  return chapter.value ? 'learn' : ''
 })
-const chapter = computed(() => findChapter(page.value.relativePath))
 watch(
   () => route.path,
   () => {

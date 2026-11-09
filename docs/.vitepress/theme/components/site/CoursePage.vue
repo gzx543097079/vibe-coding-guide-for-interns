@@ -60,7 +60,7 @@ const groups = computed(() =>
       <div class="course-curriculum">
         <div class="section-heading">
           <h2>文章</h2>
-          <span>{{ groups.length }} 个分组 · 按需要挑着看</span>
+          <span>{{ groups.length }} 个分组</span>
         </div>
         <section v-for="g in groups" :key="g.level" class="curriculum-group">
           <h3>
@@ -89,7 +89,6 @@ const groups = computed(() =>
       </div>
       <aside class="course-side-info">
         <h2>读过的标记</h2>
-        <p>看到有用的地方可以留个记号，下次回来接着翻。</p>
         <div class="course-progress-label">
           <span>本机记录</span
           ><strong>{{ completed }} / {{ course.chapters.length }}</strong>
@@ -98,7 +97,7 @@ const groups = computed(() =>
           :value="completed"
           :max="course.chapters.length"
           aria-label="本方向的阅读进度"
-        /><small>在文章页标记，记录只保存在当前浏览器。</small
+        /><small>只记在这台电脑。</small
         ><a :href="withBase('/lab')"
           ><SiteIcon name="lab" :size="20" /><span>看组件例子</span
           ><SiteIcon name="arrow" :size="17" /></a

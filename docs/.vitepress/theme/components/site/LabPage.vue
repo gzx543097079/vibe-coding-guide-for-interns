@@ -79,7 +79,7 @@ function play() {
     <header class="lab-page-heading">
       <div>
         <h1>组件演示</h1>
-        <p>点开左边任意一个组件，看看交互状态，也可以对照实现代码。</p>
+        <p>17 个组件的交互状态、实现代码与提示词。</p>
       </div>
       <a class="text-link" :href="withBase('/courses/controls')"
         >读相关笔记<SiteIcon name="arrow" :size="18"
