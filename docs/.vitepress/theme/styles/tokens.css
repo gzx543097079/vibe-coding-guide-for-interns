@@ -2,52 +2,52 @@
 
 :root {
   /* 画布与表面 */
-  --paper: #faf9f5;
-  --paper-2: #f5f0e8;
-  --paper-3: #efe9de;
-  --paper-4: #e8e0d2;
-  --raised: #fffefb;
-  --code-bg: #1f1e1b;
-  --code-head: #262420;
-  --code-rule: #34312c;
+  --paper: #fbfbf9;
+  --paper-2: #f5f4f1;
+  --paper-3: #ecebe7;
+  --paper-4: #e2e1dd;
+  --raised: #ffffff;
+  --code-bg: #1c1d1f;
+  --code-head: #26282a;
+  --code-rule: #3a3d40;
 
   /* 文字 */
-  --ink: #141413;
-  --ink-2: #3d3d3a;
-  --ink-3: #66635c;
+  --ink: #1b1a18;
+  --ink-2: #4d4c48;
+  --ink-3: #6f6e69;
 
   /* 描边 */
-  --rule: #e6dfd8;
-  --rule-soft: #ede8e1;
-  --rule-strong: #d3cabd;
+  --rule: #e4e3de;
+  --rule-soft: #eeede9;
+  --rule-strong: #d0cec7;
 
   /* 强调色（主按钮、当前态、链接） */
-  --accent: #b3573a;
-  --accent-hover: #9c4a30;
-  --accent-ink: #9c4a30;
-  --accent-soft: #f6e6dd;
+  --accent: #b0523a;
+  --accent-hover: #96452f;
+  --accent-ink: #9a4a33;
+  --accent-soft: #f7eae3;
   --on-accent: #ffffff;
-  --focus: #b3573a;
+  --focus: #9a4a33;
 
   /* 提示块 */
-  --tip: #436a46;
-  --tip-soft: #edf2e8;
-  --warn: #835a10;
-  --warn-soft: #f7efdc;
-  --danger: #b0413a;
-  --danger-soft: #f8e6e2;
-  --info-soft: #f1ede6;
+  --tip: #3f6b4c;
+  --tip-soft: #edf2ed;
+  --warn: #7d5a12;
+  --warn-soft: #f8f0da;
+  --danger: #a63e37;
+  --danger-soft: #f9e7e4;
+  --info-soft: #f0efeb;
 
-  /* 模块辅助色：低饱和中间色 / 文字色 / 浅底 */
-  --mod-start: oklch(0.5 0.07 145);
-  --mod-ai: oklch(0.5 0.08 335);
-  --mod-git: oklch(0.5 0.08 5);
-  --mod-frontend: oklch(0.5 0.07 250);
-  --mod-controls: oklch(0.5 0.07 110);
-  --mod-cross: oklch(0.5 0.06 195);
-  --mod-backend: oklch(0.5 0.07 305);
-  --mod-quality: oklch(0.52 0.08 50);
-  --mod-growth: oklch(0.52 0.08 85);
+  /* 模块辅助色：统一使用强调色，避免多个色相把页面搅乱 */
+  --mod-start: var(--accent);
+  --mod-ai: var(--accent);
+  --mod-git: var(--accent);
+  --mod-frontend: var(--accent);
+  --mod-controls: var(--accent);
+  --mod-cross: var(--accent);
+  --mod-backend: var(--accent);
+  --mod-quality: var(--accent);
+  --mod-growth: var(--accent);
   --on-start: #fff;
   --on-ai: #fff;
   --on-git: #fff;
