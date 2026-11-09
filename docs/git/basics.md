@@ -3,8 +3,6 @@ title: Git 基础
 description: init、add、commit、branch、merge、rebase 与冲突处理。
 ---
 
-<RPath />
-
 Git 把一次提交保存成一个可定位的项目快照，分支则指向提交。日常开发先分清**工作区、暂存区和提交历史**：编辑文件改的是工作区，`git add` 选择下一次提交的内容，`git commit` 把暂存内容保存到当前分支。
 
 ## 在练习仓库走一遍

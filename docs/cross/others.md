@@ -3,8 +3,6 @@ title: 其他跨端方案
 description: Kotlin Multiplatform、Electron / Tauri、Capacitor 简述。
 ---
 
-<RPath />
-
 跨端方案不只有移动 UI 框架。选择前先明确**要共享界面、业务逻辑，还是把已有 Web 应用带到桌面或手机**，这些目标对应不同的工程路线。
 
 ## 按复用层比较

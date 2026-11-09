@@ -35,7 +35,7 @@ npm run build && npx vitepress preview docs --port 4173   # 构建并预览
 
 - `docs/<模块>/<章节>.md`：章节正文，frontmatter 里 `status: draft` 表示占位。
 - `docs/.vitepress/theme/data/modules.ts`：模块与章节唯一数据源，目录、命令面板、首页和当前方向内的翻页都从它生成。
-- `docs/.vitepress/theme/components/rich/`：富组件（RPath、RPoints、RCompare、RSteps、RTerm、REditorAgent、RFolderTree、RTbd），样式在 `styles/rich.css`，用法参考 `docs/start/*.md`。
+- `docs/.vitepress/theme/components/rich/`：富组件（RPoints、RCompare、RSteps、RTerm、REditorAgent、RFolderTree、RTbd），样式在 `styles/rich.css`，用法参考 `docs/start/*.md`。
 - `docs/.vitepress/theme/components/demos/` 与 `data/controlPrompts.ts`：控件演示和提示词，验证状态记录在后者。
 - `docs/snippets/`：控件的多语言代码片段。
 - `docs/.vitepress/theme/styles/website.css` 与 `styles/desk.css`：开发笔记的设计令牌和页面样式。动效以状态反馈为主，必须尊重 `prefers-reduced-motion`。

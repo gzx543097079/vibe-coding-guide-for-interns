@@ -3,8 +3,6 @@ title: 前端性能
 description: 加载、渲染、Lighthouse 与 DevTools Performance。
 ---
 
-<RPath />
-
 前端性能需要同时看加载与交互。先确认用户等待的是资源下载、脚本执行、布局绘制还是接口，再针对那一段改动。
 
 ## 分开测首屏和操作
