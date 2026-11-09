@@ -105,7 +105,7 @@ watch(() => page.value.relativePath, () => {
             <span class="kb-nav-no">{{ String(item.module.no).padStart(2, '0') }}</span>
             <span class="kb-nav-module-name">{{ item.module.name }}</span>
             <span class="kb-nav-count">{{ item.module.chapters.length }}</span>
-            <SiteIcon :name="open.has(item.module.id) ? 'down' : 'chevron'" :size="14" />
+            <SiteIcon name="chevron" :size="14" />
           </button>
 
           <div v-show="open.has(item.module.id)" :id="'kb-group-' + item.module.id" class="kb-nav-chapters">

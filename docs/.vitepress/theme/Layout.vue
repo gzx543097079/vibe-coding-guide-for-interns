@@ -203,12 +203,7 @@ onBeforeUnmount(() => observer?.disconnect())
               </div>
               <div class="kb-aside-block">
                 <h2>本篇</h2>
-                <dl class="kb-aside-meta">
-                  <div><dt>编号</dt><dd>{{ chapterCode(here) }}</dd></div>
-                  <div><dt>方向</dt><dd>{{ here.module.name }}</dd></div>
-                  <div><dt>级别</dt><dd>{{ here.chapter.level }}</dd></div>
-                  <div><dt>顺序</dt><dd>{{ here.index + 1 }} / {{ here.module.chapters.length }}</dd></div>
-                </dl>
+                <p class="kb-aside-line">{{ chapterCode(here) }} · {{ here.module.name }} · {{ here.chapter.level }} · {{ here.index + 1 }}/{{ here.module.chapters.length }}</p>
                 <button
                   class="kb-mark-btn"
                   type="button"

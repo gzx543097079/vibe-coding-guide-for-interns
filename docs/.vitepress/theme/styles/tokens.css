@@ -2,41 +2,41 @@
 
 :root {
   /* 画布与表面 */
-  --paper: #fbfbf9;
-  --paper-2: #f5f4f1;
-  --paper-3: #ecebe7;
-  --paper-4: #e2e1dd;
+  --paper: #ffffff;
+  --paper-2: #f7f7f8;
+  --paper-3: #f1f2f4;
+  --paper-4: #e8e9ee;
   --raised: #ffffff;
-  --code-bg: #1c1d1f;
-  --code-head: #26282a;
-  --code-rule: #3a3d40;
+  --code-bg: #1f2430;
+  --code-head: #262c3a;
+  --code-rule: #343b4a;
 
   /* 文字 */
-  --ink: #1b1a18;
-  --ink-2: #4d4c48;
-  --ink-3: #6f6e69;
+  --ink: #1a1a1a;
+  --ink-2: #4b5563;
+  --ink-3: #6b7280;
 
   /* 描边 */
-  --rule: #e4e3de;
-  --rule-soft: #eeede9;
-  --rule-strong: #d0cec7;
+  --rule: #e5e7eb;
+  --rule-soft: #f1f2f4;
+  --rule-strong: #d1d5db;
 
   /* 强调色（主按钮、当前态、链接） */
-  --accent: #b0523a;
-  --accent-hover: #96452f;
-  --accent-ink: #9a4a33;
-  --accent-soft: #f7eae3;
+  --accent: #6d28d9;
+  --accent-hover: #5b21b6;
+  --accent-ink: #6d28d9;
+  --accent-soft: #f3eefe;
   --on-accent: #ffffff;
-  --focus: #9a4a33;
+  --focus: #6d28d9;
 
   /* 提示块 */
-  --tip: #3f6b4c;
-  --tip-soft: #edf2ed;
-  --warn: #7d5a12;
-  --warn-soft: #f8f0da;
-  --danger: #a63e37;
-  --danger-soft: #f9e7e4;
-  --info-soft: #f0efeb;
+  --tip: #15803d;
+  --tip-soft: #ecfdf3;
+  --warn: #b45309;
+  --warn-soft: #fffbeb;
+  --danger: #b91c1c;
+  --danger-soft: #fef2f2;
+  --info-soft: #f3f4f6;
 
   /* 模块辅助色：统一使用强调色，避免多个色相把页面搅乱 */
   --mod-start: var(--accent);
@@ -82,32 +82,32 @@
 }
 
 .dark {
-  --paper: #1b1a17;
-  --paper-2: #211f1c;
-  --paper-3: #2a2824;
-  --paper-4: #33302b;
-  --raised: #24221f;
-  --code-bg: #151412;
-  --code-head: #1c1b18;
-  --code-rule: #2f2c27;
+  --paper: #1b1b1f;
+  --paper-2: #232326;
+  --paper-3: #2b2b30;
+  --paper-4: #35353b;
+  --raised: #232326;
+  --code-bg: #1f2430;
+  --code-head: #262c3a;
+  --code-rule: #343b4a;
 
-  --ink: #f3efe7;
-  --ink-2: #d6d0c5;
-  --ink-3: #a7a196;
+  --ink: #f5f6f8;
+  --ink-2: #c4c7ce;
+  --ink-3: #9a9ea8;
 
-  --rule: #34312c;
-  --rule-soft: #2c2a26;
-  --rule-strong: #4a463f;
+  --rule: #33343a;
+  --rule-soft: #2a2b30;
+  --rule-strong: #474851;
 
-  --accent: #e08b6b;
-  --accent-hover: #eaa085;
-  --accent-ink: #eb9a7c;
-  --accent-soft: #3a2a22;
-  --on-accent: #1b1a17;
-  --focus: #eb9a7c;
+  --accent: #c4b5fd;
+  --accent-hover: #ddd6fe;
+  --accent-ink: #c4b5fd;
+  --accent-soft: #2e2a40;
+  --on-accent: #1b1b1f;
+  --focus: #c4b5fd;
 
-  --tip: #93b98f;
-  --tip-soft: #232b21;
+  --tip: #86efac;
+  --tip-soft: #1b3527;
   --warn: #d9b061;
   --warn-soft: #302818;
   --danger: #e38d84;

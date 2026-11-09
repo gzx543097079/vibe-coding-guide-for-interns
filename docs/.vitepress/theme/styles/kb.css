@@ -471,3 +471,83 @@
   }
   .kb-route-line { display: none; }
 }
+
+/* ============================================================
+   Starlight 风格覆盖（2026-11-09）
+   ============================================================ */
+.site-brand .brand-symbol{
+  width:26px;height:26px;border-radius:6px;background:var(--accent);color:#fff;
+  display:grid;place-items:center;
+}
+.site-nav a.active{color:var(--accent)}
+
+/* 外壳与左栏 */
+.kb-shell-nav{background:var(--paper)}
+.kb-nav{background:var(--paper)}
+.kb-nav-title strong{font-size:14px}
+.kb-nav-item.is-current{
+  background:var(--accent-soft);color:var(--accent);font-weight:650;
+}
+.kb-nav-item.is-current::before{display:none}
+.kb-nav-item.is-current .kb-nav-code{color:var(--accent)}
+.kb-nav-module.is-active .kb-nav-no{
+  color:var(--accent);border-color:transparent;background:var(--accent-soft);
+}
+.kb-nav-foot a.is-current{background:var(--accent-soft);color:var(--accent)}
+
+/* 首页：Hero + 卡片 */
+.kb-home{padding:0 0 44px}
+.kb-hero{text-align:center;padding:66px 24px 26px}
+.kb-eyebrow{
+  font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--accent);
+  margin:0 0 16px;
+}
+.kb-hero h1{
+  font:700 46px/1.15 var(--font-sans);letter-spacing:-.03em;color:var(--ink);
+  margin:0 0 16px;
+}
+.kb-hero-lead{
+  font-size:17px;line-height:1.8;color:var(--ink-3);max-width:640px;
+  margin:0 auto 26px;
+}
+.kb-hero-actions{display:flex;justify-content:center;gap:12px}
+.kb-cards{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;
+  max-width:1160px;margin:0 auto;padding:12px 40px 0;
+}
+.kb-card{
+  display:block;border:1px solid var(--rule);border-radius:10px;background:var(--paper);
+  padding:18px 18px 16px;text-decoration:none;color:inherit;
+  transition:border-color .18s var(--ease),background .18s var(--ease);
+}
+.kb-card:hover{border-color:var(--rule-strong);background:var(--paper-2)}
+.kb-card-ic{
+  width:32px;height:32px;border-radius:8px;background:var(--accent-soft);color:var(--accent);
+  display:grid;place-items:center;font:700 12px var(--mono);margin-bottom:12px;
+}
+.kb-card h3{
+  display:flex;align-items:baseline;gap:8px;font-size:15.5px;font-weight:650;
+  letter-spacing:-.01em;color:var(--ink);margin:0 0 6px;
+}
+.kb-card-count{margin-left:auto;font:400 10px var(--mono);color:var(--ink-3)}
+.kb-card p{font-size:12.5px;line-height:1.65;color:var(--ink-3);margin:0}
+.kb-home-links{justify-content:center;margin-top:30px}
+
+/* 文章页排版 */
+.kb-doc-head h1{
+  font:700 40px/1.2 var(--font-sans);letter-spacing:-.025em;color:var(--ink);
+}
+.kb-doc-deck{font-size:17px;line-height:1.8;color:var(--ink-3)}
+.kb-crumb b{color:var(--accent)}
+.kb-body.vp-doc{font-size:16px;line-height:1.85}
+.kb-body.vp-doc h2{font-size:25px;letter-spacing:-.02em}
+.kb-body.vp-doc div[class*="language-"]{
+  background:var(--code-bg);border-radius:10px;
+}
+.kb-body.vp-doc div[class*="language-"] pre{background:transparent}
+.kb-aside-block nav a.is-active{color:var(--accent);box-shadow:inset 2px 0 0 var(--accent)}
+.kb-related a:hover,.kb-home-links a:hover{color:var(--accent);border-color:var(--accent)}
+
+.kb-aside-line{font-size:12px;line-height:1.7;color:var(--ink-3);margin:0 0 14px}
+.kb-glossary-head h1{font-family:var(--font-sans);font-size:38px;font-weight:700;letter-spacing:-.02em}
+.kb-glossary-group-head h2{font-family:var(--font-sans);font-size:20px;font-weight:700}
