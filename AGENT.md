@@ -9,7 +9,10 @@ VibeCoding 开发指南：介绍如何借助 AI 编码助手进行高效开发�
 ## 目录结构
 
 - `AGENT.md`：本文件，agent 工作约定
-- 其余文档随项目推进补充于此
+- `docs/`：VitePress 站点源文件，各模块章节按目录存放（`start/`、`ai/`、`git/`、`frontend/`、`controls/`、`cross/`、`backend/`、`quality/`、`growth/`）；`docs/snippets/` 是控件页引用的代码片段
+- `docs/.vitepress/`：站点配置与主题；`theme/data/modules.ts` 是模块与章节的唯一数据源
+- `.github/workflows/deploy.yml`：push 到 `main` 后构建并部署到 GitHub Pages
+- 常用命令：`npm run dev`（本地预览）、`npm run build`（构建）、`npm run preview`（预览构建产物）
 
 ## 工作约定
 

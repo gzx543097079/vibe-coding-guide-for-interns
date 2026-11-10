@@ -52,7 +52,7 @@ export const terms: Term[] = [
     id: 'token',
     term: 'Token',
     category: 'AI 与模型',
-    def: '模型读写文本的最小单位。上下文长度和调用费用都按 token 计算；中文一个字通常对应一到两个 token，具体看模型的分词方式。',
+    def: '模型读写文本的最小单位。上下文长度和调用费用都按 token 计算；中文一个字可能是一个 token，也可能更多，具体看模型的分词方式。',
     links: [{ label: 'token 与上下文', href: '/ai/tokens' }],
   },
   {
@@ -365,7 +365,7 @@ export const terms: Term[] = [
     term: '缓动',
     en: 'Easing',
     category: '界面与体验',
-    def: '动画速度随时间的曲线。常用的「快出慢入」让动作看起来自然，匀速反而显得机械。',
+    def: '动画速度随时间的曲线。常用的「先快后慢」让动作看起来自然，匀速反而显得机械。',
     links: [{ label: '控件总览', href: '/controls/overview' }],
   },
   {
@@ -421,7 +421,7 @@ export const terms: Term[] = [
     term: '触控目标',
     en: 'Touch Target',
     category: '界面与体验',
-    def: '手指可以点到的区域大小。移动端一般不小于 44×44，太小会点不中或误触。',
+    def: '手指可以点到的区域大小。移动端一般不小于 44×44 pt（Android 建议 48×48 dp），太小会点不中或误触。',
     links: [{ label: '无障碍与国际化', href: '/frontend/a11y-i18n' }],
   },
   {

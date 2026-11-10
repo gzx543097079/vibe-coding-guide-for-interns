@@ -31,4 +31,4 @@ description: 慢查询、缓存、N+1、并发与连接池、压测入门。
 
 让 Codex 根据 trace 和查询记录提出修改，要求说明适用负载、正确性风险与回退方式。没有真实压测时，只能报告已完成代码检查或局部实验，不把模拟结果写成生产容量承诺。
 
-继续查阅：[OpenTelemetry 信号](https://opentelemetry.io/docs/concepts/signals/)、[数据库优化](/quality/perf-database)、[高可用与扩展](/backend/scale)。
+继续查阅：[OpenTelemetry 信号](https://opentelemetry.io/docs/concepts/signals/)、[数据库性能](/quality/perf-database)、[高可用与容量规划](/backend/scale)。

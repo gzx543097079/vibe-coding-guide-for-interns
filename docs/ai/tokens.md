@@ -11,7 +11,7 @@ description: token 怎么计数，上下文窗口装下什么、装不下会怎�
 
 <RPoints cols="3">
 <RPoint icon="tag" title="常见词">英文里常见的短词往往是一个 token，长词或生僻词会被拆成几段。</RPoint>
-<RPoint icon="chat" title="中文">一个汉字可能是一个 token，也可能更多，取决于分词器 <RTbd tip="不同分词器差别较大，不给统一换算比例" />。</RPoint>
+<RPoint icon="chat" title="中文">一个汉字可能是一个 token，也可能更多；常见词组也可能合并成一个 token，取决于分词器 <RTbd tip="不同分词器差别较大，不给统一换算比例" />。</RPoint>
 <RPoint icon="code" title="代码">缩进、括号、长变量名都要算 token。一个几百行的文件，很容易就是几千个 token。</RPoint>
 </RPoints>
 
