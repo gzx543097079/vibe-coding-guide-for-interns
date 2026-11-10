@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { withBase } from 'vitepress'
-import { demos, type Frame } from '../demos/registry'
+import { appEffects, demos, type Frame } from '../demos/registry'
 import {
   buildControlPrompt,
   getControl,
@@ -14,7 +14,7 @@ import SiteIcon from './SiteIcon.vue'
 const active = ref('button')
 const query = ref('')
 // 默认用 iPhone 外框；网页外框留作对照
-const frame = ref<Frame>('phone')
+const picked = ref<Frame>('phone')
 const replay = ref(0)
 const playing = ref(false)
 const stack = ref('HTML + CSS + JS')
@@ -22,6 +22,10 @@ const options = reactive({ ...defaultOptions })
 const copied = ref<'idle' | 'done' | 'fail'>('idle')
 const panel = ref('guide')
 const info = computed(() => demos[active.value])
+// 手势类效果只有手机外框
+const frame = computed<Frame>(() => (info.value.phoneOnly ? 'phone' : picked.value))
+const total = Object.keys(demos).length
+const hasChapter = computed(() => !appEffects.some((e) => e.id === active.value))
 const spec = computed(() => getControl(active.value))
 const prompt = computed(() =>
   // iPhone 外框用 iOS 系统色，提示词的色值表和画布跟着外框走
@@ -45,6 +49,8 @@ const groups = computed(() => {
     if (!g) result.push((g = { name, items: [] }))
     g.items.push({ id, title: c.short })
   }
+  const extra = appEffects.filter((e) => e.title.includes(query.value.trim()))
+  if (extra.length) result.push({ name: 'App 里的效果', items: extra })
   return result
 })
 function select(id: string) {
@@ -82,7 +88,7 @@ function play() {
     <header class="lab-page-heading">
       <div>
         <h1>组件演示</h1>
-        <p>17 个组件的交互状态、实现代码与提示词。</p>
+        <p>{{ total }} 个组件和效果，可以直接操作，附验证过的提示词。</p>
       </div>
       <a class="text-link" :href="withBase('/courses/controls')"
         >读相关笔记<SiteIcon name="arrow" :size="18"
@@ -113,7 +119,7 @@ function play() {
             没有匹配组件。<button @click="query = ''">清空搜索</button>
           </p>
         </nav>
-        <p class="library-note">17 个组件 · 默认 iPhone 外框，也可以切到网页</p>
+        <p class="library-note">{{ total }} 个演示 · 默认 iPhone 外框，组件可以切到网页</p>
       </aside>
       <div class="lab-main">
         <div class="lab-demo-bar">
@@ -122,15 +128,15 @@ function play() {
             <span>{{ spec?.verify.status }}</span>
           </div>
           <div class="lab-demo-actions">
-            <div class="segmented-control" role="group" aria-label="演示外框">
+            <div v-if="!info.phoneOnly" class="segmented-control" role="group" aria-label="演示外框">
               <button
                 :aria-pressed="frame === 'phone'"
-                @click="frame = 'phone'"
+                @click="picked = 'phone'"
               >
                 iPhone</button
               ><button
                 :aria-pressed="frame === 'browser'"
-                @click="frame = 'browser'"
+                @click="picked = 'browser'"
               >
                 网页
               </button>
@@ -175,7 +181,7 @@ function play() {
               检查行为</button
             ><button :aria-pressed="panel === 'prompt'" @click="panel = 'prompt'">
               复制提示词</button
-            ><a :href="withBase('/controls/' + active)"
+            ><a v-if="hasChapter" :href="withBase('/controls/' + active)"
               >查看实现代码<SiteIcon name="arrow" :size="15"
             /></a>
           </div>
@@ -246,7 +252,8 @@ function play() {
               <li v-for="item in spec?.acceptance" :key="item">{{ item }}</li>
             </ul>
             <p>{{ spec?.verify.note }}</p>
-            <p>验证状态针对站内配色的网页演示。iPhone 外框只换了色值表，没有单独验证；原生片段尚未完成编译与真机验证。</p>
+            <p v-if="spec?.verify.palette === 'ios'">验证用的是 iPhone 外框和 iOS 配色的网页写法，比对的是各状态下元素的位置、尺寸、颜色和透明度；原生片段尚未完成编译与真机验证。</p>
+            <p v-else>验证状态针对站内配色的网页演示。iPhone 外框只换了色值表，没有单独验证；原生片段尚未完成编译与真机验证。</p>
           </div>
         </div>
       </div>
