@@ -78,20 +78,51 @@ export const stackOf: Record<string, string> = {
 }
 const webStacks = new Set(['HTML + CSS + JS', 'React', 'Vue'])
 
+/** 色值表：site 是站内网页演示的配色，ios 是 iPhone 外框用的 iOS 系统色 */
+export type Palette = 'site' | 'ios'
+type Pair = [light: string, dark: string]
+const palettes: Record<Palette, Record<string, Pair>> = {
+  site: {
+    bg: ['#fffefb', '#24221f'],
+    ink: ['#141413', '#f3efe7'],
+    ink2: ['#66635c', '#a7a196'],
+    line: ['#e6dfd8', '#34312c'],
+    soft: ['#f5f0e8', '#2a2824'],
+    accent: ['#b3573a', '#e08b6b'],
+    onAccent: ['#ffffff', '#1b1a17'],
+    danger: ['#b0413a', '#e38d84'],
+    success: ['oklch(0.52 0.13 150)', 'oklch(0.74 0.14 150)'],
+    focus: ['2px 实线 #b3573a，向外偏移 2px', '#eb9a7c'],
+  },
+  ios: {
+    bg: ['#ffffff', '#000000'],
+    ink: ['#000000', '#ffffff'],
+    ink2: ['#6e6e73', '#98989f'],
+    line: ['#c6c6c8', '#38383a'],
+    soft: ['#f2f2f7', '#1c1c1e'],
+    accent: ['#007aff', '#0a84ff'],
+    onAccent: ['#ffffff', '#ffffff'],
+    danger: ['#ff3b30', '#ff453a'],
+    success: ['#34c759', '#30d158'],
+    focus: ['2px 实线 #007aff，向外偏移 2px', '#0a84ff'],
+  },
+}
+
 /** 颜色、动效与字体令牌（浅色值在前，括号里是深色值） */
-const tokenLines = (dark: boolean): string[] => {
-  const t = (name: string, light: string, darkV: string) => `- ${name}：${light}${dark ? `（深色 ${darkV}）` : ''}`
+const tokenLines = (dark: boolean, palette: Palette): string[] => {
+  const c = palettes[palette]
+  const t = (name: string, [light, darkV]: Pair) => `- ${name}：${light}${dark ? `（深色 ${darkV}）` : ''}`
   return [
-    t('背景 bg', '#fffefb', '#24221f'),
-    t('文字 ink', '#141413', '#f3efe7'),
-    t('次要文字 ink-2', '#66635c', '#a7a196'),
-    t('分隔线 line', '#e6dfd8', '#34312c'),
-    t('浅底 soft', '#f5f0e8', '#2a2824'),
-    t('强调色 accent', '#b3573a', '#e08b6b'),
-    t('强调色上的文字 on-accent', '#ffffff', '#1b1a17'),
-    t('危险色 danger', '#b0413a', '#e38d84'),
-    t('成功色 success', 'oklch(0.52 0.13 150)', 'oklch(0.74 0.14 150)'),
-    t('焦点环', '2px 实线 #b3573a，向外偏移 2px', '#eb9a7c'),
+    t('背景 bg', c.bg),
+    t('文字 ink', c.ink),
+    t('次要文字 ink-2', c.ink2),
+    t('分隔线 line', c.line),
+    t('浅底 soft', c.soft),
+    t('强调色 accent', c.accent),
+    t('强调色上的文字 on-accent', c.onAccent),
+    t('危险色 danger', c.danger),
+    t('成功色 success', c.success),
+    t('焦点环', c.focus),
     '- 缓动 ease：cubic-bezier(0.2, 0.8, 0.2, 1)；退出用 ease-in：cubic-bezier(0.4, 0, 1, 1)',
     '- 字体：系统无衬线字体（-apple-system, "PingFang SC", "Microsoft YaHei", sans-serif），基础字号 14px，默认行高 1.5',
     '- 文中「color-mix(A x%, B)」指 CSS color-mix(in oklab, A x%, B)，其他平台按同样比例混色',
@@ -713,8 +744,14 @@ export function getControl(id: string): ControlSpec | undefined {
   return controls.find((c) => c.id === id)
 }
 
-/** 组装完整提示词 */
-export function buildControlPrompt(id: string, stackLabel: string | undefined, o: PromptOptions): string {
+/** 组装完整提示词。view 不传时用站内配色和控件自己的验证画布 */
+export function buildControlPrompt(
+  id: string,
+  stackLabel: string | undefined,
+  o: PromptOptions,
+  view: { palette?: Palette; canvas?: 'phone' | 'browser' } = {},
+): string {
+  const palette = view.palette ?? 'site'
   const c = getControl(id)
   if (!c) return ''
   const stack = (stackLabel && stackOf[stackLabel]) || '{技术栈，例如：iOS，SwiftUI}'
@@ -742,8 +779,8 @@ export function buildControlPrompt(id: string, stackLabel: string | undefined, o
       ...(native ? ['- 原生平台把 px 按 1:1 换成 pt / dp / vp；颜色、时长、缓动保持不变'] : []),
       '',
     )
-    lines.push('【颜色与动效令牌】', ...tokenLines(o.dark), '')
-    lines.push('【画布与场景】', ...canvasLines[c.canvas], ...list(c.scene), '')
+    lines.push('【颜色与动效令牌】', ...tokenLines(o.dark, palette), '')
+    lines.push('【画布与场景】', ...canvasLines[view.canvas ?? c.canvas], ...list(c.scene), '')
     section('尺寸与样式', c.visual)
     section('状态', c.states)
   }
@@ -779,5 +816,7 @@ export function buildControlPrompt(id: string, stackLabel: string | undefined, o
   }
   lines.push('- 先用三到五句话说明实现方案和涉及的文件', '- 再给出完整代码或 diff', '- 最后说明怎么运行和验证')
   if (c.draft) lines.push('', '（这是草稿模板，请先补全 {补充：…} 部分）')
-  return lines.join('\n')
+  const text = lines.join('\n')
+  // 正文里唯一写死的强调色：主按钮的投影，跟着色值表换
+  return palette === 'ios' ? text.replaceAll('rgb(179 87 58 / 0.3)', 'rgb(0 122 255 / 0.3)') : text
 }

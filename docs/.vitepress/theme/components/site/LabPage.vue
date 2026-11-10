@@ -24,7 +24,11 @@ const panel = ref('guide')
 const info = computed(() => demos[active.value])
 const spec = computed(() => getControl(active.value))
 const prompt = computed(() =>
-  buildControlPrompt(active.value, stack.value, options),
+  // iPhone 外框用 iOS 系统色，提示词的色值表和画布跟着外框走
+  buildControlPrompt(active.value, stack.value, options, {
+    palette: frame.value === 'phone' ? 'ios' : 'site',
+    canvas: frame.value,
+  }),
 )
 const groups = computed(() => {
   const result: { name: string; items: { id: string; title: string }[] }[] = []
@@ -62,7 +66,7 @@ onMounted(() => {
 })
 onBeforeUnmount(() => window.removeEventListener('hashchange', fromHash))
 watch(
-  [active, stack, () => JSON.stringify(options)],
+  [active, stack, frame, () => JSON.stringify(options)],
   () => (copied.value = 'idle'),
 )
 async function copy() {
@@ -179,7 +183,7 @@ function play() {
             <div>
               <h3>生成一段提示词</h3>
               <p>
-                选好技术栈和选项，复制后把占位符换成自己的内容。提示词沿用参考演示的固定画布规格。
+                选好技术栈和选项，复制后把占位符换成自己的内容。提示词里的画布和色值跟上面选的外框一致。
               </p>
               <div class="lab-prompt-settings">
                 <label
@@ -242,7 +246,7 @@ function play() {
               <li v-for="item in spec?.acceptance" :key="item">{{ item }}</li>
             </ul>
             <p>{{ spec?.verify.note }}</p>
-            <p>验证状态针对网页演示；原生片段尚未完成编译与真机验证。</p>
+            <p>验证状态针对站内配色的网页演示。iPhone 外框只换了色值表，没有单独验证；原生片段尚未完成编译与真机验证。</p>
           </div>
         </div>
       </div>

@@ -98,10 +98,10 @@ useScript(toRef(props, 'play'), [[500, () => primary()]])
   font-size: 14px;
 }
 .dp.done {
-  --fill: oklch(0.52 0.13 150);
+  --fill: var(--app-success, oklch(0.52 0.13 150));
 }
 :root.dark .dp.done {
-  --fill: oklch(0.74 0.14 150);
+  --fill: var(--app-success, oklch(0.74 0.14 150));
 }
 .dp-bar {
   padding: 12px 18px 10px;
