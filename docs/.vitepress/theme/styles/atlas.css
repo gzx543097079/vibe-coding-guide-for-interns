@@ -123,8 +123,8 @@
 /* ---------- 章节格 ---------- */
 .at-cells { display: grid; gap: 3px; }
 .at-cell {
-  position: relative; display: flex; align-items: center; gap: 5px;
-  height: 30px; padding: 0 6px; font-size: 12px; line-height: 1; white-space: nowrap; overflow: hidden;
+  position: relative; display: flex; align-items: center; gap: 4px;
+  height: 30px; padding: 0 5px; font-size: 12px; line-height: 1; white-space: nowrap; overflow: hidden;
   border: 1.5px solid transparent; background: var(--at-tint); color: var(--ink);
   transition: opacity var(--dur-1) var(--ease), transform var(--dur-1) var(--ease);
 }
@@ -139,12 +139,13 @@
 
 /* ---------- 首页 ---------- */
 .at-home {
-  display: grid; grid-template-columns: minmax(0, 1fr) 256px; gap: 22px;
+  display: grid; grid-template-columns: minmax(0, 1fr) 244px; gap: 20px;
   padding: 20px 24px 48px; max-width: 1560px; margin: 0 auto;
 }
 .at-intro { display: flex; align-items: end; gap: 24px; margin-bottom: 16px; flex-wrap: wrap; }
 .at-intro h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.25; margin: 0; }
 .at-intro p { font-size: 14px; color: var(--ink-2); margin: 2px 0 0; }
+.at-intro p a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; margin-left: 6px; }
 .at-levels { margin-left: auto; display: flex; border: 1.5px solid var(--ink); border-radius: 4px; overflow: hidden; }
 .at-levels button { height: 32px; padding: 0 14px; background: none; border: 0; border-left: 1.5px solid var(--ink); font-size: 13px; color: var(--ink); cursor: pointer; }
 .at-levels button:first-child { border-left: 0; }
@@ -292,4 +293,108 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .at-cell, .at-page { transition: none; }
+}
+
+/* ---------- 列表类页面：目录列表、方向、路线、404 ---------- */
+.at-head.plain { grid-template-columns: 1fr; }
+.at-head .where a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.at-two { display: grid; grid-template-columns: 220px minmax(0, 820px); gap: 48px; justify-content: center; align-items: start; }
+.at-two .at-head .where, .at-paths .at-head .where, .at-nf .at-head .where { color: var(--ink-3); }
+.at-two[data-fam] .at-head .where { color: var(--at-c); }
+
+.at-famindex { position: sticky; top: 84px; display: grid; gap: 3px; }
+.at-famindex a:not(.at-back) {
+  display: grid; grid-template-columns: 26px 1fr auto; align-items: center; gap: 8px;
+  height: 36px; padding-right: 10px; font-size: 13.5px; color: var(--ink); background: var(--at-tint);
+  border: 1.5px solid transparent;
+}
+.at-famindex a b { height: 100%; display: grid; place-items: center; background: var(--at-c); color: var(--at-on); font-size: 13px; font-weight: 800; margin: -1.5px 0 -1.5px -1.5px; height: calc(100% + 3px); }
+.at-famindex a span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.at-famindex a small { font-size: 11.5px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.at-famindex a:not(.at-back):hover { background: var(--at-mid); }
+.at-famindex a[aria-current] { border-color: var(--ink); box-shadow: 0 0 0 1.5px var(--ink); font-weight: 700; z-index: 1; }
+.at-famindex.wide { position: static; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+
+.at-filter { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
+.at-filter input { width: min(360px, 100%); height: 38px; padding: 0 12px; background: var(--paper); border: 1.5px solid var(--ink); border-radius: 4px; font-size: 14px; color: var(--ink); }
+.at-filter input::placeholder { color: var(--ink-3); }
+.at-filter span { font-size: 13px; color: var(--ink-3); }
+
+.at-sec { margin-top: 36px; }
+.at-sec h2 { margin: 0; padding-top: 9px; border-top: 4px solid var(--at-c, var(--ink)); display: flex; align-items: baseline; gap: 10px; font-size: 20px; font-weight: 800; letter-spacing: -0.01em; line-height: 1.4; }
+.at-sec h2 b { font-size: 24px; color: var(--at-c); }
+.at-sec h2 a { color: var(--ink); }
+.at-sec h2 a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.at-sec h2 small { margin-left: auto; font-size: 12.5px; font-weight: 500; color: var(--ink-3); }
+.at-sec-intro { font-size: 14px; color: var(--ink-2); margin: 2px 0 0; }
+
+.at-rows { list-style: none; margin: 10px 0 0; padding: 0; }
+.at-rows li { border-bottom: 1px solid var(--rule); }
+.at-rows a { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 9px 0; color: var(--ink); }
+.at-rows .k { width: 44px; height: 44px; display: grid; place-items: center; background: var(--at-tint); font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.at-rows .k.lv2 { background: var(--at-mid); }
+.at-rows .k.lv3 { background: var(--at-c); color: var(--at-on); }
+.at-rows .b { display: grid; gap: 1px; min-width: 0; }
+.at-rows .b b { font-size: 16px; font-weight: 700; line-height: 1.45; }
+.at-rows .b span { font-size: 13.5px; line-height: 1.6; color: var(--ink-2); }
+.at-rows .m { font-size: 12.5px; color: var(--ink-3); white-space: nowrap; }
+.at-rows a.read .m { color: var(--ink); font-weight: 700; }
+.at-rows a:hover .b b { text-decoration: underline; text-underline-offset: 4px; }
+.at-empty { margin-top: 36px; padding: 28px; border: 1.5px dashed var(--ink-3); font-size: 15px; color: var(--ink-2); }
+.at-empty p { margin: 0 0 14px; }
+.at-empty button, .at-nf-actions .solid, .at-nf-actions button {
+  height: 40px; padding: 0 18px; display: inline-flex; align-items: center; gap: 8px;
+  background: var(--ink); color: var(--paper); border: 1.5px solid var(--ink); font-size: 14px; font-weight: 600; cursor: pointer;
+}
+.at-nf-actions button { background: none; color: var(--ink); }
+.at-nf-actions kbd { font: 11px var(--font-sans); color: var(--ink-3); }
+
+.at-paths { max-width: 1180px; margin: 0 auto; }
+.at-route { margin-top: 44px; display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 36px; border-top: 2px solid var(--ink); padding-top: 18px; scroll-margin-top: 76px; }
+.at-route-head h2 { margin: 0 0 8px; font-size: 22px; font-weight: 800; letter-spacing: -0.01em; line-height: 1.35; }
+.at-route-head p { margin: 0; font-size: 14.5px; line-height: 1.8; color: var(--ink-2); }
+.at-route-head .out { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--rule); }
+.at-route-head .out b { display: block; font-size: 12px; color: var(--ink-3); font-weight: 600; }
+.at-route ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+.at-route .step { display: flex; align-items: baseline; gap: 12px; border-top: 4px solid var(--at-c); padding-top: 7px; margin-bottom: 8px; }
+.at-route .step .i { font-size: 12px; font-weight: 600; color: var(--ink-3); }
+.at-route .step a { font-size: 16px; font-weight: 800; color: var(--ink); }
+.at-route .step a b { color: var(--at-c); margin-right: 6px; }
+.at-route .step a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.at-route .step small { margin-left: auto; font-size: 12px; color: var(--ink-3); }
+.at-route .at-cells { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); }
+
+.at-nf { max-width: 720px; margin: 0 auto; padding: 64px 24px 96px; }
+.at-nf-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 36px; }
+
+/* ---------- 名词解释、组件演示：沿用原组件，统一到同一套标题与控件 ---------- */
+.kb-page .kb-glossary-head, .kb-page .lab-page-heading { padding: 0 0 24px; margin-bottom: 28px; border-bottom: 2px solid var(--ink); }
+.kb-page .kb-glossary-head h1, .kb-page .lab-page-heading h1 { font: 800 32px/1.25 var(--font-sans); letter-spacing: -0.02em; margin: 0 0 4px; color: var(--ink); }
+.kb-page .kb-glossary-head > p, .kb-page .lab-page-heading p { font-size: 15px; line-height: 1.7; color: var(--ink-2); margin: 0; }
+.kb-glossary-tools { margin-top: 18px; }
+.kb-glossary-search, .lab-library-search { border: 1.5px solid var(--ink) !important; border-radius: 4px !important; background: var(--paper) !important; }
+.kb-glossary-filters button { border-radius: 4px; }
+.kb-glossary-filters button.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.kb-glossary-group-head { border-top: 4px solid var(--ink); padding-top: 9px; }
+.kb-glossary-group-head h2 { font: 800 20px/1.4 var(--font-sans); letter-spacing: -0.01em; }
+
+@media (max-width: 1340px) {
+  /* 列变窄时先收起格内编号，保住标题 */
+  .at-table .at-cell .n { display: none; }
+}
+@media (max-width: 1180px) {
+  .at-two { grid-template-columns: 200px minmax(0, 1fr); gap: 32px; }
+  .at-route { grid-template-columns: 1fr; gap: 16px; }
+}
+@media (max-width: 900px) {
+  .at-two { grid-template-columns: minmax(0, 1fr); }
+  .at-famindex { position: static; order: 2; margin-top: 40px; grid-template-columns: 1fr 1fr; }
+  .at-famindex.wide { grid-template-columns: 1fr 1fr; order: 0; margin-top: 0; }
+  .at-famindex .at-back { grid-column: 1 / -1; }
+  .at-rows a { grid-template-columns: 40px minmax(0, 1fr); }
+  .at-rows .k { width: 40px; height: 40px; }
+  .at-rows .m { display: none; }
+  .at-sec h2 { font-size: 18px; }
+  .at-nf { padding: 32px 0 60px; }
+  .kb-page .kb-glossary-head h1, .kb-page .lab-page-heading h1 { font-size: 25px; }
 }

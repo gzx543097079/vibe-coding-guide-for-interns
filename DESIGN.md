@@ -1,443 +1,226 @@
 ---
 name: "Vibe Coding 开发指南"
-description: "暖纸色页面、浅色顶栏与低饱和陶土色构成的开发笔记设计系统。"
+description: "章节表设计系统：108 篇 = 9 个方向 × 3 个级别，色相区分方向，深浅区分级别。"
 colors:
   paper: "#ffffff"
-  paper-2: "#f7f7f8"
-  paper-3: "#f1f2f4"
-  paper-4: "#e8e9ee"
-  raised: "#ffffff"
-  ink: "#1a1a1a"
-  ink-2: "#4b5563"
-  ink-3: "#6b7280"
-  rule: "#e5e7eb"
-  rule-soft: "#f1f2f4"
-  rule-strong: "#d1d5db"
-  shell: "#ffffff"
-  shell-2: "#f7f7f8"
-  shell-line: "#e5e7eb"
-  shell-ink: "#1a1a1a"
-  shell-ink-2: "#6b7280"
-  accent: "#6d28d9"
-  accent-hover: "#5b21b6"
-  accent-ink: "#6d28d9"
-  accent-soft: "#f3eefe"
+  paper-2: "#f4f5f6"
+  paper-3: "#eceef0"
+  ink: "#14161a"
+  ink-2: "#4a5058"
+  ink-3: "#6f7680"
+  rule: "#dfe2e6"
+  rule-strong: "#c4c9cf"
+  accent: "#14161a"
   on-accent: "#ffffff"
-  focus: "#6d28d9"
+  accent-soft: "#eceef0"
   tip: "#15803d"
-  tip-soft: "#ecfdf3"
   warn: "#b45309"
-  warn-soft: "#fffbeb"
   danger: "#b91c1c"
-  danger-soft: "#fef2f2"
-  info-soft: "#f3f4f6"
   code-bg: "#1f2430"
-  code-head: "#262c3a"
-  code-rule: "#343b4a"
-  live: "#6d28d9"
-  dark-paper: "#1b1b1f"
-  dark-paper-2: "#232326"
-  dark-paper-3: "#2b2b30"
-  dark-raised: "#232326"
-  dark-ink: "#f5f6f8"
-  dark-ink-2: "#c4c7ce"
-  dark-ink-3: "#9a9ea8"
-  dark-rule: "#33343a"
-  dark-rule-strong: "#474851"
-  dark-shell: "#181714"
-  dark-accent: "#c4b5fd"
-  dark-accent-hover: "#ddd6fe"
-  dark-accent-ink: "#c4b5fd"
-  dark-accent-soft: "#2e2a40"
-  dark-on-accent: "#181714"
-  dark-tip: "#86efac"
-  dark-tip-soft: "#1b3527"
-  dark-warn: "#d9b675"
-  dark-warn-soft: "#3a2e19"
-  dark-danger: "#e79a92"
-  dark-danger-soft: "#3e2724"
+  dark-paper: "#121417"
+  dark-paper-2: "#1b1e23"
+  dark-ink: "#eceef1"
+  dark-ink-2: "#b6bcc5"
+  dark-ink-3: "#8a919c"
+  dark-rule: "#2c3037"
+  fam-1-start: "oklch(0.5 0.15 25)"
+  fam-2-ai: "oklch(0.5 0.15 62)"
+  fam-3-git: "oklch(0.5 0.15 100)"
+  fam-4-frontend: "oklch(0.5 0.15 148)"
+  fam-5-controls: "oklch(0.5 0.15 190)"
+  fam-6-cross: "oklch(0.5 0.15 232)"
+  fam-7-backend: "oklch(0.5 0.15 268)"
+  fam-8-quality: "oklch(0.5 0.15 305)"
+  fam-9-growth: "oklch(0.5 0.15 350)"
 typography:
-  display:
-    fontFamily: "'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Songti SC', 'Noto Serif SC', 'Noto Serif CJK SC', 'Source Han Serif SC', serif"
-    fontSize: "42px"
-    fontWeight: 600
-    lineHeight: 1.4
-    letterSpacing: "-0.02em"
-  headline:
-    fontFamily: "'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Songti SC', 'Noto Serif SC', 'Noto Serif CJK SC', 'Source Han Serif SC', serif"
-    fontSize: "38px"
-    fontWeight: 600
-    lineHeight: 1.35
-    letterSpacing: "-0.02em"
-  reader-title:
-    fontFamily: "'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Songti SC', 'Noto Serif SC', 'Noto Serif CJK SC', 'Source Han Serif SC', serif"
-    fontSize: "34px"
-    fontWeight: 600
-    lineHeight: 1.4
-    letterSpacing: "-0.02em"
-  section-title:
-    fontFamily: "'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Songti SC', 'Noto Serif SC', 'Noto Serif CJK SC', 'Source Han Serif SC', serif"
-    fontSize: "25px"
-    fontWeight: 600
-    lineHeight: 1.4
-    letterSpacing: "-0.02em"
-  reader-heading:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "25px"
-    fontWeight: 650
-    lineHeight: 1.5
-    letterSpacing: "-0.01em"
-  card-title:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "15px"
-    fontWeight: 600
-  body:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "16px"
-    lineHeight: 2
-  body-small:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "13px"
-    lineHeight: 1.8
-  action:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "13px"
-    fontWeight: 600
-  nav:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "13px"
-    fontWeight: 500
-  label:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "12px"
-  compact-label:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "11px"
-  micro-label:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "10px"
-  tiny-label:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "9px"
-  legacy-size-14:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "14px"
-  legacy-size-46:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "46px"
-  legacy-size-48:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "48px"
-  legacy-size-17:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "17px"
-  legacy-size-18:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "18px"
-  legacy-size-19:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "19px"
-  legacy-size-20:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "20px"
-  legacy-size-21:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "21px"
-  legacy-size-22:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "22px"
-  legacy-size-24:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "24px"
-  legacy-size-26:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "26px"
-  legacy-size-27:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "27px"
-  legacy-size-28:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "28px"
-  legacy-size-30:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "30px"
-  legacy-size-31:
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "31px"
-  legacy-size-32:
+  page-title:
     fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
     fontSize: "32px"
-  legacy-size-36:
+    fontWeight: 800
+    lineHeight: 1.25
+    letterSpacing: "-0.02em"
+  home-title:
     fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "36px"
-  legacy-size-37:
+    fontSize: "28px"
+    fontWeight: 800
+    lineHeight: 1.25
+    letterSpacing: "-0.02em"
+  card-title:
     fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "37px"
-  legacy-size-40:
+    fontSize: "26px"
+    fontWeight: 800
+    lineHeight: 1.2
+    letterSpacing: "-0.02em"
+  section-title:
     fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
-    fontSize: "40px"
+    fontSize: "22px"
+    fontWeight: 800
+    lineHeight: 1.4
+    letterSpacing: "-0.01em"
+  group-title:
+    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
+    fontSize: "20px"
+    fontWeight: 800
+    lineHeight: 1.4
+    letterSpacing: "-0.01em"
+  body:
+    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
+    fontSize: "16.5px"
+    fontWeight: 400
+    lineHeight: 1.9
+  row-title:
+    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
+    fontSize: "16px"
+    fontWeight: 700
+    lineHeight: 1.45
+  ui:
+    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
+    fontSize: "14px"
+    fontWeight: 400
+    lineHeight: 1.6
+  cell:
+    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
+    fontSize: "12px"
+    fontWeight: 400
+    lineHeight: 1.4
+  cell-number:
+    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif"
+    fontSize: "9.5px"
+    fontWeight: 600
+    lineHeight: 1
   code:
     fontFamily: "ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace"
+    fontSize: "13.5px"
+    fontWeight: 400
+    lineHeight: 1.7
 rounded:
-  sm: "4px"
-  base: "6px"
-  lg: "8px"
-  legacy-panel: "10px"
-  legacy-card: "12px"
-  field: "5px"
-  action: "5px"
-  panel: "7px"
-  task: "8px"
-  workspace: "5px"
-  overlay: "7px"
-  switch: "20px"
-  phone: "24px"
+  none: "0px"
+  control: "4px"
 spacing:
+  3: "3px"
+  5: "5px"
   6: "6px"
-  8: "8px"
   12: "12px"
   16: "16px"
   20: "20px"
-  22: "22px"
   24: "24px"
-  26: "26px"
   28: "28px"
-  32: "32px"
   36: "36px"
-  40: "40px"
   44: "44px"
   48: "48px"
-  64: "64px"
-  70: "70px"
 components:
+  chapter-cell:
+    backgroundColor: "{colors.fam-1-start}"
+    textColor: "{colors.ink}"
+    typography: "{typography.cell}"
+    rounded: "{rounded.none}"
+    height: "30px"
+    padding: "0 5px"
   button-primary:
-    backgroundColor: "{colors.accent}"
-    textColor: "{colors.on-accent}"
-    typography: "{typography.action}"
-    rounded: "{rounded.sm}"
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.paper}"
+    typography: "{typography.ui}"
+    rounded: "{rounded.none}"
+    height: "40px"
     padding: "0 18px"
-    height: "42px"
-  button-primary-hover:
-    backgroundColor: "{colors.accent-hover}"
-  button-secondary:
-    backgroundColor: "{colors.raised}"
-    textColor: "{colors.ink}"
-    typography: "{typography.action}"
-    rounded: "{rounded.sm}"
-    padding: "0 18px"
-    height: "42px"
-  button-secondary-hover:
-    backgroundColor: "{colors.paper-2}"
-  site-search:
-    backgroundColor: "{colors.raised}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.sm}"
+  search-field:
+    backgroundColor: "{colors.paper}"
+    textColor: "{colors.ink-3}"
+    rounded: "{rounded.control}"
+    height: "36px"
     padding: "0 12px"
-    height: "41px"
-  filter-chip:
-    textColor: "{colors.ink-2}"
-    rounded: "{rounded.sm}"
-    padding: "10px 18px"
-  filter-chip-selected:
-    backgroundColor: "{colors.accent-soft}"
-    textColor: "{colors.accent-ink}"
-  resume-card:
-    backgroundColor: "{colors.raised}"
-    rounded: "{rounded.base}"
-    padding: "26px"
-  directory-row:
-    padding: "16px 2px"
-  note-composer:
-    backgroundColor: "{colors.paper}"
-    rounded: "{rounded.sm}"
-  reader-taskbar:
-    backgroundColor: "{colors.paper}"
-    rounded: "{rounded.sm}"
-    height: "48px"
-  nav-link:
-    textColor: "{colors.shell-ink-2}"
-    typography: "{typography.nav}"
-  nav-link-current:
-    textColor: "{colors.shell-ink}"
-  segmented-control:
-    backgroundColor: "{colors.paper-2}"
-    rounded: "{rounded.sm}"
-    padding: "3px"
-  segmented-control-selected:
-    backgroundColor: "{colors.raised}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.sm}"
-    padding: "5px 10px"
-  reading-next:
-    backgroundColor: "{colors.paper}"
-    rounded: "{rounded.sm}"
-    padding: "24px 0"
-  reading-next-done:
-    backgroundColor: "{colors.tip-soft}"
-    textColor: "{colors.tip}"
+  level-filter-selected:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.paper}"
+    rounded: "{rounded.control}"
+    height: "32px"
 ---
-# Design System: Vibe Coding 开发笔记
 
-<!-- 2026-11-07 重建：website.css 与 desk.css 覆盖 tokens.css；前置 YAML 和 .impeccable/design.json 是视觉令牌规范层。来源：PRODUCT.md、.impeccable/surfaces/docs-vitepress-theme-layout-vue.md、Layout.vue、components/site/DeskHome.vue、TaskComposer.vue、LabPage.vue、styles/website.css、styles/desk.css。 -->
+# Design System: Vibe Coding 开发指南
 
 ## Overview
 
-**Creative North Star: "一本能翻、能点、能接着读的开发笔记"**
+**Creative North Star：一张表看全。** 站点内容是 108 篇笔记，正好是 9 个方向 × 3 个级别。设计只做一件事：把这个结构原样摆出来。全站只有一种基本单元「章节格」，它带三位编号和短标题，用色相表示属于哪个方向，用深浅表示级别。首页是 9 列 108 格的整张表，章节页左栏是其中一列，方向页、路线页、列表页都是这些格子的不同排法。
 
-暖白纸面、墨色文字和浅色常驻顶栏构成网站外壳。首页以「写代码时，随手翻两页。」开场，顶栏使用「首页 / 目录 / 路线 / 组件 / 模板」这组普通入口，下面接连续目录；章节页回到正文，工具栏和完成标记安静地留在一旁。标题用系统衬线字，界面与正文用系统无衬线字，陶土色只落在链接、当前导航和主要按钮上。
-
-旧「工程交付台」的任务口号、四段编号、图标方块、三张同构卡片和深灰绿仪表盘配色已整体替换。产品事实、108 篇章节地址、正文、组件演示和已经过还原验证的提示词规格继续保留；组件实验室内部的参考画布仍用自己的暖纸色和赤陶色，不随外壳换色。
-
-**Key Characteristics:**
-
-- 浅暖纸色顶栏与页面连成一体，当前导航用文字粗细和细下划线表达。
-- 陶土色用于链接、选中态和主要动作，不铺满页面，也不做彩色状态体系。
-- 首页、目录和方向页以连续列表、细分隔线与普通文字入口为主，不依赖卡片墙。
-- 中文标题用系统衬线字，正文保持舒适列宽与舒展行高；界面标签沿用系统无衬线字。
-- 桌面端为本轮验收范围；窄屏只有代码降级。
+白底、墨色文字、2px 墨色粗线，系统无衬线字，方角。除了九个方向的色相，页面上没有别的装饰色。
 
 ## Colors
 
-### Primary
-
-`accent` 是低饱和陶土色，用于主要按钮、选中边和链接；`accent-hover`、`accent-ink`、`accent-soft` 分别承担悬停、正文链接与浅状态底。浅色主按钮文字令牌 `--on-accent` 为 `#fffefb`，主按钮对比度为 5.18:1；深色主题主按钮对比度为 8.24:1。`shell` 系列是浅暖纸色顶栏，文字仍用墨色；`live` 与陶土色同值，不再出现薄荷活动点。
-
-### Secondary
-
-`tip` 与 `tip-soft` 用于读过的标记；警示、错误分别使用 `warn` / `danger` 家族。`info-soft` 只用于低优先级信息底，不与主要动作争夺面积。旧九组课程分类色已从主要入口移除。
-
 ### Neutral
+- **paper `#ffffff` / ink `#14161a`**：页面与文字。深色模式为 `#121417` / `#eceef1`。
+- **ink-2、ink-3**：摘要与辅助信息。**rule `#dfe2e6`**：细分隔线。
+- 全站强调色 `--accent` 就是墨色：主按钮、选中的筛选项、顶栏当前项都是墨底或墨线。
 
-浅色模式以 `paper` 为主画布，`paper-2`、`paper-3` 用于分区和字段底，`raised` 是浅白纸面。`ink`、`ink-2`、`ink-3` 分别承担标题、正文和辅助信息；`rule`、`rule-soft`、`rule-strong` 区分普通边界、内部细分与输入控件。代码使用 `code-bg`、`code-head`、`code-rule` 的暖炭色环境。深色模式覆盖同名语义变量，顶栏随页面一起压暗。
+### 方向色（九个色相）
+每个方向一个色相，写在 `[data-fam='1'..'9']` 上：25、62、100、148、190、232、268、305、350。
 
-**The Shell and Canvas Rule.** 站点外壳属于暖纸色 / 墨色的阅读系统；实验室经过提示词验证的参考演示画布属于局部独立环境，参考配色不提升为全站品牌色。
+### 级别（三档，全站不出现第四档）
+| 级别 | 浅色模式 | 深色模式 | 文字 |
+|---|---|---|---|
+| 基础：浅底 | `oklch(0.955 0.03 h)` | `oklch(0.27 0.035 h)` | 墨色 |
+| 进阶：中间色 | `oklch(0.87 0.075 h)` | `oklch(0.4 0.085 h)` | 墨色 |
+| 精通：实心 | `oklch(0.5 0.15 h)` | `oklch(0.74 0.13 h)` | 白 / 深色模式下近黑 |
+
+章节页把 `--accent` 系列变量指向当前方向色，正文里的组件（提示卡、步骤、对比块）因此跟随方向变色。
+
+### 语义色
+提示绿、注意黄、危险红只用于正文提示块，不参与方向和级别编码。
 
 ## Typography
 
-标题沿用系统衬线字栈，界面标签、表单和阅读正文沿用系统无衬线字栈，不下载字体包；代码、命令和测量数据保留系统等宽字体。界面字号固定，不用流体标题。既存页面保留了历史辅助字号，登记在前置 YAML 中，新组件优先使用 16px 正文、13px 动作、12px 标签。
-
-### Hierarchy
-
-- **Display**：首页标题固定 42px / 600，写一句普通介绍，不采用口号式缩放标题。
-- **Headline / Title**：目录、路线与方向页 38px；阅读页 34px；首页区段 25px；正文二级标题 25px；目录行 15px。
-- **Body**：阅读正文 16px / 1.9～2；正文列最大 760px，段落与列表保持舒展行高。
-- **Body small / Label**：辅助说明为 9～13px；导航和按钮均为 13px；状态标签必须配合文字或语义属性。
-- **Code**：需求填写区中的中文刻意使用无衬线字体与自动换行，方便复制和编辑；代码块使用等宽字体。
-
-**The Reading Rhythm Rule.** 中文阅读正文以列宽、行高和标题间距建立层级；界面密度不侵入正文排版。
+系统无衬线字一套到底，不加载网络字体。标题一律 800 字重、负字距；正文 16.5px / 1.9，列宽 700px。编号用等宽数字（`tabular-nums`），不用等宽字体。具体字号见文件头的 `typography`。
 
 ## Layout
 
-网站内容容器为 `min(1320px, calc(100% - 80px))`；页头容器为 `min(1500px, calc(100% - 64px))`，高度 66px，滚动时保持置顶。首页首屏为一句介绍、三个按问题进入的入口和 340px 继续阅读卡片，接下来是目录网格与侧边说明；需求填写默认收在底部的按需展开区。首页目录网格的标题明确跨两列，方向列表固定在左列，路线与模板侧栏固定在右列；`/learn` 目录页保留可筛选的方向行，并在筛选区下方提供三个真实问题入口。它们都不使用四阶段入口、三张同构动作卡或仪表盘式布局。
-
-阅读区总宽为 `min(1024px, calc(100% - 80px))`，使用 220px 当前方向侧栏和最大 760px 正文，列距 44px。粘性任务条位于 66px 顶栏下方，滚动时保留组件入口与读过标记；页内目录改为正文标题下的按需展开区。正文末尾是「读完以后」的三个普通链接和当前方向内的翻页。
-
-**The Quiet Entry Rule.** 首页、阅读页和快速跳转先让读者找到想看的内容；章节翻页只走当前方向。目录和搜索是常态入口，不用任务口号重新包装。
-
-目标桌面验收宽度是 1280px、1440px、1600px；最新 UX 改动尚待重新完成浏览器视觉验收。代码在 1250px、1000px、760px 调整密度或单列降级；这些断点不作为手机端专项验收结论，也没有进行手机端专项设计。实验室「参考画布」是组件提示词验证用的局部演示外框。
+- **顶栏**：56px 高，底边 2px 墨线；左侧站名和五个入口（目录、阅读路线、组件演示、需求模板、名词解释），右侧搜索、深浅色、GitHub。
+- **首页**：左边 9 列章节表，右边 244px 详情栏（详情卡、图例、上次读到）。1440 宽下 108 格一屏看全。
+- **章节页**：240px 左栏（1–9 方向方块 + 当前方向那一列）、700px 正文、200px 本页目录。
+- **目录列表 / 方向页**：220px 方向索引 + 820px 章节行。
+- **路线页**：每条路线左边说明、右边按步骤排开各方向的章节格。
+- 断点：1340px 以下首页格内编号收起；1180px 以下详情栏和本页目录下移或折叠；900px 以下单列，表格变成按方向堆叠的两列格子。
 
 ## Elevation & Depth
 
-表面主要依靠浅暖灰分层、1px 描边和间距区分。`--shadow-1` 用于分段控件选中面，`--shadow-2` 用于旧的悬浮演示，`--shadow-3` 用于命令面板等浮层。首页继续阅读卡片、目录列表和阅读正文保持平整。
-
-### Shadow Vocabulary
-
-- **轻层**：`--shadow-1`，分段控件选中面。
-- **工作层**：`--shadow-2`，旧演示浮面与参考演示设备。
-- **浮层**：`--shadow-3`，命令面板等覆盖全页的表面。
-
-状态转场以 160～200ms 为主，统一缓动为 `--ease`；按钮和导航取消悬停抬升，改用描边与背景说明状态。`prefers-reduced-motion` 下动画与过渡缩至 0.01ms，滚动恢复自动。
-
-**The State Before Lift Rule.** 当前态由文字、语义属性、描边和状态色共同表达；悬停位移与阴影不承担唯一说明。
+没有阴影，没有圆角卡片。层次只靠三种线：2px 墨线（页面级分隔、详情卡边框）、4px 方向色线（一列或一组的顶边）、1px 细线（行与行之间）。
 
 ## Shapes
 
-细描边为主要边界语言，常规为 1px。控件圆角 4～6px，普通面板 6～8px，最大容器不超过 8px；旧开关、参考手机画布和圆形控件保留原有圆角。圆形只用于活动点、状态圆点和演示开关；路线步骤沿用小方形序号。图标沿用 24×24 viewBox、1.7 线宽、圆端与圆连接，通常为 15～24px。品牌是文字加代码图标，不新增图像标志或字体图标包。
+章节格、色块、按钮、卡片都是直角。只有输入框、分段筛选和顶栏小按钮用 4px 圆角，表示「这是可以输入或切换的控件」。
 
 ## Components
 
-### Buttons
+### 章节格 `.at-cell`
+30px 高（左栏 32px、窄屏 38px），三位编号 + 短标题。`lv1 / lv2 / lv3` 对应三档填充。当前篇或悬停选中：1.5px 墨色边框加同色外描边。读过：行尾一个 ✓。筛选不匹配：透明度降到 0.16，位置不变。
 
-主按钮是陶土色实体，次按钮为纸白底细边；两者共用 42px 高度和 4px 圆角。标签命名具体操作，例如「接着读」「记一下读过」。全局键盘焦点为 2px `focus` 描边、4px 外偏移。
+### 详情卡 `.at-card`
+2px 墨框。编号、级别标签、标题、方向与分组、摘要、墨底「开始阅读」按钮。悬停或键盘聚焦任一格时更新。
 
-### Resume Card
+### 章节头 `.at-head`
+92px 色块（编号 + 级别，填充跟随级别）加标题与摘要，底边 2px 墨线。方向页、404 页复用同一结构；没有色块时加 `plain`。
 
-首页右侧卡片显示上次停留或建议起点、所属方向、本机阅读记录、进度与继续按钮。进度明确说明只存在本机；不暗示账号、证书或同步。
+### 章节行 `.at-rows`
+44px 编号色块 + 完整标题 + 摘要，行尾显示级别或「✓ 读过」。用在目录列表和方向页。
 
-### Note Composer
+### 方向索引 `.at-famindex`
+九行，每行左端是实心编号块，后面是方向名和篇数。当前方向加墨框。
 
-四个可填写字段补齐目标、项目与范围、已知情况、怎么检查，另有一个任务类型选择器；右侧实时生成可复制文字。任务类型来自现有提示词模板，占位符保持显式，复制失败给出手动选择提示。清空填写会恢复结构模板。
+### 按钮与控件
+主按钮墨底白字、直角、40px 高；次按钮透明底墨框。分段筛选选中项墨底。搜索框 1.5px 墨框。
 
-### Directory Rows
-
-首页方向列表采用名称、摘要、篇数与箭头组成的连续行；标题跨两列，列表在左列，侧栏在右列，悬停只改变背景，不抬起卡片。`/learn` 目录页保留可筛选的课程卡片网格；方向详情页以分组清单展示章节，右侧保留本机进度与组件入口。
-
-### Inputs / Fields
-
-搜索、选择和需求填写输入框为浅底细边，焦点使用陶土色描边与 2px 浅状态环。没有结果时提供清空或恢复全部的真实操作；不伪造错误状态。实验室的技术栈与选项继续沿用同一控件语言。
-
-### Navigation
-
-浅色顶栏导航为 13px；当前项由更重的文字、墨色和 2px 陶土色下划线表达，并提供 `aria-current`。阅读页顶栏显示实际方向名称。命令面板空状态默认显示「接着读」和四个常用页面；输入后搜索全部章节，`Shift + Enter` 显式进入全文搜索。
-
-### Reader Completion
-
-粘性任务条和正文末尾的「读完以后」都提供读过操作。按钮用 `aria-pressed` 同步状态，完成后改为浅陶土底并可取消。记录仅保存在当前浏览器，说明文字始终可见。
-
-**The Verification Path Rule.** 读完一章后仍能就近进入组件演示、代码审查文章和读过记录；本地进度可取消。
-
-### Lab Workspace
-
-组件库、演示画布与提示词资料各有稳定位置。组件页首次进入、选择组件和通过深链进入时默认 `browser` 网页画布；参考手机画布是可切换的验证状态。首次进入先显示「检查行为」，提示词配置收在第二个「复制提示词」标签内。演示内部以 `--app-*` 隔离参考配色，工具栏、行为清单、技术栈和复制操作继续使用网站颜色。已验证提示词的固定画布规格没有改写。
+### 沿用的旧组件
+名词解释、组件演示、快速跳转、正文富组件沿用原实现，通过令牌换色，并把标题和筛选控件统一到上面的规格。组件演示里的参考画布保留自己的暖色配色：那组色值写在已验证的提示词里，改了会让验证结论失效。
 
 ## Do's and Don'ts
 
 ### Do:
-
-- **Do** 使用 `website.css` 与 `desk.css` 的语义颜色；新增外壳组件优先引用 CSS custom properties。
-- **Do** 为当前页面、读过状态和快速跳转结果同时保留文字与语义属性。
-- **Do** 让需求填写字段、组件演示和本机记录保持真实可操作。
-- **Do** 保持 108 篇章节地址、组件参考画布和已验证提示词规格。
-- **Do** 用普通、具体的动作名称，尊重 `prefers-reduced-motion`，并维持桌面 1280～1600px 布局稳定。
+- 新页面先问「能不能用章节格排出来」，能就不要另造卡片。
+- 颜色只表达方向，深浅只表达级别，状态用记号（✓、边框、透明度）。
+- 编号始终用全站三位编号（001–108），和首页表格一致。
+- 筛选时保持表的形状，只改变透明度。
 
 ### Don't:
-
-- **Don't** 把首页改回任务口号、四阶段编号、三张同构卡片或深灰绿工作栏。
-- **Don't** 把命令面板空状态变成 108 章的全量列表。
-- **Don't** 把阅读页读过按钮藏在正文底部，或让翻页跨到无关方向。
-- **Don't** 把实验室参考画布的暖纸色或赤陶色提升为全站品牌色。
-- **Don't** 用「验证先于信任」「可验收」「任务简报」等整齐口号替代具体说明。
-- **Don't** 把窄屏代码降级描述为已完成手机端设计与验收。
-
----
-
-## 知识库改版（2026-11-08）
-
-用户确认改回「知识库那种，但要清晰」，站点信息架构与页面骨架从「开发笔记」调整为标准文档知识库。视觉令牌（暖纸色 / 赤陶强调）不变，变的是布局与信息层级：
-
-- **全站左侧目录**：9 个方向可折叠，方向内按「基础 / 进阶 / 精通」分组，列出全部 108 篇；每项带编号（如 `1.05`），当前篇用左侧竖条 + 背景 + 加粗 + `aria-current="page"` 四重表达，不只靠颜色；已读篇带勾。
-- **阅读页三栏**：左侧全站目录 272px、中间正文 760px、右侧本页目录 208px；右栏另含「这一篇」元信息与读过按钮。正文与右栏在 1080px 以下合并为单栏，本页目录转为可折叠。
-- **首页改为知识库索引**：一句说明 + 搜索入口 + 9 个方向块，每块列出全部章节、编号、级别与篇数。
-- **面包屑与翻页**：面包屑为「知识库 › 方向 › 级别 › 编号」；底部上一篇 / 下一篇只在同一方向内，最后一篇明确回到该方向目录。
-- **字号与对比**：正文 16px / 行高 1.95，方向名与编号用等宽字体，辅助信息不小于 11px；深色模式同步。
-- **窄屏**：860px 以下左侧目录变为抽屉（顶栏「目录」按钮打开），390px 实测 `innerWidth = scrollWidth = 390`，无横向溢出。
-
-新增文件：`theme/components/site/KnowledgeNav.vue`、`KnowledgeHome.vue`、`styles/kb.css`；`Layout.vue` 的阅读页分支整体重写；`index.ts` 将首页组件指向 `KnowledgeHome` 并最后引入 `kb.css`。
-
-### 配色校准（2026-11-09）
-
-用户反馈「颜色看着不对、视觉难受、混乱」。原因是所有颜色挤在暖黄褐同一色相：纸色 `#f8f6f0` 偏黄、强调陶土、提示与警告危险全是黄褐红，`--tip` 甚至被覆盖成褐色，深色下 `--tip` 与 `--accent` 同值。调整为：
-
-- 画布改为近白中性底 `#fbfbf9`（深色 `#171614`），去掉黄灰感；正文与次要文字改为中性灰，`ink-3` 对比度 4.9:1。
-- 强调色保留陶土但收敛为单一色 `#b0523a`；只用于按钮、当前项竖条、链接与编号，不再用大面积桃色填充。
-- 语义色分开：`tip` 恢复为绿 `#3f6b4c`（用于「读过」），`warn` 琥珀、`danger` 红，互不混淆。
-- 9 个模块辅助色统一映射到强调色，流程图与演示不再出现紫、蓝、绿等额外色相。
-- 左栏当前项改为中性底 `--paper-3` + 陶土竖条 + 深色加粗文字，减少粉色块。
-- 深色模式对应调整为中性炭黑，`tip` 改为绿 `#8fc0a0`，不再与强调色同值。
-- 代码块背景同步中性化 `#1c1d1f`。
-
-对比度：浅色正文 16.8:1、次要 8.3:1、辅助 4.9:1、白字按钮 5.1:1；深色各项 6.3～15.9:1。
-
-### Starlight 改版（2026-11-09）
-
-用户选定 Astro Starlight 风格。实际站点改为：白底 / 中性灰 / 紫罗兰单一强调 `#6d28d9`；首页居中 Hero + 3×3 卡片；左栏白底 + 激活项浅紫底紫字；文章页 40px 无衬线标题、16px/1.85 正文、右侧目录；深色为中性炭黑 + 浅紫强调。
+- 不加第四档填充，不给某一篇单独配色。
+- 不用阴影、渐变、圆角卡片、图标方块做装饰。
+- 不在章节页放全站目录树；左栏只放当前方向。
+- 不把读过、当前、筛选这些状态换成另一种颜色来表达。
+- 不改组件演示参考画布的色值。

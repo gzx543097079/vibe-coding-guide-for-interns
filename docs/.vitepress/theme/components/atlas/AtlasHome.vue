@@ -48,7 +48,7 @@ const more = [
       <div class="at-intro">
         <div>
           <h1>{{ totalChapters }} 篇开发笔记，一张表看全</h1>
-          <p aria-live="polite">{{ hint }}</p>
+          <p aria-live="polite">{{ hint }} <a :href="withBase('/learn')">想看摘要，换列表视图</a></p>
         </div>
         <div class="at-levels" role="group" aria-label="按级别筛选">
           <button type="button" :aria-pressed="filter === ''" @click="setFilter('')">全部</button>
