@@ -378,6 +378,38 @@
 .kb-glossary-group-head { border-top: 4px solid var(--ink); padding-top: 9px; }
 .kb-glossary-group-head h2 { font: 800 20px/1.4 var(--font-sans); letter-spacing: -0.01em; }
 
+/* ---------- 组件演示：左边是组件清单，右边是外框、说明 ---------- */
+.kb-page .lab-workspace { border: 1.5px solid var(--ink); border-radius: 4px; background: var(--paper); overflow: hidden; }
+.kb-page .lab-library { padding: 16px 14px; border-right: 1.5px solid var(--ink); background: var(--paper); }
+/* 每个分组顶上一条墨线，组名加粗，和组内条目分开 */
+.kb-page .lab-library section { margin-bottom: 22px; }
+.kb-page .lab-library h2 { display: flex; align-items: baseline; justify-content: space-between; margin: 0 0 6px; padding: 8px 2px 0; border-top: 2px solid var(--ink); font: 800 12.5px/1.5 var(--font-sans); color: var(--ink); }
+.kb-page .lab-library h2 small { font: 500 11px/1 var(--font-mono); color: var(--ink-3); }
+.kb-page .lab-library section > button { padding: 8px 10px; margin-bottom: 1px; border-radius: 3px; font-size: 13px; color: var(--ink-2); }
+.kb-page .lab-library section > button:hover { background: var(--paper-2); color: var(--ink); }
+.kb-page .lab-library section > button[aria-pressed='true'] { background: var(--ink); color: var(--paper); font-weight: 700; }
+.kb-page .library-note { border-top: 1px solid var(--rule); font-size: 11px; line-height: 1.6; }
+.kb-page .lab-demo-bar { border-bottom: 1px solid var(--rule-strong); }
+.kb-page .lab-demo-bar h2 { font-size: 17px; font-weight: 800; }
+.kb-page .lab-detail-tabs { border-top: 1.5px solid var(--ink); }
+.kb-page .segmented-control { padding: 0; border: 1.5px solid var(--ink); border-radius: 4px; background: var(--paper); overflow: hidden; }
+.kb-page .segmented-control button { padding: 6px 12px; border-radius: 0; font-size: 12px; color: var(--ink-2); }
+.kb-page .segmented-control [aria-pressed='true'] { background: var(--ink); color: var(--paper); border: 0; box-shadow: none; font-weight: 700; }
+
+/* iPhone 外框：屏幕区仍是 248×442，和提示词里的画布规格一致，外面加机身、状态栏和底部横条 */
+.lab-demo-device.phone {
+  box-sizing: content-box; width: 248px; border: 9px solid #101114; border-radius: 44px;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'PingFang SC', 'Helvetica Neue', sans-serif;
+  box-shadow: 0 0 0 1.5px #4b4e55, 0 10px 18px rgb(16 17 20 / 0.08), 0 30px 50px -22px rgb(16 17 20 / 0.35);
+}
+.lab-ios-status { position: relative; display: flex; align-items: center; justify-content: space-between; height: 40px; padding: 4px 20px 0 24px; background: var(--app-bg); color: var(--app-ink); }
+.lab-ios-time { font-size: 13.5px; font-weight: 650; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+.lab-ios-island { position: absolute; left: 50%; top: 9px; width: 76px; height: 22px; margin-left: -38px; border-radius: 12px; background: #101114; }
+.lab-ios-icons { display: inline-flex; align-items: center; gap: 4px; }
+.lab-ios-icons svg { fill: currentColor; }
+.lab-ios-home { display: flex; align-items: center; justify-content: center; height: 20px; background: var(--app-bg); }
+.lab-ios-home::before { content: ''; width: 92px; height: 4px; border-radius: 3px; background: var(--app-ink); opacity: 0.9; }
+
 @media (max-width: 1340px) {
   /* 列变窄时先收起格内编号，保住标题 */
   .at-table .at-cell .n { display: none; }
@@ -397,4 +429,11 @@
   .at-sec h2 { font-size: 18px; }
   .at-nf { padding: 32px 0 60px; }
   .kb-page .kb-glossary-head h1, .kb-page .lab-page-heading h1 { font-size: 25px; }
+}
+
+@media (max-width: 760px) {
+  /* 窄屏：组件清单排到上面，分组横向排开 */
+  .kb-page .lab-workspace { grid-template-columns: minmax(0, 1fr); }
+  .kb-page .lab-library { min-width: 0; border-right: 0; border-bottom: 1.5px solid var(--ink); }
+  .kb-page .lab-library section { margin-bottom: 0; min-width: 104px; }
 }
