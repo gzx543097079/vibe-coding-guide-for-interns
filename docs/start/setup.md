@@ -43,7 +43,7 @@ macOS 安装 Homebrew（命令来自 [brew.sh](https://brew.sh)），装完按�
 <RTerm
   :mac='["/bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"", "brew --version"]'
   :win='["winget --version"]'
-  :mac-out='["Homebrew 4.x.x"]'
+  :mac-out='["Homebrew 5.x.x"]'
   :win-out='["v1.x.xxxx"]'
   note="版本号仅作示意，以你本机输出为准。"
 />

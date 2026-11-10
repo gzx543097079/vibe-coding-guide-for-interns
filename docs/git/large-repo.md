@@ -20,7 +20,6 @@ description: 子模块、稀疏检出、Git LFS 与 monorepo 协作。
 以下使用本指南的路径作示意，只在可重新创建的练习 clone 中操作：
 
 ```sh
-git sparse-checkout init --cone
 git sparse-checkout set docs/ai docs/git
 git sparse-checkout list
 ```
