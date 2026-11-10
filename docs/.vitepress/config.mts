@@ -21,8 +21,8 @@ export default defineConfig({
   },
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: `${BASE}favicon.svg` }],
-    ['meta', { name: 'theme-color', content: '#f8f6f0', media: '(prefers-color-scheme: light)' }],
-    ['meta', { name: 'theme-color', content: '#181714', media: '(prefers-color-scheme: dark)' }],
+    ['meta', { name: 'theme-color', content: '#ffffff', media: '(prefers-color-scheme: light)' }],
+    ['meta', { name: 'theme-color', content: '#121417', media: '(prefers-color-scheme: dark)' }],
     // 首屏绘制前恢复侧边栏折叠状态，避免刷新时闪动
     ['script', {}, "try{if(localStorage.getItem('vcg:sidebar-collapsed')==='1')document.documentElement.classList.add('sidebar-collapsed')}catch(e){}"],
   ],

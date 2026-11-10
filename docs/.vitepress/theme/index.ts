@@ -5,7 +5,7 @@ import { registerRich } from './components/rich'
 import { registerAi } from './components/ai'
 
 import Layout from './Layout.vue'
-import KnowledgeHome from './components/site/KnowledgeHome.vue'
+import AtlasHome from './components/atlas/AtlasHome.vue'
 import CodeTabs from './components/CodeTabs.vue'
 import ControlDemo from './components/ControlDemo.vue'
 import ControlGallery from './components/ControlGallery.vue'
@@ -18,11 +18,11 @@ import './styles/base.css'
 import './styles/rich.css'
 import './styles/ai-rich.css'
 import './styles/website.css'
-import './styles/desk.css'
 import './styles/kb.css'
-import LearnPage from './components/site/LearnPage.vue'
-import CoursePage from './components/site/CoursePage.vue'
-import PathsPage from './components/site/PathsPage.vue'
+import './styles/atlas.css'
+import LearnPage from './components/atlas/AtlasList.vue'
+import CoursePage from './components/atlas/AtlasFamily.vue'
+import PathsPage from './components/atlas/AtlasPaths.vue'
 import LabPage from './components/site/LabPage.vue'
 import GlossaryPage from './components/site/GlossaryPage.vue'
 
@@ -32,7 +32,7 @@ export default {
   enhanceApp({ app }) {
     registerRich(app)
     registerAi(app)
-    app.component('HomePage', KnowledgeHome)
+    app.component('HomePage', AtlasHome)
     app.component('CodeTabs', CodeTabs)
     app.component('ControlDemo', ControlDemo)
     app.component('ControlGallery', ControlGallery)
