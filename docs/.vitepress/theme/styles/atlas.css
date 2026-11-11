@@ -31,8 +31,6 @@
   --radius-xl: 4px;
   --font-serif: var(--font-sans);
 
-  --kb-header-h: 58px;
-
   /* 级别三档：浅底、中间色、实心 */
   --at-l-solid: 0.5;
   --at-c-solid: 0.15;
@@ -378,6 +376,9 @@
 .kb-glossary-group-head { border-top: 4px solid var(--ink); padding-top: 9px; }
 .kb-glossary-group-head h2 { font: 800 20px/1.4 var(--font-sans); letter-spacing: -0.01em; }
 
+.at-when-dark, .dark .at-when-light { display: none; }
+.dark .at-when-dark { display: inline; }
+
 /* ---------- 组件演示：左边是组件清单，右边是外框、说明 ---------- */
 .kb-page .lab-workspace { border: 1.5px solid var(--ink); border-radius: 4px; background: var(--paper); overflow: hidden; }
 .kb-page .lab-library { padding: 16px 14px; border-right: 1.5px solid var(--ink); background: var(--paper); }
@@ -399,8 +400,8 @@
 /* iPhone 外框：屏幕区仍是 248×442，外面加机身、状态栏和底部横条；配色用 iOS 系统色，和 controlPrompts.ts 的 ios 色值表保持一致 */
 .lab-demo-device.phone {
   --app-bg: #ffffff; --app-ink: #000000; --app-ink-2: #6e6e73; --app-line: #c6c6c8; --app-soft: #f2f2f7;
-  --app-accent: #007aff; --app-on-accent: #ffffff; --app-danger: #ff3b30; --app-success: #34c759;
-  --app-accent-shadow: rgb(0 122 255 / 0.3); --focus: #007aff;
+  --app-accent: #0071e3; --app-on-accent: #ffffff; --app-danger: #ff3b30; --app-success: #34c759;
+  --app-accent-shadow: rgb(0 113 227 / 0.3); --focus: #0071e3;
   box-sizing: content-box; width: 248px; border: 9px solid #101114; border-radius: 44px;
   /* 字体栈和提示词里写的一致 */
   font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;

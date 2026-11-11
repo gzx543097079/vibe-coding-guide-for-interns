@@ -36,55 +36,6 @@ input,
 textarea {
   caret-color: var(--accent);
 }
-
-/* ---------- 顶栏 ---------- */
-.VPNav {
-  background: var(--paper);
-}
-.VPNavBar .title,
-.VPNavBarTitle .title {
-  border-bottom-color: transparent !important;
-}
-.VPNavBar,
-.VPNavBar:not(.home),
-.VPNavBar.has-sidebar .content-body,
-.VPNavBar .content-body {
-  background: transparent !important;
-}
-.VPNavBar .divider-line {
-  background: var(--rule) !important;
-}
-.VPNavBar:not(.home) .divider,
-.VPNavBar .divider {
-  border-bottom: 1px solid var(--rule);
-}
-.VPNavBar .title {
-  font-family: var(--font-sans);
-  font-size: 17px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: var(--ink);
-}
-@media (max-width: 359px) {
-  .VPNavBar .title {
-    font-size: 15px;
-  }
-}
-.VPNavBarMenuLink {
-  font-size: 14px !important;
-  font-weight: 500 !important;
-  color: var(--ink-2) !important;
-}
-.VPNavBarMenuLink:hover,
-.VPNavBarMenuLink.active {
-  color: var(--ink) !important;
-}
-.VPNavBarMenuLink.active {
-  text-decoration: underline;
-  text-decoration-color: var(--accent);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 8px;
-}
 /* 内置搜索按钮隐藏，由命令面板入口替代；保留节点用于全文搜索 */
 .VPNavBarSearch {
   position: absolute !important;
@@ -95,11 +46,6 @@ textarea {
 }
 
 /* ---------- 正文 ---------- */
-@media (min-width: 960px) {
-  .VPDoc.has-aside .content-container {
-    max-width: 720px !important;
-  }
-}
 .vp-doc {
   font-size: 16px;
   line-height: 1.8;
@@ -321,8 +267,6 @@ textarea {
     overflow-x: auto;
   }
 }
-
-/* ---------- 章节概览版式 ---------- */
 /* 草稿章节的「计划覆盖」：一张待写要点清单，虚线圆点表示还没写 */
 .is-draft .vp-doc h2[id='计划覆盖'] + ul {
   margin: 16px 0 0;
@@ -351,70 +295,6 @@ textarea {
   height: 12px;
   border-radius: 50%;
   border: 1.5px dashed var(--ink-3);
-}
-
-/* 右侧本页目录 */
-.VPDocAsideOutline .outline-title {
-  font-size: 12.5px !important;
-  font-weight: 600 !important;
-  color: var(--ink) !important;
-}
-.VPDocAsideOutline .content {
-  border-left: 1px solid var(--rule) !important;
-}
-.VPDocAsideOutline .outline-link {
-  padding: 4px 0 !important;
-  font-size: 13.5px !important;
-  line-height: 1.5 !important;
-  color: var(--ink-3) !important;
-  transition: color var(--dur-1) var(--ease) !important;
-}
-.VPDocAsideOutline .outline-link:hover {
-  color: var(--ink) !important;
-}
-.VPDocAsideOutline .outline-link.active {
-  color: var(--accent-ink) !important;
-  font-weight: 600 !important;
-}
-.VPDocAsideOutline .outline-marker {
-  width: 2px !important;
-  background-color: var(--accent) !important;
-}
-
-/* 文末：上一章 / 下一章、编辑链接 */
-.VPDocFooter .edit-info {
-  padding-bottom: 20px !important;
-}
-.VPDocFooter .edit-link-button {
-  color: var(--ink-2) !important;
-  font-weight: 500 !important;
-}
-.VPDocFooter .edit-link-button:hover {
-  color: var(--accent-ink) !important;
-}
-.VPDocFooter .prev-next {
-  border-top: 1px solid var(--rule) !important;
-  padding-top: 24px !important;
-  gap: 12px !important;
-}
-.VPDocFooter .pager-link {
-  min-height: 72px;
-  padding: 14px 18px !important;
-  border-radius: var(--radius-lg) !important;
-  border: 1px solid var(--rule) !important;
-  background: var(--raised);
-  transition: transform var(--dur-2) var(--ease) !important;
-}
-.VPDocFooter .pager-link:hover {
-  border-color: var(--accent) !important;
-  transform: translateY(-2px);
-}
-.VPDocFooter .pager-link .desc {
-  color: var(--ink-3) !important;
-}
-.VPDocFooter .pager-link .title {
-  color: var(--ink) !important;
-  font-weight: 600 !important;
 }
 
 /* 内置全文搜索框（由命令面板唤起） */
@@ -469,9 +349,6 @@ textarea {
 }
 
 /* 页面切换淡入 */
-.page-enter .VPContent {
-  animation: page-in var(--dur-3) var(--ease);
-}
 @keyframes page-in {
   from {
     opacity: 0;
@@ -503,9 +380,4 @@ textarea {
   .reveal-on [data-reveal][data-in] {
     transition: opacity 0.2s linear !important;
   }
-}
-
-/* 上次更新已在页首显示 */
-.VPDocFooter .last-updated {
-  display: none !important;
 }
