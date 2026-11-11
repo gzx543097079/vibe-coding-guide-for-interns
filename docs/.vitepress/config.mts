@@ -1,14 +1,19 @@
 import { defineConfig } from 'vitepress'
+import { totalChapters } from './theme/data/modules'
 
 const REPO = 'https://github.com/gzx543097079/vibe-coding-guide-for-interns'
 const BASE = '/vibe-coding-guide-for-interns/'
+const SITE = 'https://gzx543097079.github.io'
+const NAME = 'Vibe Coding 开发指南'
+const DESCRIPTION = `Vibe Coding 开发笔记：环境、代码、调试和交付时随手查的 ${totalChapters} 篇笔记。`
 
 export default defineConfig({
   base: BASE,
   lang: 'zh-CN',
   title: 'Vibe Coding 开发指南',
   titleTemplate: ':title · Vibe Coding 开发指南',
-  description: 'Vibe Coding 开发笔记：环境、代码、调试和交付时随手查的 108 篇笔记。',
+  description: DESCRIPTION,
+  sitemap: { hostname: SITE + BASE },
   cleanUrls: true,
   lastUpdated: true,
   srcExclude: ['snippets/**'],
@@ -19,12 +24,31 @@ export default defineConfig({
       pageData.frontmatter.pageClass = cls ? `${cls} is-draft` : 'is-draft'
     }
   },
+  // 每页的分享卡片信息和规范地址
+  transformHead({ pageData }) {
+    const path = pageData.relativePath.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, '')
+    const url = SITE + BASE + path
+    const home = pageData.relativePath === 'index.md'
+    const title = home || !pageData.title ? NAME : `${pageData.title} · ${NAME}`
+    const description = pageData.description || pageData.frontmatter.description || DESCRIPTION
+    return [
+      ['link', { rel: 'canonical', href: url }],
+      ['meta', { property: 'og:type', content: home ? 'website' : 'article' }],
+      ['meta', { property: 'og:site_name', content: NAME }],
+      ['meta', { property: 'og:locale', content: 'zh_CN' }],
+      ['meta', { property: 'og:title', content: title }],
+      ['meta', { property: 'og:description', content: description }],
+      ['meta', { property: 'og:url', content: url }],
+      ['meta', { property: 'og:image', content: `${SITE}${BASE}og.png` }],
+      ['meta', { property: 'og:image:width', content: '1200' }],
+      ['meta', { property: 'og:image:height', content: '630' }],
+      ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ]
+  },
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: `${BASE}favicon.svg` }],
     ['meta', { name: 'theme-color', content: '#ffffff', media: '(prefers-color-scheme: light)' }],
     ['meta', { name: 'theme-color', content: '#121417', media: '(prefers-color-scheme: dark)' }],
-    // 首屏绘制前恢复侧边栏折叠状态，避免刷新时闪动
-    ['script', {}, "try{if(localStorage.getItem('vcg:sidebar-collapsed')==='1')document.documentElement.classList.add('sidebar-collapsed')}catch(e){}"],
   ],
   markdown: {
     theme: { light: 'github-dark-default', dark: 'github-dark-default' },
