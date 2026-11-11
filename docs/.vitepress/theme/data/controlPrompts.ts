@@ -14,6 +14,8 @@ export interface Verify {
   note: string
   /** 验证时用的色值表，不写就是站内配色 */
   palette?: Palette
+  /** SwiftUI 技术栈的验证结果：只在模拟器里用触摸操作过，没有真机 */
+  swiftui?: string
 }
 
 export interface ControlSpec {
@@ -956,12 +958,19 @@ const verifyLog: Record<string, Verify> = {
  * 提示词原文、独立实现和比对脚本在 scripts/verify-prompts/。
  */
 const D2 = '2026-11-10'
+const SWIFTUI = {
+  'swipe-reply': '2026-11-11 在 iOS 模拟器里用触摸操作过：拖动、过阈值、松手、发送、短距离拖动，一致。',
+  reaction: '2026-11-11 在 iOS 模拟器里用触摸操作过：长按打开、选表情、短按，只有一处不一致——表情条盖在被长按的气泡上，没有在它上方 8pt。',
+  stories: '2026-11-11 在 iOS 模拟器里用触摸操作过：自动推进、点右侧切换、按住隐藏顶部，一致。',
+  zoom: '2026-11-11 在 iOS 模拟器里用触摸操作过：放大、拖动、松手关闭，一致。',
+}
 Object.assign(verifyLog, {
   'swipe-reply': { status: '已验证', date: D2, rounds: 1, palette: 'ios', note: '对比默认、拖动未过阈值、过阈值、松手回弹中间帧、引用条、发送后、深色 7 个状态，一致；键盘回复、取消回复、空输入禁用的行为一致。对比前把站内演示的三处细节改成和提示词一致（引用条标题字重、气泡盖住箭头、松手后箭头保持强调色）。' },
   reaction: { status: '已验证', date: D2, rounds: 2, palette: 'ios', note: '对比默认、按压、表情条打开、已有回应、深色 5 个状态；长按、右键、回车三种打开方式和替换、取消、Esc、点遮罩的行为一致。第一轮自己消息的读屏文案前缀和徽章数字行高不同，补进提示词后第二轮一致。' },
   stories: { status: '已验证', date: D2, rounds: 1, palette: 'ios', note: '对比播放、按钮暂停、按住暂停、切换中间帧、切换后 5 个状态，一致；短按、长按、方向键、自动推进和末尾循环的行为一致。进度条只核对了推进和暂停，没有逐帧比对填充长度。' },
   zoom: { status: '已验证', date: D2, rounds: 1, palette: 'ios', note: '对比网格、放大首帧与中间帧、全屏、向下拖动、关闭中间帧、深色 7 个状态，大图的位置、尺寸、圆角和遮罩透明度一致；回弹、Esc、关闭按钮和焦点归还的行为一致。' },
 } satisfies Record<string, Verify>)
+for (const [id, note] of Object.entries(SWIFTUI)) verifyLog[id].swiftui = note
 for (const c of controls) c.verify = verifyLog[c.id] ?? c.verify
 
 export function getControl(id: string): ControlSpec | undefined {
