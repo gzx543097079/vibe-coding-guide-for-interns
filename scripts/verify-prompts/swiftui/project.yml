@@ -1,0 +1,20 @@
+# 用 xcodegen 生成工程：cd scripts/verify-prompts/swiftui && xcodegen
+name: PromptVerify
+options:
+  bundleIdPrefix: dev.vcg
+  deploymentTarget:
+    iOS: "17.0"
+targets:
+  PromptVerify:
+    type: application
+    platform: iOS
+    sources: [App]
+    settings:
+      base:
+        SWIFT_VERSION: "5.0"
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_CFBundleDisplayName: 提示词验证
+        PRODUCT_BUNDLE_IDENTIFIER: dev.vcg.promptverify
+        TARGETED_DEVICE_FAMILY: "1"
+        CODE_SIGNING_ALLOWED: NO

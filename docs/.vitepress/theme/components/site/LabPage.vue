@@ -246,6 +246,7 @@ function play() {
             </ul>
             <p>{{ spec?.verify.note }}</p>
             <p v-if="spec?.verify.palette === 'ios'">验证用的是 iPhone 外框和 iOS 配色的网页写法，比对的是各状态下元素的位置、尺寸、颜色和透明度；原生片段尚未完成编译与真机验证。</p>
+            <p v-if="spec?.verify.swiftui">SwiftUI 版：{{ spec.verify.swiftui }}没有在真机上验证。</p>
             <p v-else>验证状态针对站内配色的网页演示。iPhone 外框只换了色值表，没有单独验证；原生片段尚未完成编译与真机验证。</p>
           </div>
         </div>
