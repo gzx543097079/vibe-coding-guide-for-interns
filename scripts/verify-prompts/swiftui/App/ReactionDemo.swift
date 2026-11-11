@@ -318,8 +318,9 @@ struct ReactionDemo: View {
         .overlay(alignment: msg.mine ? .topTrailing : .topLeading) {
             if openID == msg.id {
                 bar(msg)
-                    // 条的底边距气泡顶部 8pt
-                    .alignmentGuide(.top) { $0[.bottom] + 8 }
+                    // 条的底边距气泡顶部 8pt：条高 42（上下 padding 5 + 表情 32），整体上移 42 + 8
+                    // 原先用 alignmentGuide(.top) 在这个 overlay 里没有生效，条落在气泡上，改成显式偏移
+                    .offset(y: -(42 + 8))
                     .transition(barTransition(mine: msg.mine))
             }
         }
