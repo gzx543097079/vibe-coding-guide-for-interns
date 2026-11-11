@@ -170,15 +170,6 @@
   color: var(--ink);
 }
 
-/* 卡片统一：1px 边框、10px 圆角、白底、无阴影 */
-.kb-page .lab-library,
-.kb-page .lab-detail {
-  border: 1px solid var(--rule);
-  border-radius: 10px;
-  background: var(--paper);
-  box-shadow: none;
-}
-
 /* 筛选 / 分段控件统一 */
 .kb-page .segmented-control,
 .kb-page .kb-glossary-filters button {

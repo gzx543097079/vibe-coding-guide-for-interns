@@ -13,7 +13,8 @@ import { copyText } from '../../composables/clipboard'
 import SiteIcon from './SiteIcon.vue'
 const active = ref('button')
 const query = ref('')
-const frame = ref<Frame>('browser')
+// 默认用 iPhone 外框；网页外框留作对照
+const frame = ref<Frame>('phone')
 const replay = ref(0)
 const playing = ref(false)
 const stack = ref('HTML + CSS + JS')
@@ -23,7 +24,11 @@ const panel = ref('guide')
 const info = computed(() => demos[active.value])
 const spec = computed(() => getControl(active.value))
 const prompt = computed(() =>
-  buildControlPrompt(active.value, stack.value, options),
+  // iPhone 外框用 iOS 系统色，提示词的色值表和画布跟着外框走
+  buildControlPrompt(active.value, stack.value, options, {
+    palette: frame.value === 'phone' ? 'ios' : 'site',
+    canvas: frame.value,
+  }),
 )
 const groups = computed(() => {
   const result: { name: string; items: { id: string; title: string }[] }[] = []
@@ -44,7 +49,6 @@ const groups = computed(() => {
 })
 function select(id: string) {
   active.value = id
-  frame.value = 'browser'
   playing.value = false
   replay.value++
   history.replaceState(null, '', '#' + id)
@@ -54,7 +58,6 @@ function fromHash() {
   const id = new URLSearchParams(location.search).get('frame') ?? location.hash.slice(1)
   if (demos[id]) {
     active.value = id
-    frame.value = 'browser'
   }
 }
 onMounted(() => {
@@ -63,7 +66,7 @@ onMounted(() => {
 })
 onBeforeUnmount(() => window.removeEventListener('hashchange', fromHash))
 watch(
-  [active, stack, () => JSON.stringify(options)],
+  [active, stack, frame, () => JSON.stringify(options)],
   () => (copied.value = 'idle'),
 )
 async function copy() {
@@ -95,7 +98,7 @@ function play() {
         /></label>
         <nav aria-label="组件列表">
           <section v-for="g in groups" :key="g.name">
-            <h2>{{ g.name }}</h2>
+            <h2>{{ g.name }}<small>{{ g.items.length }}</small></h2>
             <button
               v-for="c in g.items"
               :key="c.id"
@@ -110,7 +113,7 @@ function play() {
             没有匹配组件。<button @click="query = ''">清空搜索</button>
           </p>
         </nav>
-        <p class="library-note">17 个组件 · 默认网页画布，也可以切到参考画布</p>
+        <p class="library-note">17 个组件 · 默认 iPhone 外框，也可以切到网页</p>
       </aside>
       <div class="lab-main">
         <div class="lab-demo-bar">
@@ -121,15 +124,15 @@ function play() {
           <div class="lab-demo-actions">
             <div class="segmented-control" role="group" aria-label="演示外框">
               <button
-                :aria-pressed="frame === 'browser'"
-                @click="frame = 'browser'"
-              >
-                网页</button
-              ><button
                 :aria-pressed="frame === 'phone'"
                 @click="frame = 'phone'"
               >
-                参考画布
+                iPhone</button
+              ><button
+                :aria-pressed="frame === 'browser'"
+                @click="frame = 'browser'"
+              >
+                网页
               </button>
             </div>
             <button class="icon-button" aria-label="播放组件演示" @click="play">
@@ -139,9 +142,17 @@ function play() {
         </div>
         <div class="lab-canvas">
           <div class="lab-demo-device" :class="frame">
-            <div class="lab-device-heading">
-              <span>{{ frame === 'phone' ? '参考画布' : '网页画布' }}</span
-              ><span class="live-indicator" />
+            <div v-if="frame === 'phone'" class="lab-ios-status" aria-hidden="true">
+              <span class="lab-ios-time">9:41</span>
+              <span class="lab-ios-island" />
+              <span class="lab-ios-icons">
+                <svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="7" width="3" height="4" rx="1" /><rect x="4.6" y="5" width="3" height="6" rx="1" /><rect x="9.2" y="2.5" width="3" height="8.5" rx="1" /><rect x="13.8" y="0" width="3" height="11" rx="1" /></svg>
+                <svg width="15" height="11" viewBox="0 0 15 11"><path d="M7.5 2.2c2 0 3.9.8 5.3 2.1l1-1.1A9.2 9.2 0 0 0 7.5.7 9.2 9.2 0 0 0 1.200 3.2l1 1.1a7.700 7.700 0 0 1 5.300-2.100Zm0 3.200c1.200 0 2.300.5 3.100 1.200l1-1.100a6.200 6.200 0 0 0-8.200 0l1 1.100c.8-.7 1.900-1.200 3.100-1.200Zm0 3.100c.6 0 1.100.2 1.500.6l-1.500 1.700L6 9.100c.4-.4.900-.6 1.500-.6Z" /></svg>
+                <svg width="25" height="12" viewBox="0 0 25 12"><rect x=".5" y=".5" width="21" height="11" rx="3.300" fill="none" stroke="currentColor" opacity=".4" /><rect x="2" y="2" width="18" height="8" rx="2" /><path d="M23 4v4c.8-.300 1.500-1.100 1.500-2S23.800 4.300 23 4Z" opacity=".45" /></svg>
+              </span>
+            </div>
+            <div v-else class="lab-device-heading">
+              <span>网页外框</span><span class="live-indicator" />
             </div>
             <div class="lab-demo-screen">
               <component
@@ -151,6 +162,7 @@ function play() {
                 :frame="frame"
               />
             </div>
+            <div v-if="frame === 'phone'" class="lab-ios-home" aria-hidden="true" />
           </div>
           <p class="lab-canvas-hint">{{ info.hint }}</p>
         </div>
@@ -171,7 +183,7 @@ function play() {
             <div>
               <h3>生成一段提示词</h3>
               <p>
-                选好技术栈和选项，复制后把占位符换成自己的内容。提示词沿用参考演示的固定画布规格。
+                选好技术栈和选项，复制后把占位符换成自己的内容。提示词里的画布和色值跟上面选的外框一致。
               </p>
               <div class="lab-prompt-settings">
                 <label
@@ -234,7 +246,7 @@ function play() {
               <li v-for="item in spec?.acceptance" :key="item">{{ item }}</li>
             </ul>
             <p>{{ spec?.verify.note }}</p>
-            <p>验证状态针对网页演示；原生片段尚未完成编译与真机验证。</p>
+            <p>验证状态针对站内配色的网页演示。iPhone 外框只换了色值表，没有单独验证；原生片段尚未完成编译与真机验证。</p>
           </div>
         </div>
       </div>
