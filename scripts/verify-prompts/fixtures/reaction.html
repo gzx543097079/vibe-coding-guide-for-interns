@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>长按表情回应</title>
+<script>
+  // URL 带 ?dark 时切换到深色
+  if (new URLSearchParams(location.search).has('dark')) {
+    document.documentElement.classList.add('dark');
+  }
+</script>
+<style>
+  :root {
+    --bg: #ffffff;
+    --ink: #000000;
+    --ink-2: #6e6e73;
+    --line: #c6c6c8;
+    --soft: #f2f2f7;
+    --accent: #0071e3;
+    --on-accent: #ffffff;
+    --danger: #ff3b30;
+    --success: #34c759;
+    --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  }
+  html.dark {
+    --bg: #000000;
+    --ink: #ffffff;
+    --ink-2: #98989f;
+    --line: #38383a;
+    --soft: #1c1c1e;
+    --accent: #0a84ff;
+    --on-accent: #ffffff;
+    --danger: #ff453a;
+    --success: #30d158;
+  }
+
+  html, body { margin: 0; }
+  body { background: #888; }
+
+  #canvas, #canvas * { box-sizing: border-box; }
+
+  #canvas {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 248px;
+    height: 442px;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  #canvas button {
+    border: 0;
+    background: transparent;
+    font: inherit;
+    color: inherit;
+    margin: 0;
+    padding: 0;
+  }
+  #canvas button:focus { outline: none; }
+  #canvas button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* 标题栏 */
+  .titlebar {
+    margin: 0;
+    padding: 12px 18px 10px;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    text-align: left;
+  }
+
+  /* 消息列表 */
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px 12px 8px;
+  }
+  .row {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .row.me { align-items: flex-end; }
+  /* 被长按的那一行抬到遮罩之上 */
+  .row.active { z-index: 20; }
+
+  /* 气泡 */
+  #canvas .bubble {
+    position: relative;
+    z-index: 0;
+    max-width: 78%;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 1.45;
+    text-align: left;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    background: var(--soft);
+    color: var(--ink);
+    border-radius: 18px 18px 18px 6px;
+    transform: scale(1);
+    transition: transform 150ms var(--ease);
+  }
+  #canvas .row.me .bubble {
+    background: var(--accent);
+    color: var(--on-accent);
+    border-radius: 18px 18px 6px 18px;
+  }
+  #canvas .bubble.pressing {
+    transform: scale(0.96);
+    transition: transform 450ms var(--ease);
+  }
+
+  /* 遮罩 */
+  .overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    background: rgb(0 0 0 / 0.28);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms var(--ease);
+  }
+  .overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* 表情条 */
+  .bar {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    padding: 5px 6px;
+    border-radius: 999px;
+    background: var(--bg);
+    box-shadow: 0 6px 24px rgb(0 0 0 / 0.18), 0 0 0 1px var(--line);
+    transform-origin: 24px 100%;
+    animation: bar-in 220ms var(--ease) both;
+  }
+  .row.me .bar {
+    left: auto;
+    right: 0;
+    transform-origin: calc(100% - 24px) 100%;
+  }
+  .bar.leaving {
+    animation: bar-out 140ms var(--ease-in) both;
+    pointer-events: none;
+  }
+  @keyframes bar-in {
+    from { transform: scale(0.6); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+  }
+  @keyframes bar-out {
+    from { transform: scale(1);   opacity: 1; }
+    to   { transform: scale(0.6); opacity: 0; }
+  }
+
+  /* 表情按钮 */
+  #canvas .emoji {
+    flex: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 20px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 150ms var(--ease);
+    /* 延迟期间保持起始状态：fill-mode backwards */
+    animation: emoji-in 260ms var(--ease) backwards;
+    animation-delay: calc(var(--n) * 30ms);
+  }
+  #canvas .emoji[aria-pressed="true"] { background: var(--soft); }
+  #canvas .emoji:hover,
+  #canvas .emoji:focus-visible {
+    transform: scale(1.25) translateY(-2px);
+  }
+  @keyframes emoji-in {
+    from { transform: scale(0.3); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+  }
+
+  /* 回应徽章 */
+  #canvas .badge {
+    position: relative;
+    z-index: 1;
+    margin: -6px 10px 0;
+    height: 24px;
+    padding: 0 8px 0 6px;
+    border-radius: 12px;
+    border: 1px solid var(--accent);
+    background: color-mix(in oklab, var(--accent) 14%, var(--bg));
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    animation: badge-in 350ms var(--ease) both;
+  }
+  .badge .badge-emoji { font-size: 14px; line-height: 1; }
+  .badge .badge-count {
+    font-size: 12px;
+    line-height: 1;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  #canvas .badge.leaving {
+    animation: badge-out 160ms var(--ease-in) both;
+    pointer-events: none;
+  }
+  @keyframes badge-in {
+    0%   { transform: scale(0); }
+    60%  { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+  @keyframes badge-out {
+    from { transform: scale(1); opacity: 1; }
+    to   { transform: scale(0); opacity: 0; }
+  }
+
+  /* 减少动态效果：去掉位移和缩放，只保留透明度 */
+  @media (prefers-reduced-motion: reduce) {
+    #canvas .bubble,
+    #canvas .bubble.pressing { transform: none; transition: none; }
+    #canvas .emoji { transition: none; animation-name: fade-in; }
+    #canvas .emoji:hover,
+    #canvas .emoji:focus-visible { transform: none; }
+    .bar { animation-name: fade-in; }
+    .bar.leaving { animation-name: fade-out; }
+    #canvas .badge { animation: none; }
+    #canvas .badge.leaving { animation: fade-out 160ms var(--ease-in) both; }
+  }
+  @keyframes fade-in  { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes fade-out { from { opacity: 1; } to { opacity: 0; } }
+</style>
+</head>
+<body>
+<div id="canvas">
+  <h1 class="titlebar">林夕</h1>
+  <div class="list" id="list"></div>
+  <div class="overlay" id="overlay"></div>
+</div>
+
+<script>
+(function () {
+  var EMOJIS = ['👍', '❤️', '😂', '😮', '😢', '🙏'];
+  var MESSAGES = [
+    { me: false, text: '新版本今晚发布' },
+    { me: true,  text: '收到，我来盯发布' },
+    { me: false, text: '辛苦了，发完早点休息' }
+  ];
+  var LONG_PRESS_MS = 450;
+  var MOVE_TOLERANCE = 8;
+  var BAR_OUT_MS = 140;
+  var OVERLAY_MS = 180;
+  var BADGE_OUT_MS = 160;
+
+  var list = document.getElementById('list');
+  var overlay = document.getElementById('overlay');
+
+  var current = null;   // 当前打开表情条的消息
+  var currentBar = null;
+  var closing = null;   // 正在播放退出动画的表情条
+  var press = null;     // 进行中的长按
+
+  /* ---------- 构建消息 ---------- */
+  var msgs = MESSAGES.map(function (data) {
+    var row = document.createElement('div');
+    row.className = 'row' + (data.me ? ' me' : '');
+
+    var bubble = document.createElement('button');
+    bubble.type = 'button';
+    bubble.className = 'bubble';
+    bubble.textContent = data.text;
+    bubble.setAttribute('aria-label', (data.me ? '自己' : '林夕') + '：' + data.text + '。按回车添加回应');
+    bubble.setAttribute('aria-haspopup', 'true');
+    bubble.setAttribute('aria-expanded', 'false');
+
+    row.appendChild(bubble);
+    list.appendChild(row);
+
+    var msg = {
+      me: data.me, text: data.text, row: row, bubble: bubble,
+      reaction: null,   // 逻辑上的回应
+      badge: null,      // 当前 DOM 里的徽章（可能正在消失）
+      badgeEmoji: null,
+      badgeLeaving: false
+    };
+    bindBubble(msg);
+    return msg;
+  });
+
+  /* ---------- 长按 ---------- */
+  function cancelPress() {
+    if (!press) return;
+    clearTimeout(press.timer);
+    press.msg.bubble.classList.remove('pressing');
+    press = null;
+  }
+
+  function bindBubble(msg) {
+    var bubble = msg.bubble;
+
+    bubble.addEventListener('pointerdown', function (e) {
+      if (!e.isPrimary) return;
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      if (current) return; // 表情条打开时不能再长按
+      cancelPress();
+      bubble.classList.add('pressing');
+      press = {
+        msg: msg,
+        id: e.pointerId,
+        x: e.clientX,
+        y: e.clientY,
+        timer: setTimeout(function () {
+          cancelPress();      // 恢复 scale(1)
+          openBar(msg);
+        }, LONG_PRESS_MS)
+      };
+    });
+
+    bubble.addEventListener('pointermove', function (e) {
+      if (!press || press.msg !== msg || e.pointerId !== press.id) return;
+      var dx = e.clientX - press.x, dy = e.clientY - press.y;
+      if (dx * dx + dy * dy > MOVE_TOLERANCE * MOVE_TOLERANCE) { cancelPress(); return; }
+      // 触摸指针会被隐式捕获，不触发 pointerleave，这里手动判断是否移出气泡
+      var r = bubble.getBoundingClientRect();
+      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) cancelPress();
+    });
+
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (type) {
+      bubble.addEventListener(type, function (e) {
+        if (press && press.msg === msg && e.pointerId === press.id) cancelPress();
+      });
+    });
+
+    // 右键打开，并阻止浏览器默认菜单
+    bubble.addEventListener('contextmenu', function (e) {
+      e.preventDefault();
+      cancelPress();
+      openBar(msg);
+    });
+
+    // 键盘回车 / 空格（以及读屏激活）会触发 detail 为 0 的 click；指针点击不打开
+    bubble.addEventListener('click', function (e) {
+      if (e.detail === 0) openBar(msg);
+    });
+
+    // 焦点通过 Tab 离开这一行时关闭表情条
+    msg.row.addEventListener('focusout', function (e) {
+      if (current === msg && e.relatedTarget && !msg.row.contains(e.relatedTarget)) closeBar(false);
+    });
+  }
+
+  /* ---------- 表情条 ---------- */
+  function finishClosing() {
+    if (!closing) return;
+    clearTimeout(closing.t1);
+    clearTimeout(closing.t2);
+    closing.bar.remove();
+    closing.msg.row.classList.remove('active');
+    closing = null;
+  }
+
+  function openBar(msg) {
+    if (current) return; // 同一时间只能打开一个
+    finishClosing();
+    cancelPress();
+
+    var bar = document.createElement('div');
+    bar.className = 'bar';
+    bar.setAttribute('role', 'group');
+    bar.setAttribute('aria-label', '选择回应');
+
+    EMOJIS.forEach(function (emoji, n) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'emoji';
+      btn.textContent = emoji;
+      btn.style.setProperty('--n', n);
+      btn.setAttribute('aria-label', '回应 ' + emoji);
+      btn.setAttribute('aria-pressed', msg.reaction === emoji ? 'true' : 'false');
+      btn.addEventListener('click', function () { pick(msg, emoji); });
+      bar.appendChild(btn);
+    });
+
+    // 放在气泡之后、徽章之前，Tab 顺序为 气泡 → 表情 → 徽章
+    msg.bubble.insertAdjacentElement('afterend', bar);
+    msg.row.classList.add('active');
+    overlay.classList.add('show');
+    msg.bubble.setAttribute('aria-expanded', 'true');
+
+    current = msg;
+    currentBar = bar;
+    bar.firstElementChild.focus({ preventScroll: true });
+  }
+
+  function closeBar(restoreFocus) {
+    if (!current) return;
+    var msg = current, bar = currentBar;
+    current = null;
+    currentBar = null;
+
+    msg.bubble.setAttribute('aria-expanded', 'false');
+    overlay.classList.remove('show');
+    if (restoreFocus !== false) msg.bubble.focus({ preventScroll: true });
+
+    bar.classList.add('leaving');
+    bar.inert = true;
+    closing = {
+      msg: msg,
+      bar: bar,
+      t1: setTimeout(function () { bar.remove(); }, BAR_OUT_MS),
+      // 遮罩淡出结束后再把这一行放回普通层级，避免中途突然变暗
+      t2: setTimeout(function () {
+        msg.row.classList.remove('active');
+        closing = null;
+      }, OVERLAY_MS)
+    };
+  }
+
+  function pick(msg, emoji) {
+    if (current !== msg) return;
+    msg.reaction = (msg.reaction === emoji) ? null : emoji;
+    closeBar(true);
+    syncBadge(msg);
+  }
+
+  overlay.addEventListener('click', function () { closeBar(true); });
+  overlay.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && current) {
+      e.preventDefault();
+      closeBar(true);
+    }
+  });
+
+  /* ---------- 徽章 ---------- */
+  // 让 DOM 里的徽章追上 msg.reaction；任何时刻最多只有一个徽章元素
+  function syncBadge(msg) {
+    if (msg.badge) {
+      if (msg.badgeLeaving) return;                    // 等它消失完再同步
+      if (msg.badgeEmoji === msg.reaction) return;     // 已一致
+      var old = msg.badge;
+      var hadFocus = document.activeElement === old;
+      msg.badgeLeaving = true;
+      old.classList.add('leaving');
+      if (hadFocus) msg.bubble.focus({ preventScroll: true });
+      old.inert = true;
+      setTimeout(function () {
+        old.remove();
+        msg.badge = null;
+        msg.badgeEmoji = null;
+        msg.badgeLeaving = false;
+        syncBadge(msg);                                // 旧的消失后，新的再出现
+      }, BADGE_OUT_MS);
+      return;
+    }
+    if (!msg.reaction) return;
+
+    var emoji = msg.reaction;
+    var badge = document.createElement('button');
+    badge.type = 'button';
+    badge.className = 'badge';
+    badge.setAttribute('aria-label', '取消回应 ' + emoji);
+
+    var e1 = document.createElement('span');
+    e1.className = 'badge-emoji';
+    e1.textContent = emoji;
+    var e2 = document.createElement('span');
+    e2.className = 'badge-count';
+    e2.textContent = '1';
+    badge.appendChild(e1);
+    badge.appendChild(e2);
+
+    badge.addEventListener('click', function () {
+      if (msg.badge !== badge || msg.badgeLeaving) return;
+      msg.reaction = null;
+      if (current === msg) closeBar(true);
+      syncBadge(msg);
+    });
+
+    msg.row.appendChild(badge);
+    msg.badge = badge;
+    msg.badgeEmoji = emoji;
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>滑动回复</title>
+<script>
+  // URL 带 ?dark 时使用深色值
+  if (new URLSearchParams(location.search).has('dark')) {
+    document.documentElement.classList.add('dark');
+  }
+</script>
+<style>
+  :root {
+    --bg: #ffffff;
+    --ink: #000000;
+    --ink-2: #6e6e73;
+    --line: #c6c6c8;
+    --soft: #f2f2f7;
+    --accent: #0071e3;
+    --on-accent: #ffffff;
+    --danger: #ff3b30;
+    --success: #34c759;
+    --focus: #0071e3;
+    --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  }
+  html.dark {
+    --bg: #000000;
+    --ink: #ffffff;
+    --ink-2: #98989f;
+    --line: #38383a;
+    --soft: #1c1c1e;
+    --accent: #0a84ff;
+    --on-accent: #ffffff;
+    --danger: #ff453a;
+    --success: #30d158;
+    --focus: #0a84ff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body { margin: 0; }
+  body {
+    background: #888;
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  button {
+    border: 0;
+    background: transparent;
+    font: inherit;
+    color: inherit;
+    padding: 0;
+    margin: 0;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  /* 画布 */
+  #canvas {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 248px;
+    height: 442px;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 标题栏 */
+  .header {
+    flex: none;
+    margin: 0;
+    padding: 12px 18px 10px;
+    font-size: 17px;
+    font-weight: 700;
+    text-align: left;
+    color: var(--ink);
+  }
+
+  /* 消息列表 */
+  .list {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 4px 12px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .list.has-quote { padding-bottom: 52px; }
+
+  .row {
+    position: relative;
+    flex: none;
+    display: flex;
+    justify-content: flex-start;
+  }
+  .row.me { justify-content: flex-end; }
+
+  /* 气泡 */
+  .bubble {
+    position: relative;
+    z-index: 1;
+    display: block;
+    max-width: 78%;
+    min-width: 0;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 1.45;
+    text-align: left;
+    background: var(--soft);
+    color: var(--ink);
+    border-radius: 18px 18px 18px 6px;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: pan-y;
+    overflow-wrap: anywhere;
+  }
+  .row.me .bubble {
+    background: var(--accent);
+    color: var(--on-accent);
+    border-radius: 18px 18px 6px 18px;
+  }
+  /* 松手回弹 */
+  .bubble.settling { transition: transform 300ms var(--ease); }
+  /* 新消息进入 */
+  .bubble.enter { animation: bubble-in 260ms var(--ease); }
+  @keyframes bubble-in {
+    from { opacity: 0; transform: translateY(10px) scale(0.96); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .bubble-text { display: block; }
+
+  /* 气泡内的引用行 */
+  .bubble-quote {
+    display: block;
+    font-size: 12px;
+    opacity: 0.75;
+    padding-left: 8px;
+    border-left: 2px solid currentColor;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* 回复箭头 */
+  .arrow {
+    position: absolute;
+    right: 0;
+    top: calc(50% - 14px);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--soft);
+    color: var(--ink-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.5);
+    pointer-events: none;
+  }
+  .arrow.settling { transition: opacity 300ms var(--ease), transform 300ms var(--ease); }
+  .arrow.armed { background: var(--accent); color: var(--on-accent); }
+  .arrow svg { display: block; width: 16px; height: 16px; }
+  .arrow.pop svg { animation: arrow-pop 200ms var(--ease); }
+  @keyframes arrow-pop {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.25); }
+    100% { transform: scale(1); }
+  }
+
+  /* 引用条 */
+  .quote-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 52px;
+    z-index: 2;
+    height: 44px;
+    padding: 0 8px 0 12px;
+    border-top: 1px solid var(--line);
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(8px);
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 200ms var(--ease), transform 200ms var(--ease), visibility 0s linear 200ms;
+  }
+  .quote-bar.show {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity 200ms var(--ease), transform 200ms var(--ease), visibility 0s;
+  }
+  .quote-body {
+    flex: 1 1 auto;
+    min-width: 0;
+    border-left: 2px solid var(--accent);
+    padding-left: 8px;
+    line-height: 1.35;
+  }
+  .quote-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .quote-text {
+    font-size: 12px;
+    color: var(--ink-2);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .quote-close {
+    flex: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    color: var(--ink-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .quote-close:hover { background: var(--soft); }
+  .quote-close svg { display: block; width: 14px; height: 14px; }
+
+  /* 输入栏 */
+  .composer {
+    flex: none;
+    position: relative;
+    z-index: 3;
+    height: 52px;
+    padding: 0 10px;
+    border-top: 1px solid var(--line);
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .input {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 36px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: 18px;
+    background: var(--soft);
+    color: var(--ink);
+    font: inherit;
+    font-size: 14px;
+    outline: none;
+  }
+  .input::placeholder { color: var(--ink-2); opacity: 1; }
+  .input:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 2px var(--accent);
+  }
+  .send {
+    flex: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--on-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .send:disabled { opacity: 0.4; cursor: default; }
+  .send svg { display: block; width: 16px; height: 16px; }
+
+  /* 视觉隐藏 */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* 减少动态效果：去掉位移和缩放动画，只保留透明度 */
+  @media (prefers-reduced-motion: reduce) {
+    .bubble.settling { transition: none; }
+    .arrow.settling { transition: opacity 300ms var(--ease); }
+    .arrow.pop svg { animation: none; }
+    .bubble.enter { animation-name: bubble-fade; }
+    .quote-bar { transform: none; transition: opacity 200ms var(--ease), visibility 0s linear 200ms; }
+    .quote-bar.show { transition: opacity 200ms var(--ease), visibility 0s; }
+  }
+  @keyframes bubble-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+<div id="canvas">
+  <h1 class="header">林夕</h1>
+
+  <div class="list" id="list"></div>
+
+  <div class="quote-bar" id="quoteBar">
+    <div class="quote-body">
+      <div class="quote-title" id="quoteTitle"></div>
+      <div class="quote-text" id="quoteText"></div>
+    </div>
+    <button type="button" class="quote-close" id="quoteClose" aria-label="取消回复">
+      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+        <path d="m3 3 8 8M11 3l-8 8"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="composer">
+    <input class="input" id="input" type="text" placeholder="发消息" aria-label="消息内容" autocomplete="off">
+    <button type="button" class="send" id="send" aria-label="发送" disabled>
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M8 13V3M3.5 7.5 8 3l4.5 4.5"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="sr-only" id="live" aria-live="polite"></div>
+</div>
+
+<script>
+(function () {
+  var PEER = '林夕';
+  var FACTOR = 0.6;      // 气泡位移 = 指针位移 × 0.6
+  var MAX_SHIFT = 64;    // 最多向左 64px
+  var THRESHOLD = 48;    // 触发阈值
+
+  var list = document.getElementById('list');
+  var quoteBar = document.getElementById('quoteBar');
+  var quoteTitle = document.getElementById('quoteTitle');
+  var quoteText = document.getElementById('quoteText');
+  var quoteClose = document.getElementById('quoteClose');
+  var input = document.getElementById('input');
+  var send = document.getElementById('send');
+  var live = document.getElementById('live');
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  // 当前正在引用的消息，null 表示没有引用条
+  var replyTo = null;
+
+  var ARROW_SVG =
+    '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" ' +
+    'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M6.5 3.5 2.5 7.5l4 4M3 7.5h6a4 4 0 0 1 4 4v1"/></svg>';
+
+  function addMessage(msg, animate) {
+    var row = document.createElement('div');
+    row.className = 'row' + (msg.me ? ' me' : '');
+
+    var bubble = document.createElement('button');
+    bubble.type = 'button';
+    bubble.className = 'bubble';
+    bubble.setAttribute('aria-label', (msg.me ? '自己' : PEER) + '：' + msg.text + '。按回车回复');
+
+    if (msg.quote) {
+      var q = document.createElement('span');
+      q.className = 'bubble-quote';
+      q.textContent = msg.quote;
+      bubble.appendChild(q);
+    }
+    var t = document.createElement('span');
+    t.className = 'bubble-text';
+    t.textContent = msg.text;
+    bubble.appendChild(t);
+
+    var arrow = document.createElement('span');
+    arrow.className = 'arrow';
+    arrow.setAttribute('aria-hidden', 'true');
+    arrow.innerHTML = ARROW_SVG;
+
+    row.appendChild(bubble);
+    row.appendChild(arrow);
+    list.appendChild(row);
+
+    bindBubble(bubble, arrow, msg);
+
+    if (animate) {
+      bubble.classList.add('enter');
+      bubble.addEventListener('animationend', function () {
+        bubble.classList.remove('enter');
+      }, { once: true });
+    }
+  }
+
+  function bindBubble(bubble, arrow, msg) {
+    var pointerId = null;
+    var startX = 0;
+    var shift = 0;       // 当前气泡位移（<= 0）
+    var armed = false;   // 是否已过阈值
+    var clearTimer = 0;
+
+    function apply() {
+      var p = Math.min(Math.abs(shift) / THRESHOLD, 1);
+      bubble.style.transform = shift ? 'translateX(' + shift + 'px)' : '';
+      arrow.style.opacity = String(p);
+      arrow.style.transform = 'scale(' + (0.5 + 0.5 * p) + ')';
+    }
+
+    function setArmed(next) {
+      if (next === armed) return;
+      armed = next;
+      arrow.classList.toggle('armed', armed);
+      arrow.classList.remove('pop');
+      if (armed) {
+        // 每次越过阈值播放一次图标回弹
+        void arrow.offsetWidth;
+        arrow.classList.add('pop');
+      }
+    }
+
+    function settle() {
+      // 回到原位：气泡与箭头都带 300ms 过渡
+      bubble.classList.add('settling');
+      arrow.classList.add('settling');
+      shift = 0;
+      bubble.style.transform = '';
+      arrow.style.opacity = '';
+      arrow.style.transform = '';
+      clearTimeout(clearTimer);
+      clearTimer = setTimeout(function () {
+        bubble.classList.remove('settling');
+        arrow.classList.remove('settling', 'armed', 'pop');
+        armed = false;
+      }, 320);
+    }
+
+    bubble.addEventListener('pointerdown', function (e) {
+      if (pointerId !== null) return;
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      pointerId = e.pointerId;
+      startX = e.clientX;
+      shift = 0;
+      clearTimeout(clearTimer);
+      bubble.classList.remove('settling');
+      arrow.classList.remove('settling', 'armed', 'pop');
+      armed = false;
+      try { bubble.setPointerCapture(e.pointerId); } catch (err) {}
+    });
+
+    bubble.addEventListener('pointermove', function (e) {
+      if (e.pointerId !== pointerId) return;
+      var dx = (e.clientX - startX) * FACTOR;
+      shift = Math.max(-MAX_SHIFT, Math.min(0, dx)); // 只能向左
+      apply();
+      setArmed(shift <= -THRESHOLD);
+    });
+
+    function end(e, cancelled) {
+      if (e.pointerId !== pointerId) return;
+      pointerId = null;
+      try { bubble.releasePointerCapture(e.pointerId); } catch (err) {}
+      var hit = !cancelled && shift <= -THRESHOLD;
+      settle();
+      if (hit) startReply(msg);
+    }
+    bubble.addEventListener('pointerup', function (e) { end(e, false); });
+    bubble.addEventListener('pointercancel', function (e) { end(e, true); });
+
+    // 键盘：回车或空格等同于滑动回复
+    bubble.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault();
+        if (e.repeat) return;
+        startReply(msg);
+      }
+    });
+    // 单纯点击不触发任何操作（不绑定 click）
+  }
+
+  function startReply(msg) {
+    replyTo = msg;
+    quoteTitle.textContent = '回复 ' + (msg.me ? '自己' : PEER);
+    quoteText.textContent = msg.text;
+    quoteBar.classList.add('show');
+    list.classList.add('has-quote');
+    // 先清空再写入，保证连续回复同一条时也会播报
+    live.textContent = '';
+    setTimeout(function () { live.textContent = '正在回复：' + msg.text; }, 30);
+    input.focus();
+  }
+
+  function clearReply() {
+    replyTo = null;
+    quoteBar.classList.remove('show');
+    list.classList.remove('has-quote');
+  }
+
+  function updateSend() {
+    send.disabled = input.value.trim() === '';
+  }
+
+  function submit() {
+    var text = input.value.trim();
+    if (!text) return;
+    var msg = { me: true, text: text };
+    if (replyTo) msg.quote = replyTo.text;
+    addMessage(msg, true);
+    clearReply();
+    input.value = '';
+    updateSend();
+    input.focus();
+    list.scrollTop = list.scrollHeight;
+  }
+
+  quoteClose.addEventListener('click', function () {
+    clearReply();
+    // 关闭按钮随引用条隐藏，把焦点交还输入框
+    input.focus();
+  });
+
+  input.addEventListener('input', updateSend);
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && !e.isComposing && e.keyCode !== 229) {
+      e.preventDefault();
+      submit();
+    }
+  });
+  send.addEventListener('click', submit);
+
+  // 初始消息
+  [
+    { me: false, text: '周五的评审改到下午三点了' },
+    { me: true,  text: '好的，我把演示准备好' },
+    { me: false, text: '登录页那个问题修了吗？' },
+    { me: true,  text: '修了，下午合并' }
+  ].forEach(function (m) { addMessage(m, false); });
+
+  updateSend();
+})();
+</script>
+</body>
+</html>
