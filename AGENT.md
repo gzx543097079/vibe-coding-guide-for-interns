@@ -12,7 +12,9 @@ VibeCoding 开发指南：介绍如何借助 AI 编码助手进行高效开发�
 - `docs/`：VitePress 站点源文件，各模块章节按目录存放（`start/`、`ai/`、`git/`、`frontend/`、`controls/`、`cross/`、`backend/`、`quality/`、`growth/`）；`docs/snippets/` 是控件页引用的代码片段
 - `docs/.vitepress/`：站点配置与主题；`theme/data/modules.ts` 是模块与章节的唯一数据源
 - `.github/workflows/deploy.yml`：push 到 `main` 后构建并部署到 GitHub Pages
-- 常用命令：`npm run dev`（本地预览）、`npm run build`（构建）、`npm run preview`（预览构建产物）
+- `.github/workflows/check.yml`：PR 上检查提示词快照并构建
+- `scripts/verify-prompts/`：提示词还原验证的脚本和材料，改了 `controlPrompts.ts` 里已验证的提示词要按其中的 README 重新验证
+- 常用命令：`npm run dev`（本地预览）、`npm run build`（构建）、`npm run preview`（预览构建产物）、`npm run check:prompts`（提示词快照检查）
 
 ## 工作约定
 

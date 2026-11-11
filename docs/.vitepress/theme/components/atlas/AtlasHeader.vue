@@ -41,9 +41,12 @@ const search = () => window.dispatchEvent(new CustomEvent('vcg:palette'))
     <button
       class="at-theme"
       type="button"
-      :aria-label="isDark ? '切换到浅色模式' : '切换到深色模式'"
+      aria-label="切换深色和浅色模式"
       @click="isDark = !isDark"
-    >{{ isDark ? '浅色' : '深色' }}</button>
+    >
+      <!-- 两个文字都渲染，由样式按当前模式显示其中一个：服务端输出和客户端首帧一致，不会有水合不匹配 -->
+      <span class="at-when-light">深色</span><span class="at-when-dark">浅色</span>
+    </button>
     <a
       class="at-theme"
       href="https://github.com/gzx543097079/vibe-coding-guide-for-interns"

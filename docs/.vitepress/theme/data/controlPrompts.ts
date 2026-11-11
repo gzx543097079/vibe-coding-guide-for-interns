@@ -102,11 +102,12 @@ const palettes: Record<Palette, Record<string, Pair>> = {
     ink2: ['#6e6e73', '#98989f'],
     line: ['#c6c6c8', '#38383a'],
     soft: ['#f2f2f7', '#1c1c1e'],
-    accent: ['#007aff', '#0a84ff'],
+    // 浅色用 #0071e3 而不是系统蓝 #007aff：白字在上面的对比度从 4.0 提到 4.7
+    accent: ['#0071e3', '#0a84ff'],
     onAccent: ['#ffffff', '#ffffff'],
     danger: ['#ff3b30', '#ff453a'],
     success: ['#34c759', '#30d158'],
-    focus: ['2px 实线 #007aff，向外偏移 2px', '#0a84ff'],
+    focus: ['2px 实线 #0071e3，向外偏移 2px', '#0a84ff'],
   },
 }
 
@@ -951,6 +952,8 @@ const verifyLog: Record<string, Verify> = {
  * 用的是 iPhone 外框的手机画布和 iOS 色值表。
  * 对比方式是在无头 Chrome 里对两边执行同一套操作，逐状态比对元素的位置、尺寸、颜色、圆角和透明度数值，
  * 再看截图确认；动画只在固定时刻取了中间帧，没有逐帧比对。
+ * 验证之后浅色强调色从 #007aff 调成了 #0071e3，独立实现里只机械替换了这一个色值，替换后重跑比对仍然一致。
+ * 提示词原文、独立实现和比对脚本在 scripts/verify-prompts/。
  */
 const D2 = '2026-11-10'
 Object.assign(verifyLog, {
@@ -1039,5 +1042,5 @@ export function buildControlPrompt(
   if (c.draft) lines.push('', '（这是草稿模板，请先补全 {补充：…} 部分）')
   const text = lines.join('\n')
   // 正文里唯一写死的强调色：主按钮的投影，跟着色值表换
-  return palette === 'ios' ? text.replaceAll('rgb(179 87 58 / 0.3)', 'rgb(0 122 255 / 0.3)') : text
+  return palette === 'ios' ? text.replaceAll('rgb(179 87 58 / 0.3)', 'rgb(0 113 227 / 0.3)') : text
 }

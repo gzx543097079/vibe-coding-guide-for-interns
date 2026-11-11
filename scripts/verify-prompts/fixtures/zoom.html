@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>图片放大查看</title>
+<script>
+  // URL 带 ?dark 时切到深色
+  if (new URLSearchParams(location.search).has('dark')) {
+    document.documentElement.classList.add('dark');
+  }
+</script>
+<style>
+  :root {
+    --bg: #ffffff;
+    --ink: #000000;
+    --ink-2: #6e6e73;
+    --line: #c6c6c8;
+    --soft: #f2f2f7;
+    --accent: #0071e3;
+    --on-accent: #ffffff;
+    --danger: #ff3b30;
+    --success: #34c759;
+    --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --tile-l: 0.88;
+    --tile-c: 0.05;
+    --num-l: 0.38;
+    --num-c: 0.12;
+  }
+  :root.dark {
+    --bg: #000000;
+    --ink: #ffffff;
+    --ink-2: #98989f;
+    --line: #38383a;
+    --soft: #1c1c1e;
+    --accent: #0a84ff;
+    --on-accent: #ffffff;
+    --danger: #ff453a;
+    --success: #30d158;
+    --tile-l: 0.38;
+    --tile-c: 0.06;
+    --num-l: 0.9;
+    --num-c: 0.08;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body { margin: 0; }
+  body {
+    background: #888;
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  button {
+    border: 0;
+    background: transparent;
+    font: inherit;
+    color: inherit;
+    padding: 0;
+    margin: 0;
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  #canvas {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 248px;
+    height: 442px;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--ink);
+  }
+
+  .titlebar {
+    margin: 0;
+    padding: 12px 18px 10px;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    text-align: left;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+    padding: 4px 18px;
+  }
+
+  /* 缩略图与大图共用的配色，--h 为色相 */
+  .tile {
+    background: oklch(var(--tile-l) var(--tile-c) var(--h));
+    color: oklch(var(--num-l) var(--num-c) var(--h) / 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .thumb {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    border-radius: 10px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  /* 查看层 */
+  .viewer {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+  }
+  .viewer-mask {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    opacity: 0;
+  }
+  .viewer-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 48px;
+    z-index: 2;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .viewer-count {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+  }
+  .viewer-close {
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.16);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .viewer-close:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+  .viewer-close svg {
+    width: 14px;
+    height: 14px;
+    display: block;
+  }
+  .viewer-img {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    margin-top: -50%; /* 百分比按宽度算，正好是自身高度的一半 */
+    z-index: 1;
+    font-size: 74px;
+    border-radius: 0;
+    transform-origin: center;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+</style>
+</head>
+<body>
+<div id="canvas">
+  <h1 class="titlebar">相册</h1>
+  <div class="grid" id="grid"></div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var HUES = [30, 150, 250, 85, 330, 200];
+  var TOTAL = HUES.length;
+  var EASE = 'cubic-bezier(0.2, 0.8, 0.2, 1)';
+  var OPEN_MS = 320;
+  var CLOSE_MS = 280;
+  var SETTLE_MS = 320;
+  var THUMB_RADIUS = 10;
+
+  var canvas = document.getElementById('canvas');
+  var grid = document.getElementById('grid');
+
+  // 状态：grid（网格）| opening（放大过程中）| open（全屏查看）
+  //       | dragging（向下拖动中）| settling（回弹中）| closing（关闭过程中）
+  var state = 'grid';
+  var cur = null;      // 当前查看层相关的引用
+  var animToken = 0;   // 用来作废过期的动画结束回调
+
+  function reducedMotion() {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  // ---------- 网格 ----------
+  HUES.forEach(function (h, i) {
+    var n = i + 1;
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'tile thumb';
+    btn.style.setProperty('--h', h);
+    btn.setAttribute('aria-label', '查看第 ' + n + ' 张照片');
+    btn.textContent = n;
+    btn.addEventListener('click', function () { open(btn, n, h); });
+    grid.appendChild(btn);
+  });
+
+  // ---------- 工具 ----------
+  // 动画结束回调：transitionend 与超时兜底，谁先到用谁
+  function afterTransition(el, prop, ms, cb) {
+    var token = ++animToken;
+    var done = false;
+    function finish() {
+      if (done) return;
+      done = true;
+      el.removeEventListener('transitionend', onEnd);
+      clearTimeout(timer);
+      if (token === animToken) cb();
+    }
+    function onEnd(e) {
+      if (e.target === el && e.propertyName === prop) finish();
+    }
+    el.addEventListener('transitionend', onEnd);
+    var timer = setTimeout(finish, ms + 60);
+  }
+
+  // 算出让大图「正好盖住缩略图」的 transform 和圆角
+  function coverThumb() {
+    var layerRect = cur.layer.getBoundingClientRect();
+    var img = cur.img;
+    var w = img.offsetWidth;
+    var h = img.offsetHeight;
+    // 大图未变换时的中心点（不受当前 transform 影响）
+    var cx = layerRect.left + img.offsetLeft + w / 2;
+    var cy = layerRect.top + img.offsetTop + h / 2;
+    var t = cur.thumb.getBoundingClientRect();
+    var scale = t.width / w;
+    var dx = t.left + t.width / 2 - cx;
+    var dy = t.top + t.height / 2 - cy;
+    return {
+      transform: 'translate(' + dx + 'px, ' + dy + 'px) scale(' + scale + ')',
+      radius: (THUMB_RADIUS / scale) + 'px'
+    };
+  }
+
+  function setFade(value) {
+    cur.mask.style.opacity = value;
+    cur.bar.style.opacity = value;
+  }
+
+  function setFadeTransition(ms) {
+    var v = ms ? 'opacity ' + ms + 'ms ' + EASE : 'none';
+    cur.mask.style.transition = v;
+    cur.bar.style.transition = v;
+  }
+
+  // ---------- 打开 ----------
+  function open(thumb, n, hue) {
+    if (state !== 'grid') return; // 同一时间只能打开一张
+
+    var layer = document.createElement('div');
+    layer.className = 'viewer';
+    layer.setAttribute('role', 'dialog');
+    layer.setAttribute('aria-modal', 'true');
+    layer.setAttribute('aria-label', '第 ' + n + ' 张照片，共 ' + TOTAL + ' 张');
+
+    var mask = document.createElement('div');
+    mask.className = 'viewer-mask';
+
+    var bar = document.createElement('div');
+    bar.className = 'viewer-bar';
+
+    var count = document.createElement('span');
+    count.className = 'viewer-count';
+    count.textContent = n + ' / ' + TOTAL;
+
+    var closeBtn = document.createElement('button');
+    closeBtn.type = 'button';
+    closeBtn.className = 'viewer-close';
+    closeBtn.setAttribute('aria-label', '关闭');
+    closeBtn.innerHTML =
+      '<svg viewBox="0 0 14 14" fill="none" aria-hidden="true" focusable="false">' +
+      '<path d="m3 3 8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>' +
+      '</svg>';
+
+    var img = document.createElement('div');
+    img.className = 'tile viewer-img';
+    img.style.setProperty('--h', hue);
+    img.setAttribute('role', 'img');
+    img.setAttribute('aria-label', '第 ' + n + ' 张照片');
+    img.textContent = n;
+
+    bar.appendChild(count);
+    bar.appendChild(closeBtn);
+    layer.appendChild(mask);
+    layer.appendChild(img);
+    layer.appendChild(bar);
+    canvas.appendChild(layer);
+
+    cur = {
+      layer: layer, mask: mask, bar: bar, img: img, closeBtn: closeBtn, thumb: thumb,
+      pointerId: null, startX: 0, startY: 0, dx: 0, dy: 0
+    };
+    state = 'opening';
+
+    closeBtn.addEventListener('click', close);
+    layer.addEventListener('keydown', onLayerKeydown);
+    img.addEventListener('pointerdown', onPointerDown);
+    img.addEventListener('pointermove', onPointerMove);
+    img.addEventListener('pointerup', onPointerUp);
+    img.addEventListener('pointercancel', onPointerCancel);
+
+    var reduce = reducedMotion();
+
+    // First / Invert：大图已在最终位置，先摆到缩略图上
+    img.style.transition = 'none';
+    setFadeTransition(0);
+    setFade('0');
+    if (reduce) {
+      img.style.opacity = '0';
+    } else {
+      var from = coverThumb();
+      img.style.transform = from.transform;
+      img.style.borderRadius = from.radius;
+    }
+
+    thumb.style.visibility = 'hidden';
+    closeBtn.focus({ preventScroll: true });
+
+    // 强制提交起始样式，下一帧再放开
+    void img.offsetWidth;
+    requestAnimationFrame(function () {
+      if (!cur || cur.layer !== layer || state !== 'opening') return;
+      setFadeTransition(OPEN_MS);
+      setFade('1');
+      if (reduce) {
+        img.style.transition = 'opacity ' + OPEN_MS + 'ms ' + EASE;
+        img.style.opacity = '1';
+        afterTransition(img, 'opacity', OPEN_MS, onOpened);
+      } else {
+        img.style.transition =
+          'transform ' + OPEN_MS + 'ms ' + EASE + ', border-radius ' + OPEN_MS + 'ms ' + EASE;
+        img.style.transform = 'none';
+        img.style.borderRadius = '0px';
+        afterTransition(img, 'transform', OPEN_MS, onOpened);
+      }
+    });
+  }
+
+  function onOpened() {
+    if (state === 'opening') state = 'open';
+  }
+
+  // ---------- 拖动 ----------
+  function onPointerDown(e) {
+    if (state !== 'open') return; // 打开、回弹、关闭动画进行中都不响应新的拖动
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    e.preventDefault();
+    cur.pointerId = e.pointerId;
+    cur.startX = e.clientX;
+    cur.startY = e.clientY;
+    cur.dx = 0;
+    cur.dy = 0;
+    try { cur.img.setPointerCapture(e.pointerId); } catch (err) {}
+    cur.img.style.transition = 'none';
+    setFadeTransition(0);
+    cur.img.style.cursor = 'grabbing';
+    state = 'dragging';
+  }
+
+  function onPointerMove(e) {
+    if (state !== 'dragging' || e.pointerId !== cur.pointerId) return;
+    var dx = e.clientX - cur.startX;
+    var dy = e.clientY - cur.startY;
+    cur.dx = dx;
+    cur.dy = dy;
+    var down = Math.max(dy, 0);
+    var s = 1 - Math.min(down / 500, 0.3);
+    var fade = 1 - Math.min(down / 200, 1) * 0.7;
+    cur.img.style.transform = 'translate(' + dx + 'px, ' + dy + 'px) scale(' + s + ')';
+    setFade(String(fade));
+  }
+
+  function endDrag() {
+    try { cur.img.releasePointerCapture(cur.pointerId); } catch (err) {}
+    cur.pointerId = null;
+    cur.img.style.cursor = '';
+  }
+
+  function onPointerUp(e) {
+    if (state !== 'dragging' || e.pointerId !== cur.pointerId) return;
+    var dy = cur.dy;
+    endDrag();
+    if (dy > 80) {
+      state = 'open'; // 让 close() 接手，从当前 transform 直接飞回
+      close();
+    } else {
+      settle();
+    }
+  }
+
+  function onPointerCancel(e) {
+    if (state !== 'dragging' || e.pointerId !== cur.pointerId) return;
+    endDrag();
+    settle();
+  }
+
+  // 拖动距离不够：回到全屏位置
+  function settle() {
+    var img = cur.img;
+    if (reducedMotion()) {
+      img.style.transition = 'none';
+      img.style.transform = 'none';
+      setFadeTransition(SETTLE_MS);
+      setFade('1');
+      state = 'open';
+      return;
+    }
+    state = 'settling';
+    img.style.transition = 'transform ' + SETTLE_MS + 'ms ' + EASE;
+    setFadeTransition(SETTLE_MS);
+    img.style.transform = 'none';
+    setFade('1');
+    afterTransition(img, 'transform', SETTLE_MS, function () {
+      if (state === 'settling') state = 'open';
+    });
+  }
+
+  // ---------- 关闭 ----------
+  function close() {
+    if (!cur || state === 'grid' || state === 'closing') return;
+    if (state === 'dragging') endDrag();
+    state = 'closing';
+
+    var img = cur.img;
+    setFadeTransition(CLOSE_MS);
+    setFade('0');
+
+    if (reducedMotion()) {
+      // 去掉位移和缩放动画：图片原地淡出
+      img.style.transition = 'opacity ' + CLOSE_MS + 'ms ' + EASE;
+      img.style.opacity = '0';
+      afterTransition(img, 'opacity', CLOSE_MS, onClosed);
+    } else {
+      // 从当前 transform（可能是拖到一半、打开到一半）直接过渡到缩略图
+      var to = coverThumb();
+      img.style.transition =
+        'transform ' + CLOSE_MS + 'ms ' + EASE + ', border-radius ' + CLOSE_MS + 'ms ' + EASE;
+      img.style.transform = to.transform;
+      img.style.borderRadius = to.radius;
+      afterTransition(img, 'transform', CLOSE_MS, onClosed);
+    }
+  }
+
+  function onClosed() {
+    if (!cur) return;
+    var thumb = cur.thumb;
+    cur.layer.remove();
+    cur = null;
+    state = 'grid';
+    thumb.style.visibility = '';
+    thumb.focus({ preventScroll: true });
+  }
+
+  // ---------- 键盘 ----------
+  function onLayerKeydown(e) {
+    // 模态层里只有关闭按钮一个可聚焦元素，Tab 留在它上面
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      cur.closeBtn.focus({ preventScroll: true });
+    }
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && cur && state !== 'grid') {
+      e.preventDefault();
+      close();
+    }
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,26 +1,28 @@
 // 控件演示注册表：ControlDemo 按 id 取演示组件、标题、操作提示和默认外框
-import type { Component } from 'vue'
-import DemoButton from './DemoButton.vue'
-import DemoSwitch from './DemoSwitch.vue'
-import DemoModal from './DemoModal.vue'
-import DemoList from './DemoList.vue'
-import DemoTabBar from './DemoTabBar.vue'
-import DemoCheckbox from './DemoCheckbox.vue'
-import DemoInput from './DemoInput.vue'
-import DemoSelect from './DemoSelect.vue'
-import DemoTabs from './DemoTabs.vue'
-import DemoToast from './DemoToast.vue'
-import DemoSkeleton from './DemoSkeleton.vue'
-import DemoProgress from './DemoProgress.vue'
-import DemoAccordion from './DemoAccordion.vue'
-import DemoCarousel from './DemoCarousel.vue'
-import DemoSearch from './DemoSearch.vue'
-import DemoLike from './DemoLike.vue'
-import DemoSortable from './DemoSortable.vue'
-import DemoSwipeReply from './DemoSwipeReply.vue'
-import DemoReaction from './DemoReaction.vue'
-import DemoStories from './DemoStories.vue'
-import DemoZoom from './DemoZoom.vue'
+import { defineAsyncComponent, type Component } from 'vue'
+
+// 每个演示单独成块，用到时才加载，不进全站都要下载的主题脚本
+const DemoButton = defineAsyncComponent(() => import('./DemoButton.vue'))
+const DemoSwitch = defineAsyncComponent(() => import('./DemoSwitch.vue'))
+const DemoModal = defineAsyncComponent(() => import('./DemoModal.vue'))
+const DemoList = defineAsyncComponent(() => import('./DemoList.vue'))
+const DemoTabBar = defineAsyncComponent(() => import('./DemoTabBar.vue'))
+const DemoCheckbox = defineAsyncComponent(() => import('./DemoCheckbox.vue'))
+const DemoInput = defineAsyncComponent(() => import('./DemoInput.vue'))
+const DemoSelect = defineAsyncComponent(() => import('./DemoSelect.vue'))
+const DemoTabs = defineAsyncComponent(() => import('./DemoTabs.vue'))
+const DemoToast = defineAsyncComponent(() => import('./DemoToast.vue'))
+const DemoSkeleton = defineAsyncComponent(() => import('./DemoSkeleton.vue'))
+const DemoProgress = defineAsyncComponent(() => import('./DemoProgress.vue'))
+const DemoAccordion = defineAsyncComponent(() => import('./DemoAccordion.vue'))
+const DemoCarousel = defineAsyncComponent(() => import('./DemoCarousel.vue'))
+const DemoSearch = defineAsyncComponent(() => import('./DemoSearch.vue'))
+const DemoLike = defineAsyncComponent(() => import('./DemoLike.vue'))
+const DemoSortable = defineAsyncComponent(() => import('./DemoSortable.vue'))
+const DemoSwipeReply = defineAsyncComponent(() => import('./DemoSwipeReply.vue'))
+const DemoReaction = defineAsyncComponent(() => import('./DemoReaction.vue'))
+const DemoStories = defineAsyncComponent(() => import('./DemoStories.vue'))
+const DemoZoom = defineAsyncComponent(() => import('./DemoZoom.vue'))
 
 export type Frame = 'phone' | 'browser'
 

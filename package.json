@@ -7,7 +7,9 @@
   "scripts": {
     "dev": "vitepress dev docs",
     "build": "vitepress build docs",
-    "preview": "vitepress preview docs"
+    "preview": "vitepress preview docs",
+    "check:prompts": "node scripts/verify-prompts/check-snapshots.mjs",
+    "verify:prompts": "node scripts/verify-prompts/run.mjs"
   },
   "devDependencies": {
     "vitepress": "1.6.4"

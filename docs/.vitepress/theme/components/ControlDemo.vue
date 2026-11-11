@@ -5,6 +5,7 @@ import { controlNote } from '../data/approaches'
 import { currentTab, tabsHostKey, type TabsHost } from '../composables/codeTabs'
 import { copyText } from '../composables/clipboard'
 import { demos, type Frame } from './demos/registry'
+import IosStatusBar from './site/IosStatusBar.vue'
 
 const props = defineProps<{
   control: string
@@ -17,7 +18,8 @@ const props = defineProps<{
 
 const info = computed(() => demos[props.control])
 const frameSel = ref<Frame | null>(null)
-const frame = computed<Frame>(() => frameSel.value ?? props.frame ?? info.value?.frame ?? 'phone')
+// 默认 iPhone 外框；手势类效果只有手机外框
+const frame = computed<Frame>(() => (info.value?.phoneOnly ? 'phone' : frameSel.value ?? props.frame ?? 'phone'))
 const verify = computed(() => getControl(props.control)?.verify)
 const verifyClass = computed(() => ({ 已验证: 'ok', 部分一致: 'part', 未验证: 'none' })[verify.value?.status ?? '未验证'])
 const runKey = ref(0)
@@ -49,7 +51,13 @@ const stackLabel = computed(() => (host.group ? currentTab(host.group, host.labe
 
 const uid = useId()
 const opts = reactive<PromptOptions>({ ...defaultOptions })
-const prompt = computed(() => buildControlPrompt(props.control, stackLabel.value, opts))
+// iPhone 外框用 iOS 色值表，提示词的色值和画布跟着外框走
+const prompt = computed(() =>
+  buildControlPrompt(props.control, stackLabel.value, opts, {
+    palette: frame.value === 'phone' ? 'ios' : 'site',
+    canvas: frame.value,
+  }),
+)
 const promptParts = computed(() =>
   prompt.value.split(/(\{[^}]*\})/).filter(Boolean).map((t) => ({ t, ph: t.startsWith('{') })),
 )
@@ -80,9 +88,9 @@ function replay() {
       <div class="cd-head">
         <span class="cd-name">{{ title ?? info.name }}</span>
         <span class="cd-hint">{{ info.hint }}</span>
-        <div v-if="frames" class="cd-frames" role="group" aria-label="演示外框">
+        <div v-if="frames && !info.phoneOnly" class="cd-frames" role="group" aria-label="演示外框">
+          <button type="button" :aria-pressed="frame === 'phone'" @click="frameSel = 'phone'">iPhone</button>
           <button type="button" :aria-pressed="frame === 'browser'" @click="frameSel = 'browser'">网页</button>
-          <button type="button" :aria-pressed="frame === 'phone'" @click="frameSel = 'phone'">手机</button>
         </div>
         <button type="button" class="cd-copy" :class="copyState" :aria-describedby="`${uid}-tip`" @click="copyPrompt">
           <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true">
@@ -109,7 +117,7 @@ function replay() {
         </fieldset>
         <p v-if="verify" class="cd-verify">
           <span class="cd-badge" :class="verifyClass">{{ verify.status }}</span>
-          <span>{{ verify.date ? `${verify.date} · ` : '' }}{{ verify.note }}<template v-if="verify.status !== '未验证'"> 提示词已按网页模拟验证，原生代码未在真机验证。</template></span>
+          <span>{{ verify.date ? `${verify.date} · ` : '' }}{{ verify.note }}<template v-if="verify.status !== '未验证'"> 提示词已按网页模拟验证，原生代码未在真机验证。</template><template v-if="frame === 'phone' && verify.palette !== 'ios' && verify.status !== '未验证'"> 当前是 iPhone 外框，提示词换了色值表和画布，这个组合没有单独验证。</template></span>
         </p>
         <p :id="`${uid}-tip`" class="cd-tip">
           提示词按当前选中的写法（{{ stackLabel ?? '未指定' }}）生成，复制后把 <mark class="cd-ph">{…}</mark> 换成你项目的实际内容。
@@ -121,22 +129,17 @@ function replay() {
         <p class="sr-only" aria-live="polite">{{ copyState === 'done' ? '提示词已复制到剪贴板' : copyState === 'fail' ? '复制失败，请展开预览手动复制' : '' }}</p>
       </div>
 
-      <div class="cd-device" :class="frame">
-        <div v-if="frame === 'phone'" class="cd-status" aria-hidden="true">
-          <span>9:41</span>
-          <span class="cd-island" />
-          <span class="cd-sig">
-            <i /><i /><i />
-          </span>
-        </div>
+      <!-- 手机外框直接用演示页的 iPhone 外框（样式在 atlas.css），两处外观保持一致 -->
+      <div :class="frame === 'phone' ? 'lab-demo-device phone cd-phone' : 'cd-device browser'">
+        <IosStatusBar v-if="frame === 'phone'" />
         <div v-else class="cd-chrome" aria-hidden="true">
           <span class="cd-lights"><i /><i /><i /></span>
           <span class="cd-url">localhost:5173</span>
         </div>
-        <div class="cd-screen">
+        <div :class="frame === 'phone' ? 'lab-demo-screen' : 'cd-screen'">
           <component :is="info.comp" :key="`${runKey}-${frame}`" :play="play" :frame="frame" />
         </div>
-        <div v-if="frame === 'phone'" class="cd-home" aria-hidden="true" />
+        <div v-if="frame === 'phone'" class="lab-ios-home" aria-hidden="true" />
       </div>
     </div>
     <div v-if="$slots.default" class="cd-code">
@@ -285,59 +288,8 @@ function replay() {
   --app-on-accent: #1b1a17;
   --app-danger: #e38d84;
 }
-.cd-device.phone {
-  width: 268px;
-  height: 500px;
-  border-radius: 40px;
-  padding: 10px;
-  background: var(--app-bg);
-  outline: 9px solid #2a2824;
-  outline-offset: -1px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  display: flex;
-  flex-direction: column;
-}
-:root.dark .cd-device.phone {
-  outline-color: #3d3a34;
-}
-.cd-status {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 26px;
-  padding: 0 14px;
-  font-size: 12px;
-  font-weight: 650;
-  font-variant-numeric: tabular-nums;
-}
-.cd-island {
-  width: 74px;
-  height: 20px;
-  border-radius: 12px;
-  background: #141413;
-}
-.cd-sig {
-  display: inline-flex;
-  align-items: flex-end;
-  gap: 2px;
-  height: 10px;
-}
-.cd-sig i {
-  width: 3px;
-  border-radius: 1px;
-  background: currentColor;
-}
-.cd-sig i:nth-child(1) { height: 4px; }
-.cd-sig i:nth-child(2) { height: 7px; }
-.cd-sig i:nth-child(3) { height: 10px; }
-.cd-home {
-  width: 96px;
-  height: 4px;
-  margin: 6px auto 2px;
-  border-radius: 3px;
-  background: var(--app-ink);
-  opacity: 0.85;
+.cd-phone {
+  margin: 10px auto;
 }
 .cd-device.browser {
   width: 100%;
@@ -386,10 +338,6 @@ function replay() {
   flex: 1;
   min-height: 0;
   overflow: hidden;
-  border-radius: 0 0 30px 30px;
-}
-.cd-device.browser .cd-screen {
-  border-radius: 0;
 }
 
 .cd-code {
@@ -565,10 +513,6 @@ function replay() {
 @media (max-width: 479px) {
   .cd-stage {
     padding: 12px 10px 22px;
-  }
-  .cd-device.phone {
-    width: 252px;
-    height: 480px;
   }
 }
 </style>

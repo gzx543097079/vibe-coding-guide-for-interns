@@ -1,7 +1,7 @@
 ---
 layout: page
 title: 组件演示
-description: 点开 17 个交互组件看状态，再对照实现和提示词。
+description: 21 个组件和常见 App 效果，可以直接操作，附验证过的提示词。
 ---
 
 <LabPage />

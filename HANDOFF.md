@@ -1,53 +1,84 @@
 # 续接文档
 
-给下一次接手的人或 agent：读完这一页就能接着干。更新日期：2026-11-07。
+给下一次接手的人或 agent：读完「当前状态」这几节就能接着干。更新日期：2026-11-10。
 
 ## 项目是什么
 
-Vibe Coding 开发指南网站。VitePress 1.6.4 + 自定义主题，部署到 GitHub Pages 子路径 `/vibe-coding-guide-for-interns/`。仓库约定见 [AGENT.md](AGENT.md)，产品定位见 [PRODUCT.md](PRODUCT.md)。
+Vibe Coding 开发指南网站。VitePress 1.6.4 + 自定义主题，部署到 GitHub Pages 子路径 `/vibe-coding-guide-for-interns/`。仓库约定见 [AGENT.md](AGENT.md)，产品定位见 [PRODUCT.md](PRODUCT.md)，视觉规格见 [DESIGN.md](DESIGN.md)。
 
-## 当前进度
+线上地址：<https://gzx543097079.github.io/vibe-coding-guide-for-interns/>
+
+## 当前状态
 
 | 部分 | 状态 |
 |---|---|
-| 网站体验：首页、目录、方向页、阅读路线、组件页 | 2026-11-08 改为标准知识库：首页为方向索引，全站左侧目录 + 三栏阅读页 |
-| 阅读页：当前方向导航、页内定位、粘性工具栏、读完以后、本机阅读记录 | 已改为安静的阅读外壳；翻页不跨方向，保留全文搜索、深浅色与原章节地址 |
-| 全站结构：9 个模块，108 个章节，带「基础 / 进阶 / 精通」分级 | 完成，数据源 `docs/.vitepress/theme/data/modules.ts` |
-| 「起步」模块：5 章真实内容 + 富组件版式（样板） | 完成 |
-| 「UI 控件与提示词」模块：17 个控件，提示词已做还原验证 | 完成，见下方验证说明 |
-| 「AI 与 Agent」模块 | 20 章正文齐全；基础 10 章含交互演示，进阶与精通各 5 章已补齐 |
-| Git、前端、跨端、后端、质量、提升 | 65 章正文已补齐，保留原工具卡、演示、代码片段和任务模板 |
-| 全站正文覆盖 | 108 个登记章节均有正文，当前无 `status: draft`；正文覆盖不代表原生片段全部验证 |
-
-PR #3 已用 merge commit `6e7aff4` 合并。当前工作位于从最新 `main` 建立的 `feat/complete-guide-chapters`，对应仍保持开放的 PR #4，等待用户审核；未经用户明确允许，不自行合并。
+| 全站结构：9 个方向，108 篇章节，分基础、进阶、精通三级 | 完成，数据源 `docs/.vitepress/theme/data/modules.ts` |
+| 全站正文 | 108 篇都有正文，没有 `status: draft` |
+| 网站外观：「章节表」设计 | 2026-11-10 落地并上线，见下方「章节表改版」 |
+| 组件演示页 `/lab` | 17 个组件 + 4 个 App 里的效果，默认 iPhone 外框和 iOS 配色 |
+| 提示词验证 | 21 份提示词都做过还原验证；其中 4 个效果的验证材料和脚本在 `scripts/verify-prompts/` |
+| 原生代码片段 | 都没有编译或真机验证 |
 
 ## 怎么跑
 
 ```bash
 npm ci
-npm run dev                                   # 开发
-npm run build && npx vitepress preview docs --port 4173   # 构建并预览
+npm run dev            # 开发
+npm run build          # 构建
+npm run preview        # 预览构建产物
+npm run check:prompts  # 提示词有没有在验证之后被改动（CI 里也会跑）
+npm run verify:prompts # 无头 Chrome 里比对站内演示和独立实现，要先构建
 ```
 
-构建后重启预览服务，否则会读到过期的文件列表，CSS 返回空。只停自己端口的进程，不要用 `pkill -f "vitepress preview"`。
+每次构建后要重启预览服务，否则会读到过期的文件列表，新文件返回 404。只停自己端口的进程，不要用 `pkill -f "vitepress preview"`。
 
 ## 目录要点
 
-- `docs/<模块>/<章节>.md`：章节正文，frontmatter 里 `status: draft` 表示占位。
-- `docs/.vitepress/theme/data/modules.ts`：模块与章节唯一数据源，目录、命令面板、首页和当前方向内的翻页都从它生成。
-- `docs/.vitepress/theme/components/rich/`：富组件（RPoints、RCompare、RSteps、RTerm、REditorAgent、RFolderTree、RTbd），样式在 `styles/rich.css`，用法参考 `docs/start/*.md`。
-- `docs/.vitepress/theme/components/demos/` 与 `data/controlPrompts.ts`：控件演示和提示词，验证状态记录在后者。
+- `docs/<方向>/<章节>.md`：章节正文。
+- `docs/.vitepress/theme/data/modules.ts`：方向与章节的唯一数据源，首页表格、目录、命令面板、翻页都从它生成。
+- `docs/.vitepress/theme/Layout.vue`：全站外壳。章节页是左栏（当前方向的章节格）、正文、右栏（本页目录）三栏。
+- `docs/.vitepress/theme/components/atlas/`：章节表相关组件。`AtlasHome`（首页表格）、`AtlasRail`（章节页左栏）、`AtlasList`（`/learn`）、`AtlasFamily`（`/courses/*`）、`AtlasPaths`（`/paths`）、`AtlasHeader`（顶栏）。
+- `docs/.vitepress/theme/components/site/`：`LabPage`（组件演示）、`GlossaryPage`（名词解释）、`IosStatusBar`（iPhone 外框的状态栏）、页脚等。
+- `docs/.vitepress/theme/components/demos/`：21 个演示组件，在 `registry.ts` 里登记，按需加载。
+- `docs/.vitepress/theme/data/controlPrompts.ts`：每个组件的提示词规格、两套色值表（站内配色和 iOS 配色）、验证记录。
+- `docs/.vitepress/theme/components/ControlDemo.vue`：章节页里内嵌的演示，手机外框和 `/lab` 用同一套样式。
+- `docs/.vitepress/theme/components/rich/`、`components/ai/`：正文里用的富组件，样式在 `styles/rich.css`、`styles/ai-rich.css`。
+- `docs/.vitepress/theme/styles/`：`tokens.css` 和 `base.css` 是基础，`website.css` 是页脚和组件演示页，`kb.css` 是通用页面外壳和名词解释，`atlas.css` 最后加载，放章节表的全部样式并改写基础令牌。
 - `docs/snippets/`：控件的多语言代码片段。
-- `docs/.vitepress/theme/styles/website.css` 与 `styles/desk.css`：开发笔记的设计令牌和页面样式。动效以状态反馈为主，必须尊重 `prefers-reduced-motion`。
+- `scripts/verify-prompts/`：提示词还原验证的脚本、独立实现和提示词快照，用法见其中的 README。
 
 ## 待办
 
-1. 审核 `feat/complete-guide-chapters` 的 75 篇新增正文，结合实际读者反馈继续深化内容。
-2. 控件页的「待校对」片段（鸿蒙、Compose、小程序、uni-app、RN 的部分）需要搭建对应工程，完成编译和设备验证后再更新状态。保留未核实的版本与 API 标记。
-3. 重设计将 CodeTabs 向外层登记延迟到挂载后，保持 SSR 与客户端首帧一致；本轮所查 `frontend/ios`、`controls/button` 已不再复现既有 hydration 警告。后续仍需在更多浏览器与持久化标签场景回归。
-4. 「UI 控件」额外规划的 6 个控件（日期选择、无限滚动、页面转场等）还只有未验证提示词，不属于当前 108 个登记章节。新增时先登记，再完成实现与还原验证。
-5. 校对 `TechCard` 里的基础工具介绍和措辞；起步页的安装包名称、命令等待核实项也应逐项验证，不静默删掉标记。
-6. 确认 GitHub 仓库 Settings → Pages 的 Source 是否已设为 GitHub Actions；本轮没有修改线上配置或验证生产部署。
+1. 原生技术栈的提示词没有验证。SwiftUI、Compose 等需要搭对应工程，编译并在设备上操作后才能标「已验证」。
+2. 手势类效果只用脚本模拟的指针事件验证过，没有在真机上用触摸操作。
+3. 控件页的「待校对」片段（鸿蒙、Compose、小程序、uni-app、RN 的部分）需要搭建对应工程验证。保留未核实的版本与 API 标记。
+4. 「UI 控件」额外规划的 6 个控件（日期选择、无限滚动、页面转场等）还只有未验证的草稿提示词，不属于 108 个登记章节。新增时先登记，再完成实现与还原验证。
+5. 另外 17 个组件的验证是 2026-11-06 做的，当时的提示词原文和独立实现没有保存，`npm run check:prompts` 不覆盖它们。
+6. 样式总量约 286KB（gzip 后约 51KB），全部在一个文件里。VitePress 默认不拆分样式，要拆需要改构建配置。
+7. 校对 `TechCard` 里的基础工具介绍和措辞；起步页的安装包名称、命令等待核实项应逐项验证，不静默删掉标记。
+8. iPhone 外框深色模式下，强调色 `#0a84ff` 上的白字对比度约 3.7:1，低于 4.5:1。这个色值同时用作文字色和底色，只改一个值解决不了，需要拆成两个令牌。
+
+## 章节表改版（2026-11-10）
+
+用户要求「根据内容重新设计一版 UI，不在当前基础上改」。依据是内容本身的形状：108 篇正好是 9 个方向 × 12 篇，每个方向分三级。
+
+- **基本单元**：章节格，由三位全站编号和短标题组成。首页、章节页左栏、路线页、404 页用的是同一个格子。
+- **颜色**：色相区分方向（9 个），深浅区分级别（基础浅底、进阶中间色、精通实心）。全站强调色是墨色；章节页内正文的强调色跟随所在方向。
+- **状态**：读过打 ✓，当前篇加墨框，筛选时不匹配的变淡。阅读记录只存在浏览器 `localStorage`（键 `vcg:learning:v1`）。
+- **首页**：9 列表格一屏看全，悬停或聚焦时右侧显示这一篇的摘要，可按级别筛选。
+- **旧组件**：之前几轮的 `KnowledgeNav`、`KnowledgeHome`、`SiteHeader`、`DeskHome` 等 17 个组件和 `desk.css`、`sidebar.css` 已删除，`website.css` 和 `kb.css` 里对应的样式也已清掉。
+
+## 组件演示（2026-11-10）
+
+- **外框**：默认 iPhone 外框（机身、灵动岛、状态栏、底部横条），屏幕区固定 248×442。网页外框留作对照。章节页里的内嵌演示用的是同一套外框。
+- **配色**：iPhone 外框内用 iOS 系统色，网页外框内用站内的陶土配色。提示词的色值表和画布跟着所选外框走。浅色强调色用 `#0071e3` 而不是系统蓝 `#007aff`，为的是白字在上面的对比度达到 4.7:1。
+- **App 里的效果**：滑动回复、长按表情回应、快拍分段进度、图片放大查看。只有 iPhone 外框，没有对应的章节页。
+- **验证方式**：把提示词原文交给一个没看过源码的 agent 写出单文件实现，再在无头 Chrome 里对两边执行同一套操作，逐状态比对元素的位置、尺寸、颜色、圆角和透明度。
+- **按需加载**：演示组件、提示词数据、名词表不进全站都要下载的主题脚本。主题脚本从 408KB 降到 164KB。
+
+## 历史记录
+
+下面是更早几轮的记录，按时间保留。其中描述的页面结构和配色（工程交付台、开发笔记、知识库三栏、Starlight 风格）都已被上面的章节表改版取代，提到的不少文件已经删除，只在追溯某个决定的来由时参考。
 
 ## 本轮续接与验证
 
@@ -88,8 +119,8 @@ npm run build && npx vitepress preview docs --port 4173   # 构建并预览
 ## 已知限制
 
 - 原生代码（iOS、Android、鸿蒙等）都没有编译或真机验证。
-- 提示词验证只对网页模拟演示做了截图对比，没有逐项比对动画时长和缓动，也没比对拖动手感。
-- 没在 Safari、Firefox、真机上测过。标题的衬线字体依赖系统字体，Windows 和 Linux 需要安装 Noto Serif SC。
+- 提示词验证只针对网页写法；动画只在固定时刻取了中间帧，没有逐帧比对，也没比对拖动手感。
+- 没在 Safari、Firefox、真机上测过。
 - 仓库名里仍有 `interns`，改名会让 Pages 地址和 `base` 路径一起变，是否改由维护者决定。
 
 ## 协作约定
