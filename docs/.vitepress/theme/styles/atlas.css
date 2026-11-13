@@ -257,14 +257,22 @@
 .at-toc a.on { color: var(--ink); font-weight: 700; border-left-color: var(--at-c); }
 
 /* ---------- 窄屏 ---------- */
-@media (max-width: 1180px) {
+@media (max-width: 1260px) {
+  /* 10 列表格加右侧栏，到这个宽度已经放不下，详情栏改排到表格下面（9 列时是 1180） */
   .at-home { grid-template-columns: 1fr; }
   .at-side { position: static; border-left: 0; padding-left: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; }
+}
+@media (max-width: 1180px) {
   .at-read { grid-template-columns: 220px minmax(0, 700px); gap: 32px; }
   .at-toc { display: none; }
   .at-inline-toc { display: block; }
   .at-top { gap: 18px; }
   .at-nav { gap: 16px; }
+}
+@media (max-width: 1000px) {
+  /* 10 列到这个宽度每列只剩 80px 左右，改成一个方向一行，格子横向排开 */
+  .at-table { grid-template-columns: 1fr; gap: 18px; }
+  .at-table .at-cells { grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); }
 }
 @media (max-width: 900px) {
   .at-top { flex-wrap: wrap; height: auto; padding: 10px 16px 0; gap: 10px; }
@@ -276,8 +284,6 @@
   .at-home { padding: 16px 16px 40px; }
   .at-intro h1 { font-size: 23px; }
   .at-levels { margin-left: 0; }
-  .at-table { grid-template-columns: 1fr; gap: 18px; }
-  .at-table .at-cells { grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); }
   .at-cell { height: 38px; font-size: 13.5px; }
   .at-side { grid-template-columns: 1fr; }
   .at-card { display: none; }
@@ -420,9 +426,16 @@
 .lab-ios-home { display: flex; align-items: center; justify-content: center; height: 20px; background: var(--app-bg); }
 .lab-ios-home::before { content: ''; width: 92px; height: 4px; border-radius: 3px; background: var(--app-ink); opacity: 0.9; }
 
-@media (max-width: 1340px) {
-  /* 列变窄时先收起格内编号，保住标题 */
+@media (max-width: 1520px) {
+  /* 10 列下列更窄：先收起格内编号，保住标题（9 列时这个断点是 1340） */
   .at-table .at-cell .n { display: none; }
+}
+@media (max-width: 1340px) {
+  /* 窄列头里最长的方向名（UI 控件与提示词）放不下，字号小一号 */
+  .at-col h2 a { font-size: 12px; }
+}
+@media (max-width: 1260px) {
+  .at-col h2 a { font-size: 11px; }
 }
 @media (max-width: 1180px) {
   .at-two { grid-template-columns: 200px minmax(0, 1fr); gap: 32px; }
