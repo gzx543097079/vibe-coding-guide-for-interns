@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { withBase } from 'vitepress'
 import SiteIcon from './SiteIcon.vue'
+import { totalChapters } from '../../data/modules'
 </script>
 <template>
   <footer class="site-footer">
@@ -25,7 +26,7 @@ import SiteIcon from './SiteIcon.vue'
       </nav>
     </div>
     <div class="footer-bottom">
-      <span>内容以 MIT 协议开源</span><span>108 篇 · 网址一直有效 · 阅读记录只存本机</span>
+      <span>内容以 MIT 协议开源</span><span>{{ totalChapters }} 篇 · 网址一直有效 · 阅读记录只存本机</span>
     </div>
   </footer>
 </template>
