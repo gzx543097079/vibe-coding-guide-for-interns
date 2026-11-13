@@ -2,7 +2,7 @@
 import { withBase } from 'vitepress'
 import { modules } from '../../data/modules'
 
-// 九个方向的索引：目录列表页和方向页的左栏共用
+// 全部方向的索引：目录列表页和方向页的左栏共用
 defineProps<{ current?: string }>()
 </script>
 

@@ -15,7 +15,7 @@ interface Item {
 
 const actions: Item[] = [
   { id: 'p-home', title: '首页', sub: '继续读，或者整理一段需求', link: '/', group: '常用页面' },
-  { id: 'p-lab', title: '组件演示', sub: '17 个可操作的组件例子', link: '/lab', group: '常用页面' },
+  { id: 'p-lab', title: '组件演示', sub: '21 个可操作的组件和 App 效果', link: '/lab', group: '常用页面' },
   { id: 'p-prompts', title: '需求模板', sub: '写功能、修 bug 和审查的模板', link: '/growth/prompt-templates', group: '常用页面' },
   { id: 'p-review', title: '质量与交付', sub: '测试、调试、审查和发布', link: '/courses/quality', group: '常用页面' },
 ]

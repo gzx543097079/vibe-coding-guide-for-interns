@@ -1,5 +1,5 @@
 /* ============================================================
-   章节表设计：108 篇 = 9 个方向 × 3 个级别
+   章节表设计：10 个方向 × 3 个级别
    全站只有一种基本单元「章节格」：色相区分方向，深浅区分级别。
    命名空间 at-*，由 index.ts 最后引入，同时改写全站设计令牌。
    ============================================================ */
@@ -69,16 +69,17 @@
   --at-on: #101215;
 }
 
-/* 九个方向各一个色相 */
-[data-fam='1'] { --at-h: 25; }
-[data-fam='2'] { --at-h: 62; }
-[data-fam='3'] { --at-h: 100; }
-[data-fam='4'] { --at-h: 148; }
-[data-fam='5'] { --at-h: 190; }
-[data-fam='6'] { --at-h: 232; }
-[data-fam='7'] { --at-h: 268; }
-[data-fam='8'] { --at-h: 305; }
-[data-fam='9'] { --at-h: 350; }
+/* 十个方向各一个色相，色相环上等距 36° */
+[data-fam='1'] { --at-h: 20; }
+[data-fam='2'] { --at-h: 56; }
+[data-fam='3'] { --at-h: 92; }
+[data-fam='4'] { --at-h: 128; }
+[data-fam='5'] { --at-h: 164; }
+[data-fam='6'] { --at-h: 200; }
+[data-fam='7'] { --at-h: 236; }
+[data-fam='8'] { --at-h: 272; }
+[data-fam='9'] { --at-h: 308; }
+[data-fam='10'] { --at-h: 344; }
 [data-fam] {
   --at-c: oklch(var(--at-l-solid) var(--at-c-solid) var(--at-h));
   --at-mid: oklch(var(--at-l-mid) var(--at-c-mid) var(--at-h));
@@ -148,7 +149,7 @@
 .at-levels button { height: 32px; padding: 0 14px; background: none; border: 0; border-left: 1.5px solid var(--ink); font-size: 13px; color: var(--ink); cursor: pointer; }
 .at-levels button:first-child { border-left: 0; }
 .at-levels button[aria-pressed='true'] { background: var(--ink); color: var(--paper); font-weight: 600; }
-.at-table { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 5px; align-items: start; }
+.at-table { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 5px; align-items: start; }
 .at-col h2 {
   height: 60px; margin: 0; padding-top: 7px; border-top: 4px solid var(--at-c);
   display: grid; grid-template-columns: 1fr auto; align-items: baseline; align-content: start; row-gap: 3px;
@@ -196,7 +197,7 @@
   --on-accent: var(--at-on);
 }
 .at-rail, .at-toc { position: sticky; top: 84px; max-height: calc(100vh - 100px); overflow-y: auto; }
-.at-fams { display: grid; grid-template-columns: repeat(9, 1fr); gap: 3px; margin-bottom: 16px; }
+.at-fams { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; margin-bottom: 16px; }
 .at-fams a { height: 24px; display: grid; place-items: center; font-size: 12px; font-weight: 700; background: var(--at-tint); color: var(--ink); }
 .at-fams a:hover { background: var(--at-mid); }
 .at-fams a[aria-current] { background: var(--at-c); color: var(--at-on); }
