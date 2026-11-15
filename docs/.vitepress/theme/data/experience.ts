@@ -48,8 +48,8 @@ export const learningPaths = [
     title: '完成你的第一个项目',
     description: '从环境、AI 协作到版本管理，建立完整开发习惯。',
     icon: 'start',
-    modules: ['start', 'ai', 'git', 'quality'],
-    outcome: '能够拆解一个小需求，用 Codex 实现、检查，并提交可审查的 PR。',
+    modules: ['start', 'ai', 'models', 'git', 'quality'],
+    outcome: '能够拆解一个小需求，按场景挑选合适的模型，用 Codex 实现、检查，并提交可审查的 PR。',
   },
   {
     id: 'interface',
